@@ -6,20 +6,21 @@ public class Brick
 {
     public double x { get; }
     public double y { get; }
-    public double W { get; }
-    public double H { get; }
-    public Color color; 
-    public int vie;
+    public double w { get; }
+    public double h { get; }
+    public Color color { get; }
+    public int health { get; }
+    
     //private bool hasPowerUp;
     //private PowerUpType powerUpType;
 
-    public Brick(double x, double y, double w, double h, Color color, int vie)
+    public Brick(double x, double y, double w, double h, Color color, int health)
     {
         this.x = x;
         this.y = y;
-        this.W = w;
-        this.H = h;
+        this.w = w;
+        this.h = h;
         this.color = color;
-        this.vie = vie;
+        this.health = health;
     }
 }

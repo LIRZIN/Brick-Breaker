@@ -1,6 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameCore", "GameCore\GameCore.csproj", "{A4194750-D0AC-45AF-B433-DE574AC1DEAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrickBreaker", "Godot\BrickBreaker.csproj", "{8A9672F7-D0E1-4365-8C46-061D7DDFCFB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Console", "Console\Console.csproj", "{081780C1-C030-4E55-8E62-1A22AD39FFE7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +19,19 @@ Global
 		{A4194750-D0AC-45AF-B433-DE574AC1DEAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4194750-D0AC-45AF-B433-DE574AC1DEAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4194750-D0AC-45AF-B433-DE574AC1DEAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A9672F7-D0E1-4365-8C46-061D7DDFCFB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A9672F7-D0E1-4365-8C46-061D7DDFCFB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A9672F7-D0E1-4365-8C46-061D7DDFCFB2}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A9672F7-D0E1-4365-8C46-061D7DDFCFB2}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{081780C1-C030-4E55-8E62-1A22AD39FFE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{081780C1-C030-4E55-8E62-1A22AD39FFE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{081780C1-C030-4E55-8E62-1A22AD39FFE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{081780C1-C030-4E55-8E62-1A22AD39FFE7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D2BE5352-2BC6-4F34-A976-C53D025EC0E1}
 	EndGlobalSection
 EndGlobal

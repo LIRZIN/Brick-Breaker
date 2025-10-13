@@ -1,6 +1,6 @@
 using Godot;
 using System;
-using GameCore;
+using Brick_Breaker;
 
 public partial class NewScript : Node
 {

@@ -14,7 +14,7 @@ public class Class1
         System.Console.WriteLine("Hello World!");
         System.Console.WriteLine(b.x);
 
-        Ball ball = new Ball(new Vector2((float)0.2, (float)0.4), new Vector2(0.2f, 0.2f) , 10, 4, Color.Aqua);
+        Ball ball = new Ball(0.2, 0.4, 0.2, 0.2, 10, 4, Color.Aqua);
         ball.Afficher();
         for (int i = 0; i < 1000; i++)
         {

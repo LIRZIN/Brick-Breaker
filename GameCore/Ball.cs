@@ -6,49 +6,23 @@ using System.Drawing;
 
 public class Ball
 {
-    private Vector2 position, direction;
-    private double speed, radius;
+    private double positionX, positionY, directionX, directionY, speed, radius;
     private Color color;
 
-    public Vector2 Position
-    {
-        get => position;
-        set => position = value;
-    }
-
-    public void PositionX(float x)
-    {
-        position.X = x;
-    }
-
-    public void PositionY(float y)
-    {
-        position.Y = y;
-    }
-
-    public Vector2 Direction
-    {
-        get => direction;
-        set => direction = value;
-    }
-    public void DirectionX(float x)
-    {
-        direction.X = x;
-    }
-
-    public void DirectionY(float y)
-    {
-        direction.Y = y;
-    }
-
+    public double PositionX { get => positionX; set => positionX = value; }
+    public double PositionY { get => positionY; set => positionY = value; }
+    public double DirectionX { get => directionX; set => directionX = value; }
+    public double DirectionY { get => directionY; set => directionY = value; }
     public double Speed { get => speed; set => speed = value; }
     public double Radius { get => radius; set => radius = value; }
     public Color Color { get => color; set => color = value; }
 
-    public Ball(Vector2 position, Vector2 direction, double speed, double radius, Color color)
+    public Ball(double positionX, double positionY, double directionX, double directionY, double speed, double radius, Color color)
     {
-        this.position = position;
-        this.direction = direction;
+        this.positionX = positionX;
+        this.positionY = positionY;
+        this.directionX = directionX;
+        this.directionY = directionY;
         this.speed = speed;
         this.radius = radius;
         this.color = color;
@@ -57,8 +31,8 @@ public class Ball
 
     public void Afficher()
     {
-        Console.WriteLine("Position : " + Position);
-        Console.WriteLine("Direction : " + Direction);
+        Console.WriteLine("Position : " + PositionX + ", " + PositionY);
+        Console.WriteLine("Direction : " + DirectionX + ", " + DirectionY);
         Console.WriteLine("Vitesse : " + Speed);
         Console.WriteLine("Rayon : " + Radius);
         Console.WriteLine("Couleur : " + Color);
@@ -67,26 +41,27 @@ public class Ball
 
     public void Update(double deltaTime)
     {
-        Position += (float)Speed * Direction * (float)deltaTime;
-        if (Position.X > 1)
+        PositionX += Speed * DirectionX * deltaTime;
+        PositionY += Speed * DirectionY * deltaTime;
+        if (PositionX > 1)
         {
-            PositionX(1);
-            DirectionX(Direction.X * -1);
+            PositionX = 1;
+            DirectionX *= -1;
         }
-        if (Position.Y > 1)
+        if (PositionY > 1)
         {
-            PositionY(1);
-            DirectionY(Direction.Y * -1);
+            PositionY = 1;
+            DirectionY *= -1;
         }
-        if (Position.X < 0)
+        if (PositionX < 0)
         {
-            PositionX(0);
-            DirectionX(Direction.X * -1);
+            PositionX = 0;
+            DirectionX *= -1;
         }
-        if (Position.Y < 0)
+        if (PositionY < 0)
         {
-            PositionY(0);
-            DirectionY(Direction.Y * -1);
+            PositionY = 0;
+            DirectionY *= -1;
         }
     }
 }

@@ -16,7 +16,36 @@ public class BrickBreaker
     private BallManager ballManager = new BallManager();
     private BrickWall brickWall =  new BrickWall();
     private Paddle paddle = new Paddle();
+    private bool isGameOver = false;
+    private bool isGameWon = false;
 
+    public BallManager BallManager
+    {
+        get => ballManager;
+    }
+
+    public BrickWall BrickWall
+    {
+        get => brickWall;
+    }
+
+    public Paddle Paddle
+    {
+        get => paddle;
+    }
+
+    public bool IsGameOver
+    {
+        get => isGameOver;
+        set  => isGameOver = value;
+    }
+
+    public bool IsGameWon
+    {
+        get => isGameWon;
+        set => isGameWon = value;
+    }
+    
     void init( int W_pixels, int H_pixels )
     {
         double min = (W_pixels < H_pixels) ? W_pixels : H_pixels;
@@ -27,8 +56,16 @@ public class BrickBreaker
 
     void update(double deltaTime, PlayerMovement move)
     {
-        ballManager.Update( deltaTime, brickWall, paddle );
+        IsGameOver = ballManager.Update( deltaTime, brickWall, paddle );
         paddle.update( deltaTime, move );
+        IsGameWon = true;
+        foreach (var brickHealth in brickWall.brickHealth)
+        {
+            if (brickHealth >= 0)
+            {
+                IsGameWon  = false;
+            }
+        }
     }
 }
 

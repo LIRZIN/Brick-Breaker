@@ -28,6 +28,7 @@ public class main
         }*/
         
         ConsoleDisplay display = new ConsoleDisplay();
+        ConsoleInput.beginListening();
         System.Console.WriteLine("test1");
         display.Init();
         System.Console.WriteLine("test2");
@@ -46,7 +47,8 @@ public class main
         {
             display.DrawLose();
         }
-        
+
+        ConsoleInput.stopListening();
     }
 }
 

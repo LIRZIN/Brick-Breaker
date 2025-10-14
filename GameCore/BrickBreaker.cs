@@ -100,9 +100,10 @@ public class BrickBreaker
     
     public void init( int W_pixels, int H_pixels )
     {
-        double max = (W_pixels > H_pixels) ? W_pixels : H_pixels;
-        Data.screenSizeWidth = (double)W_pixels / max; 
-        Data.screenSizeHeight = (double)H_pixels / max; 
+        double min = (W_pixels < H_pixels) ? W_pixels : H_pixels;
+        Data.screenSizeWidth = (double)W_pixels / min; 
+        Data.screenSizeHeight = (double)H_pixels / min; 
+        Data.screenSizeRatio = ( Data.screenSizeWidth > Data.screenSizeHeight) ? Data.screenSizeHeight / Data.screenSizeWidth : Data.screenSizeWidth / Data.screenSizeHeight;
         brickWall.init(0);
         IsGameWon = false;
         IsGameOver = false;

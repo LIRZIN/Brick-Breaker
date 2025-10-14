@@ -35,8 +35,8 @@ public class ConsoleDisplay
     public void Init()
     {
         brickBreaker = new BrickBreaker();
-        W_pixels = System.Console.WindowWidth;
-        h_pixels = System.Console.WindowHeight;
+        W_pixels = 10; 
+        H_pixels = 15;
         brickBreaker.init(W_pixels, H_pixels);
         displaytab = new char[H_pixels][];
         for (int i = 0; i < H_pixels; i++)

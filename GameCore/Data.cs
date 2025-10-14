@@ -6,6 +6,7 @@ static public class Data
 {
     public static double screenSizeWidth = 1.0; 
     public static double screenSizeHeight = 1.0;
+    public static double screenSizeRatio = 1.0;
     
     public const int MAX_VERTICAL_BRICKS = 10;
     public const int MAX_HORIZONTAL_BRICKS = 10;

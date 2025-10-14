@@ -4,6 +4,12 @@ namespace Brick_Breaker;
 
 static public class Data
 {
+    public static double screenSizeWidth = 1.0; 
+    public static double screenSizeHeight = 1.0;
+    
+    public const int MAX_VERTICAL_BRICKS = 10;
+    public const int MAX_HORIZONTAL_BRICKS = 10;
+    
     // Brick Wall n°0
     private static double bw0_x = 0.1;
     private static double bw0_y = 0.1;
@@ -22,9 +28,6 @@ static public class Data
         Color.Blue, Color.Aqua, 
         Color.Chocolate, Color.DarkKhaki
     });
-
-    public static BrickWallParameters brickWallParameters_0 = new BrickWallParameters(bw0_x, bw0_y, bw0_w, bw0_h,
-        bw0_nbVerticalBricks, bw0_nbHorizontalBricks, bw0_spaceBetweenBricks, bw0_health, bw0_color);
     
     // Brick Wall n°1
     private static double bw1_x = 0;
@@ -49,6 +52,12 @@ static public class Data
         Color.Red, Color.Blue, Color.Red, Color.Blue, 
     });
 
-    public static BrickWallParameters brickWallParameters_1 = new BrickWallParameters(bw1_x, bw1_y, bw1_w, bw1_h,
-        bw1_nbVerticalBricks, bw1_nbHorizontalBricks, bw1_spaceBetweenBricks, bw1_health, bw1_color);
+    public static BrickWallParameters getBrickWallParameters(int index)
+    {
+        switch( index )
+        {
+            case 1 : return new BrickWallParameters(bw1_x, bw1_y, bw1_w, bw1_h, bw1_nbVerticalBricks, bw1_nbHorizontalBricks, bw1_spaceBetweenBricks, bw1_health, bw1_color);
+            default : return new BrickWallParameters(bw0_x, bw0_y, bw0_w, bw0_h, bw0_nbVerticalBricks, bw0_nbHorizontalBricks, bw0_spaceBetweenBricks, bw0_health, bw0_color);
+        }
+    }
 }

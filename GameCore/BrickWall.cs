@@ -6,11 +6,11 @@ namespace Brick_Breaker;
 
 public class BrickWall
 {
-    private List<BrickWallParameters> parameters = new List<BrickWallParameters>{ Data.brickWallParameters_0, Data.brickWallParameters_1 };                                                                     
+    private List<BrickWallParameters> parameters = new List<BrickWallParameters>();                                                                     
     private List<Brick> bricks = new List<Brick>();
     private int _currentBrickWall;   
 
-    private int currentBrickWall
+    public int currentBrickWall
     {
         get => _currentBrickWall;
         set
@@ -18,11 +18,11 @@ public class BrickWall
             if(value < 0 || value >= parameters.Count )
             {
                 throw new ArgumentOutOfRangeException(nameof(value),
-                    "The value given is invalid. ( is negative or is greater than MAX_VERTICAL_BRICKS)");
+                    "The value given is invalid. ( is negative or is greater than the number of brick wall parameter sets)");
             }
             
             _currentBrickWall = value;
-            build();
+            buildWall();
         }
     }
     
@@ -38,12 +38,20 @@ public class BrickWall
     public List<int> brickHealth { get => parameters[currentBrickWall].brickHealth; }
     public List<Color> brickColor { get => parameters[currentBrickWall].brickColor; }
 
-    public BrickWall( int index )
+    public void init(int index)
     {
+        buildParameters();
         currentBrickWall = index;
     }
 
-    private void build()
+    private void buildParameters()
+    {
+        parameters.Clear();
+        parameters.Add( Data.getBrickWallParameters(0));
+        parameters.Add( Data.getBrickWallParameters(1));
+    }
+
+    private void buildWall()
     {
         bricks.Clear();
         int index = 0;
@@ -74,6 +82,7 @@ public class BrickWall
         for( int i = 0; i < bricks.Count; i++ )
         {
             System.Console.WriteLine("Brick n°" + i);
+            System.Console.WriteLine("(w, h) : " + bricks[i].w + ", " + bricks[i].h);
             System.Console.WriteLine("(x, y, next_x, next_y, color, health ):" + bricks[i].x + ", " + bricks[i].y + ", " + ( bricks[i].x + bricks[i].w ) + ", " + ( bricks[i].y +bricks[i].h ) + ", " + bricks[i].color + ", " + bricks[i].health + "\n");
         }
     }

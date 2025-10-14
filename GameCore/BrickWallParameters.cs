@@ -6,31 +6,37 @@ public class BrickWallParameters
 {
     private double _x, _y, _w, _h, _spaceBetweenBricks;
     private int _nbVerticalBricks,  _nbHorizontalBricks;
-    private const int MAX_VERTICAL_BRICKS = 10;
-    private const int MAX_HORIZONTAL_BRICKS = 10;
 
     public double x
     {
         get => _x;
-        private set => _x = value; // check if negative or y > screen_space.w ...
+        private set => _x = (value<0 || value>Data.screenSizeWidth)
+                          ? throw new ArgumentOutOfRangeException(nameof(value), "The value given is invalid. ( is negative or is greater than screenSizeWidth)")
+                          : value; 
     }
 
     public double y
     {
         get => _y;
-        private set => _y = value; // check if negative or x > screen_space.h ...
+        private set => _y = (value<0 || value>Data.screenSizeHeight)
+                          ? throw new ArgumentOutOfRangeException(nameof(value), "The value given is invalid. ( is negative or is greater than screenSizeHeight)")
+                          : value; 
     }
 
     public double w
     {
         get => _w;
-        private set => _w = value; // check if w <= screen_space.w
+        private set => _w = (value<=0 || value>Data.screenSizeWidth-x)
+                          ? throw new ArgumentOutOfRangeException(nameof(value), "The value given is invalid. ( is negative or doesn't fit on the screen)")
+                          : value; 
     }
 
     public double h
     {
         get => _h;
-        private set => _h = value; // check if h <= screen_space.h
+        private set => _h = (value<=0 || value>Data.screenSizeHeight-y)
+                          ? throw new ArgumentOutOfRangeException(nameof(value), "The value given is invalid. ( is negative or doesn't fit on the screen)")
+                          : value; 
     }
     
     public double spaceBetweenBricks
@@ -42,14 +48,14 @@ public class BrickWallParameters
     public int nbVerticalBricks
     {
         get => _nbVerticalBricks;
-        private set => _nbVerticalBricks = (value<=0 || value>MAX_VERTICAL_BRICKS)
+        private set => _nbVerticalBricks = (value<=0 || value>Data.MAX_VERTICAL_BRICKS)
                     ? throw new ArgumentOutOfRangeException(nameof(value), "The value given is invalid. ( is negative or is greater than MAX_VERTICAL_BRICKS)")
                     : value;
     }
     public int nbHorizontalBricks 
     {
         get => _nbHorizontalBricks;
-        private set => _nbHorizontalBricks = (value<=0 || value>MAX_HORIZONTAL_BRICKS)
+        private set => _nbHorizontalBricks = (value<=0 || value>Data.MAX_HORIZONTAL_BRICKS)
                     ? throw new ArgumentOutOfRangeException(nameof(value), "The value given is invalid. ( is negative or is greater than MAX_HORIZONTAL_BRICKS)")
                     : value;
     }

@@ -27,7 +27,12 @@ public class Ball
         this.radius = radius;
         this.color = color;
     }
-    //public CheckCollissions()
+
+    // Paddle, bricks, murs
+    public void CheckCollissions(double deltaTime, BrickWall brickWall, Paddle paddle)
+    {
+        
+    }
 
     public void Afficher()
     {

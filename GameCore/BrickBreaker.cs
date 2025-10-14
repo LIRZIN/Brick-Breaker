@@ -65,7 +65,6 @@ public class BrickBreaker
             case BrickAttribute.Health : return brick.health;
             case BrickAttribute.Color : return brick.color.R | (brick.color.G<<8) | (brick.color.B<<16) |  (brick.color.A<<24);
         }
-
         return 0;
     }
 

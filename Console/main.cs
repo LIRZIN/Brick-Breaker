@@ -26,11 +26,16 @@ public class main
             ball.Update(0.005);
             ball.Afficher();
         }*/
-        /*
+        
         ConsoleDisplay display = new ConsoleDisplay();
+        System.Console.WriteLine("test1");
+        display.Init();
+        System.Console.WriteLine("test2");
         while (!display.BrickBreaker.IsGameWon || !display.BrickBreaker.IsGameOver)
         {
             display.Update();
+            display.DrawGame();
+            System.Console.WriteLine("test3");
         }
 
         if (display.BrickBreaker.IsGameWon)
@@ -41,7 +46,7 @@ public class main
         {
             display.DrawLose();
         }
-        */
+        
     }
 }
 

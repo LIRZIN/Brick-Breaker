@@ -18,10 +18,10 @@ public class Paddle
 
     public void reset()
     {
-        w = 0.2;
-        h = 0.05;
-        x = Data.screenSizeWidth - w / 2.0;
-        y = Data.screenSizeHeight - h - 0.05;
+        w = Data.screenSizeWidth/5.0;
+        h = Data.screenSizeHeight/20.0;
+        x = (Data.screenSizeWidth - w) / 2.0;
+        y = Data.screenSizeHeight - h;
         v = 0.03;
         color = Color.Gray;
     }

@@ -107,6 +107,7 @@ public class BrickBreaker
         brickWall.init(0);
         IsGameWon = false;
         IsGameOver = false;
+        paddle.reset();
     }
 
     public int addLevel(string filePath)

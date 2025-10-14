@@ -29,16 +29,16 @@ public class main
         
         ConsoleDisplay display = new ConsoleDisplay();
         ConsoleInput.beginListening();
-        System.Console.WriteLine("test1");
         display.Init();
-        System.Console.WriteLine("test2");
         while (!display.BrickBreaker.IsGameWon || !display.BrickBreaker.IsGameOver)
         {
+            System.Console.Clear();
             if( ConsoleInput.pressingLeft ) { System.Console.WriteLine("pressing Left"); }
             else if( ConsoleInput.pressingRight ) { System.Console.WriteLine("pressing Right"); }
             else {  System.Console.WriteLine("pressing Nothing"); }
             display.Update();
             display.DrawGame();
+            System.Threading.Thread.Sleep(100);
         }
 
         if (display.BrickBreaker.IsGameWon)

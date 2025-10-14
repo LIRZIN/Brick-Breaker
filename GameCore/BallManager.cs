@@ -7,9 +7,16 @@ public class BallManager
 {
     private List<Ball> balls = new List<Ball>();
 
-    public List<Ball> Balls
+    public int nbBalls { get => balls.Count; }
+
+    public Ball getBall(int index)
     {
-        get => balls;
+        if (index < 0 || index >= nbBalls)
+        {
+            throw new ArgumentOutOfRangeException(nameof(index), "The value given is out of range");
+        }
+        
+        return balls[index];
     }
 
     public BallManager()

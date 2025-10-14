@@ -47,12 +47,21 @@ public class BrickWall
 
     public Brick getBrick(int index)
     {
+        if (index < 0 || index >= brickCount )
+        {
+            throw new ArgumentOutOfRangeException(nameof(index), "The value given is out of range");
+        }
+        
         return bricks[index];
     }
 
     public void decreaseHealthBrick(int index)
     {
         bricks[index].decreaseHealthBrick();
+        if(bricks[index].health <= 0)
+        {
+            bricks.RemoveAt(index);
+        }
     }
 
     private void buildParameters()

@@ -77,7 +77,7 @@ public class Ball
         {
             PositionX = CollisionX;
             PositionY = CollisionY;
-            
+            HandleReflectiveCollision( CollisionX, CollisionY, side );
             // Special Reflection
         }
     }

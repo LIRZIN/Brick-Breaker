@@ -1,14 +1,5 @@
 namespace Brick_Breaker;
 
-public enum Side
-{
-    Top,
-    Bottom,
-    Left,
-    Right, 
-    None
-};
-
 public static class CollisionChecker
 {
     private static bool circleLineCollision(double ballX, double ballY, double nextBallX, double nextBallY, 

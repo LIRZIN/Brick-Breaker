@@ -30,8 +30,6 @@ public class ConsoleDisplay
         set => h_pixels = value;
     }
     
-    
-    
     public void Init()
     {
         brickBreaker = new BrickBreaker();

@@ -20,19 +20,19 @@ public class ConsoleInput : Form
 
     [DllImport("user32.dll")]
     private static extern bool GetMessage(out MSG lpMsg, IntPtr hWnd, uint wMsgFilterMin, uint wMsgFilterMax);
-    
-    private int key_mask = 0;
-    private const int left_key_mask = 2;
-    private const int right_key_mask = 1;
 
-    public bool pressingLeft{ get => key_mask == left_key_mask; }
-    public bool pressingRight{ get => key_mask == right_key_mask; }
+    private static bool isLeftPressed;
+    private static bool isRightPressed;
+
+    public static bool pressingLeft{ get => isLeftPressed && !isRightPressed; }
+    public static bool pressingRight{ get => !isLeftPressed && isRightPressed; }
     
     private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
     private static LowLevelKeyboardProc _proc = new LowLevelKeyboardProc(HookCallback);
     private static IntPtr _hookId = IntPtr.Zero;
     private static bool _running = true;
     private static Thread? _listenerThread;
+    private static HashSet<int> keysPressed = new HashSet<int>();
 
     public static void beginListening()
     {
@@ -85,16 +85,37 @@ public class ConsoleInput : Form
 
     private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
     {
-        if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
+        if (nCode >= 0)
         {
             int vkCode = Marshal.ReadInt32(lParam);
 
-            switch (vkCode)
+            if (wParam == (IntPtr)WM_KEYDOWN)
             {
-                case 0x25: OnArrowPressed("Left"); break;
-                case 0x26: OnArrowPressed("Up"); break;
-                case 0x27: OnArrowPressed("Right"); break;
-                case 0x28: OnArrowPressed("Down"); break;
+                // Only trigger if key not already pressed
+                if (!keysPressed.Contains(vkCode))
+                {
+                    keysPressed.Add(vkCode);
+
+                    switch (vkCode)
+                    {
+                        case 0x25: OnArrowPressed("Left"); break;
+                        case 0x26: OnArrowPressed("Up"); break;
+                        case 0x27: OnArrowPressed("Right"); break;
+                        case 0x28: OnArrowPressed("Down"); break;
+                    }
+                }
+            }
+            else if (wParam == (IntPtr)WM_KEYUP)
+            {
+                keysPressed.Remove(vkCode);
+
+                switch (vkCode)
+                {
+                    case 0x25: OnArrowLetGo("Left"); break;
+                    case 0x26: OnArrowLetGo("Up"); break;
+                    case 0x27: OnArrowLetGo("Right"); break;
+                    case 0x28: OnArrowLetGo("Down"); break;
+                }
             }
         }
 
@@ -103,7 +124,30 @@ public class ConsoleInput : Form
 
     private static void OnArrowPressed(string direction)
     {
-        System.Console.WriteLine($"[{DateTime.Now:T}] Arrow pressed: {direction}");
+        // System.Console.WriteLine($"[{DateTime.Now:T}] Arrow pressed: {direction}");
+        if (direction == "Left")
+        {
+            isLeftPressed =  true;
+        }
+
+        if (direction == "Right")
+        {
+            isRightPressed = true;
+        }
+    }
+    
+    private static void OnArrowLetGo(string direction)
+    {
+        //System.Console.WriteLine($"[{DateTime.Now:T}] Arrow let go: {direction}");
+        if (direction == "Left")
+        {
+            isLeftPressed = false;
+        }
+
+        if (direction == "Right")
+        {
+            isRightPressed = false;
+        }
     }
 
     // --- WinAPI constants & imports ---

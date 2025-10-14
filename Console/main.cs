@@ -34,9 +34,11 @@ public class main
         System.Console.WriteLine("test2");
         while (!display.BrickBreaker.IsGameWon || !display.BrickBreaker.IsGameOver)
         {
+            if( ConsoleInput.pressingLeft ) { System.Console.WriteLine("pressing Left"); }
+            else if( ConsoleInput.pressingRight ) { System.Console.WriteLine("pressing Right"); }
+            else {  System.Console.WriteLine("pressing Nothing"); }
             display.Update();
             display.DrawGame();
-            System.Console.WriteLine("test3");
         }
 
         if (display.BrickBreaker.IsGameWon)

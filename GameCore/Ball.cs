@@ -11,8 +11,26 @@ public class Ball
 
     public double PositionX { get => positionX; set => positionX = value; }
     public double PositionY { get => positionY; set => positionY = value; }
-    public double DirectionX { get => directionX; set => directionX = value; }
-    public double DirectionY { get => directionY; set => directionY = value; }
+    public double DirectionX
+    {
+        get => directionX;
+        set
+        {
+            directionX = value;
+            normalize();
+        }
+    }
+
+    public double DirectionY
+    {
+        get => directionY;
+        set
+        {
+            directionY = value;
+            normalize();
+        }
+    }
+
     public double Speed { get => speed; set => speed = value; }
     public double Radius { get => radius; set => radius = value; }
     public Color Color { get => color; set => color = value; }
@@ -26,6 +44,13 @@ public class Ball
         this.speed = speed;
         this.radius = radius;
         this.color = color;
+    }
+
+    private void normalize()
+    {
+        double norm = double.Sqrt( directionX * directionX + directionY * directionY );
+        directionX /= norm;
+        directionY /= norm;
     }
 
     private void HandleReflectiveCollision(double CollisionX, double CollisionY, Side side)
@@ -57,7 +82,6 @@ public class Ball
         }
     }
 
-    // Paddle, bricks, murs
     public void CheckCollissions(double deltaTime, BrickWall brickWall, Paddle paddle, int recursiveCount )
     {
         double dx = deltaTime * DirectionX * Speed;
@@ -80,7 +104,7 @@ public class Ball
         for( int i = 0; i < brickWall.brickCount; i++ )
         {
             Brick brick = brickWall.getBrick(i);
-            if( CollisionChecker.ballRectCollision(PositionX, PositionY, Radius, dx, dy,
+            if( CollisionChecker.circleRectCollision(PositionX, PositionY, Radius, dx, dy,
                                                brick.x, brick.y, brick.w, brick.h,
                                                ref collisionX, ref collisionY, ref collisionU, ref side))
             {
@@ -95,14 +119,14 @@ public class Ball
             brickWall.decreaseHealthBrick(brickCollisionIndex);
         }
         // Walls Collision
-        else if( CollisionChecker.ballWallsCollision( PositionX, PositionY, Radius, dx, dy,
+        else if( CollisionChecker.circleWallsCollision( PositionX, PositionY, Radius, dx, dy,
                                                       ref collisionX, ref collisionY, ref collisionU, ref side) )
         {
             System.Console.WriteLine("Collision found with the " + side + " wall");
             HandleReflectiveCollision( collisionX, collisionY, side );
         }
         // Paddle Collision
-        else if (CollisionChecker.ballRectCollision(PositionX, PositionY, Radius, dx, dy,
+        else if (CollisionChecker.circleRectCollision(PositionX, PositionY, Radius, dx, dy,
                 paddle.x, paddle.y, paddle.w, paddle.h,
                 ref collisionX, ref collisionY, ref collisionU, ref side))
         {

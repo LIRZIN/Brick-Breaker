@@ -6,7 +6,7 @@ using Brick_Breaker;
 
 namespace Console;
 
-public class Class1
+public class main
 {
     static void Main()
     {

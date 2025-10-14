@@ -33,7 +33,7 @@ public class Paddle
         {
             case PlayerMovement.Left: speed_factor = -1; break;
             case PlayerMovement.Right: speed_factor = 1; break;
-            default: speed_factor = 0; break;
+            default: return;
         }
         
         x += deltaTime * v * speed_factor;

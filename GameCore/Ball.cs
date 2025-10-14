@@ -28,10 +28,93 @@ public class Ball
         this.color = color;
     }
 
-    // Paddle, bricks, murs
-    public void CheckCollissions(double deltaTime, BrickWall brickWall, Paddle paddle)
+    private void HandleReflectiveCollision(double CollisionX, double CollisionY, Side side)
     {
+        PositionX = CollisionX;
+        PositionY = CollisionY;
         
+        switch (side)
+        {
+            case Side.Left:
+            case Side.Right: DirectionX *= -1; break;
+            case Side.Bottom:
+            case Side.Top: DirectionY *= -1; break;
+        }
+    }
+
+    private void HandlePaddleCollision(double CollisionX, double CollisionY, Side side)
+    {
+        if (side != Side.Top)
+        {
+            HandleReflectiveCollision( CollisionX, CollisionY, side );
+        }
+        else
+        {
+            PositionX = CollisionX;
+            PositionY = CollisionY;
+            
+            // Special Reflection
+        }
+    }
+
+    // Paddle, bricks, murs
+    public void CheckCollissions(double deltaTime, BrickWall brickWall, Paddle paddle, int recursiveCount )
+    {
+        double dx = deltaTime * DirectionX * Speed;
+        double dy = deltaTime * DirectionY * Speed;
+        
+        if (recursiveCount <= 0)
+        {
+            System.Console.WriteLine("Recursive Collision Method Call Count Reached");
+            PositionX += dx;
+            PositionY += dy;
+        }
+
+        int brickCollisionIndex = -1;
+        double collisionX = 0;
+        double collisionY = 0;
+        double collisionU = 999;
+        Side side = Side.None;
+        
+        // Brick Collision
+        for( int i = 0; i < brickWall.brickCount; i++ )
+        {
+            Brick brick = brickWall.getBrick(i);
+            if( CollisionChecker.ballRectCollision(PositionX, PositionY, Radius, dx, dy,
+                                               brick.x, brick.y, brick.w, brick.h,
+                                               ref collisionX, ref collisionY, ref collisionU, ref side))
+            {
+                brickCollisionIndex = i;
+            }
+        }
+        
+        if (brickCollisionIndex >= 0)
+        {
+            System.Console.WriteLine("Collision found with " + side + " part of brick n°" + brickCollisionIndex);
+            HandleReflectiveCollision( collisionX, collisionY, side );
+            brickWall.decreaseHealthBrick(brickCollisionIndex);
+        }
+        // Walls Collision
+        else if( CollisionChecker.ballWallsCollision( PositionX, PositionY, Radius, dx, dy,
+                                                      ref collisionX, ref collisionY, ref collisionU, ref side) )
+        {
+            System.Console.WriteLine("Collision found with the " + side + " wall");
+            HandleReflectiveCollision( collisionX, collisionY, side );
+        }
+        // Paddle Collision
+        else if (CollisionChecker.ballRectCollision(PositionX, PositionY, Radius, dx, dy,
+                paddle.x, paddle.y, paddle.w, paddle.h,
+                ref collisionX, ref collisionY, ref collisionU, ref side))
+        {
+            System.Console.WriteLine("Collision found with the paddle on its " + side + " side");
+            HandlePaddleCollision( collisionX, collisionY, side );
+        }
+
+        if (side != Side.None)
+        {
+            double uDeltaTime = deltaTime * collisionU;
+            CheckCollissions( uDeltaTime, brickWall, paddle, recursiveCount-1 );
+        }
     }
 
     public void Afficher()
@@ -42,31 +125,5 @@ public class Ball
         Console.WriteLine("Rayon : " + Radius);
         Console.WriteLine("Couleur : " + Color);
         Console.WriteLine("\n");
-    }
-
-    public void Update(double deltaTime)
-    {
-        PositionX += Speed * DirectionX * deltaTime;
-        PositionY += Speed * DirectionY * deltaTime;
-        if (PositionX > 1)
-        {
-            PositionX = 1;
-            DirectionX *= -1;
-        }
-        if (PositionY > 1)
-        {
-            PositionY = 1;
-            DirectionY *= -1;
-        }
-        if (PositionX < 0)
-        {
-            PositionX = 0;
-            DirectionX *= -1;
-        }
-        if (PositionY < 0)
-        {
-            PositionY = 0;
-            DirectionY *= -1;
-        }
     }
 }

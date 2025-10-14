@@ -37,11 +37,22 @@ public class BrickWall
     public int nbHorizontalBricks { get => parameters[currentBrickWall].nbHorizontalBricks; }
     public List<int> brickHealth { get => parameters[currentBrickWall].brickHealth; }
     public List<Color> brickColor { get => parameters[currentBrickWall].brickColor; }
+    public int brickCount { get => bricks.Count; }
 
     public void init(int index)
     {
         buildParameters();
         currentBrickWall = index;
+    }
+
+    public Brick getBrick(int index)
+    {
+        return bricks[index];
+    }
+
+    public void decreaseHealthBrick(int index)
+    {
+        bricks[index].decreaseHealthBrick();
     }
 
     private void buildParameters()
@@ -62,6 +73,11 @@ public class BrickWall
         {
             for (int j = 0; j < nbHorizontalBricks; j++, index++)
             {
+                if (brickHealth[index] <= 0)
+                {
+                    continue;
+                }
+                
                 double position_x = ((double)j / (double)(nbHorizontalBricks)) * building_width + spaceBetweenBricks/2.0;
                 double position_y = ((double)i / (double)(nbVerticalBricks)) * building_height + spaceBetweenBricks/2.0;
                 double next_position_x = ((double)(j+1) / (double)(nbHorizontalBricks)) * building_width - spaceBetweenBricks/2.0;

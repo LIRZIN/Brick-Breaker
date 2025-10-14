@@ -21,7 +21,7 @@ public class BallManager
     {
         foreach (var ball in balls)
         {
-            ball.CheckCollissions(deltaTime, brickWall, paddle);
+            ball.CheckCollissions(deltaTime, brickWall, paddle, Data.MAX_RECURSIVE_COLLISION_CALL );
             
             if (ball.PositionY < 0)
             {

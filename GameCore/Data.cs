@@ -9,6 +9,8 @@ static public class Data
     
     public const int MAX_VERTICAL_BRICKS = 10;
     public const int MAX_HORIZONTAL_BRICKS = 10;
+
+    public const int MAX_RECURSIVE_COLLISION_CALL = 3;
     
     // Brick Wall n°0
     private static double bw0_x = 0.1;

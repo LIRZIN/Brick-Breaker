@@ -46,15 +46,17 @@ public class BrickBreaker
         set => isGameWon = value;
     }
     
-    void init( int W_pixels, int H_pixels )
+    public void init( int W_pixels, int H_pixels )
     {
         double min = (W_pixels < H_pixels) ? W_pixels : H_pixels;
         Data.screenSizeWidth = (double)W_pixels / min; 
         Data.screenSizeHeight = (double)H_pixels / min; 
         brickWall.init(0);
+        IsGameWon = false;
+        IsGameOver = false;
     }
 
-    void update(double deltaTime, PlayerMovement move)
+    public void update(double deltaTime, PlayerMovement move)
     {
         IsGameOver = ballManager.Update( deltaTime, brickWall, paddle );
         paddle.update( deltaTime, move );

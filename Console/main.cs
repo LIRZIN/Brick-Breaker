@@ -10,11 +10,11 @@ public class main
 {
     static void Main()
     {
-        BrickWall brickWall = new BrickWall();
+        /*BrickWall brickWall = new BrickWall();
         brickWall.init(1);
         brickWall.print_values();
 
-        /*
+        
         Ball ball = new Ball(new Vector2((float)0.2, (float)0.4), new Vector2(0.2f, 0.2f) , 10, 4, Color.Aqua);
         ball.Afficher();
         for (int i = 0; i < 1000; i++)
@@ -23,6 +23,20 @@ public class main
             ball.Update(0.005);
             ball.Afficher();
         }*/
+        ConsoleDisplay display = new ConsoleDisplay();
+        while (!display.BrickBreaker.IsGameWon || !display.BrickBreaker.IsGameOver)
+        {
+            display.Update();
+        }
+
+        if (display.BrickBreaker.IsGameWon)
+        {
+            display.DrawWin();
+        }
+        else if (display.BrickBreaker.IsGameOver)
+        {
+            display.DrawLose();
+        }
     }
 }
 

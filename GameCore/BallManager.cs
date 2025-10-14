@@ -21,7 +21,7 @@ public class BallManager
 
     public BallManager()
     {
-        balls.Add(new Ball(0.5, 0.1, 0.2, 0.2, 1, 1, Color.Aqua));
+        balls.Add(new Ball(0.5, 0.5, 0.2, 0.2, 0.001, 0.001, Color.Aqua));
     }
 
     public bool Update( double deltaTime, BrickWall brickWall, Paddle paddle )

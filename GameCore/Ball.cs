@@ -86,6 +86,10 @@ public class Ball
     {
         double dx = deltaTime * DirectionX * Speed;
         double dy = deltaTime * DirectionY * Speed;
+        System.Console.WriteLine("x = " + positionX);
+        System.Console.WriteLine("y = " + positionY);
+        System.Console.WriteLine("dx = " + dx);
+        System.Console.WriteLine("dy = " + dy);
         
         if (recursiveCount <= 0)
         {
@@ -138,6 +142,11 @@ public class Ball
         {
             double uDeltaTime = deltaTime * collisionU;
             CheckCollissions( uDeltaTime, brickWall, paddle, recursiveCount-1 );
+        }
+        else
+        {
+            PositionX += dx;
+            PositionY += dy;
         }
     }
 

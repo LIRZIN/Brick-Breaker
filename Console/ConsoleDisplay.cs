@@ -61,7 +61,9 @@ public class ConsoleDisplay
         {
             movement = PlayerMovement.Right;
         }
-        BrickBreaker.update(DeltaTime, movement);
+        BrickBreaker.update(0.1, movement);
+        System.Console.WriteLine(BrickBreaker.getBallAttribute(0, BallAttribute.PositionX));
+        System.Console.WriteLine(BrickBreaker.getBallAttribute(0, BallAttribute.PositionY));
         
         //Draw all pixels
         for (int i = 0; i < H_pixels; i++)

@@ -1,3 +1,6 @@
+using System.Drawing;
+using System.IO;
+
 namespace Brick_Breaker;
 
 // Conditions victoire/défaite
@@ -62,6 +65,8 @@ public class BrickBreaker
             case BrickAttribute.Health : return brick.health;
             case BrickAttribute.Color : return brick.color.R | (brick.color.G<<8) | (brick.color.B<<16) |  (brick.color.A<<24);
         }
+
+        return 0;
     }
 
     public double getPaddleAttribute(PaddleAttribute attribute)
@@ -78,21 +83,9 @@ public class BrickBreaker
 
         return 0;
     }
-
-    public BallManager BallManager
-    {
-        get => ballManager;
-    }
-
-    public BrickWall BrickWall
-    {
-        get => brickWall;
-    }
-
-    public Paddle Paddle
-    {
-        get => paddle;
-    }
+    
+    public double screenSizeWidth { get => Data.screenSizeWidth; }
+    public double screenSizeHeight { get => Data.screenSizeHeight; }
 
     public bool IsGameOver
     {
@@ -108,12 +101,73 @@ public class BrickBreaker
     
     public void init( int W_pixels, int H_pixels )
     {
-        double min = (W_pixels < H_pixels) ? W_pixels : H_pixels;
-        Data.screenSizeWidth = (double)W_pixels / min; 
-        Data.screenSizeHeight = (double)H_pixels / min; 
+        double max = (W_pixels > H_pixels) ? W_pixels : H_pixels;
+        Data.screenSizeWidth = (double)W_pixels / max; 
+        Data.screenSizeHeight = (double)H_pixels / max; 
         brickWall.init(0);
         IsGameWon = false;
         IsGameOver = false;
+    }
+
+    public int addLevel(string filePath)
+    {
+        if (!File.Exists(filePath))
+        {
+            System.Console.WriteLine("File does not exist");
+            return -1;
+        }
+        
+        string fileContent =  File.ReadAllText(filePath);
+        char[] delimiterChars = [' ', ',', ';', ':', '\t', '{', '}', '(', ')', '\n'];
+        string[] strValues = fileContent.Split(delimiterChars, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+        double x = Double.Parse(strValues[0]);
+        double y = Double.Parse(strValues[1]);
+        double w = Double.Parse(strValues[2]);
+        double h = Double.Parse(strValues[3]);
+        double sBB = Double.Parse(strValues[4]);
+        int nbVB = Int32.Parse(strValues[5]);
+        int nbHB = Int32.Parse(strValues[6]);
+
+        foreach (string str in strValues)
+        {
+            System.Console.WriteLine(str);
+        }
+
+        if (strValues.Length != (nbVB * nbHB * 4) + 7)
+        {
+            System.Console.WriteLine("Wrong number of values. Wanted : " + ( (nbVB * nbHB * 4) + 7 ) + ". Read : " + strValues.Length);
+            return -1;
+        }
+
+        List<int> healths = new List<int>();
+        List<Color> colors = new List<Color>();
+        int i = 7;
+        for (; i < 7 + nbVB * nbHB; i++)
+        {
+            healths.Add(Int32.Parse(strValues[i]));
+        }
+            
+        for (; i < 7 + nbVB * nbHB * 4; i += 3 )
+        {
+            int R = Int32.Parse(strValues[i]);
+            int G = Int32.Parse(strValues[i + 1]);
+            int B = Int32.Parse(strValues[i + 2]);
+            colors.Add(Color.FromArgb(R, G, B));
+        }
+
+        int newIndex = -1;
+
+        try
+        {
+            newIndex = brickWall.addNewBrickWall(new BrickWallParameters(x, y, w, h, nbVB, nbHB, sBB, healths, colors));
+        }
+        catch (Exception e)
+        {
+            System.Console.WriteLine("Could not create new Brick Wall : " + e.Message);
+        }
+
+        return newIndex;
     }
 
     public void update(double deltaTime, PlayerMovement move)
@@ -132,6 +186,5 @@ public class BrickBreaker
 }
 
 /* pistes d'amélioration :
- * faire des niveaux en txt
  * faire les power ups
 */

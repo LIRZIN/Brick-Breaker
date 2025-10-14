@@ -44,7 +44,7 @@ public class ConsoleDisplay
 
     public void DrawGame()
     {
-        BrickBreaker.BrickWall
+        //BrickBreaker.BrickWall
     }
     
     public void DrawWin()

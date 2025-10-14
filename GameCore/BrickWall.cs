@@ -64,6 +64,12 @@ public class BrickWall
         }
     }
 
+    public int addNewBrickWall(BrickWallParameters newParameters)
+    {
+        parameters.Add(newParameters);
+        return parameters.Count - 1;
+    }
+
     private void buildParameters()
     {
         parameters.Clear();
@@ -73,7 +79,7 @@ public class BrickWall
 
     private void buildWall()
     {
-        bricks.Clear();
+        bricks = new List<Brick>();
         int index = 0;
         double building_width = w + spaceBetweenBricks;
         double building_height = h + spaceBetweenBricks;

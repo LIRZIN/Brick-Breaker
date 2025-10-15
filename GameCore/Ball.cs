@@ -82,14 +82,18 @@ public class Ball
         }
     }
 
-    public void CheckCollissions(double deltaTime, BrickWall brickWall, Paddle paddle, int recursiveCount )
+    public void CheckCollissions(double deltaTime, BrickWall brickWall, Paddle paddle, CollisionType previousCollision, int recursiveCount )
     {
         double dx = deltaTime * DirectionX * Speed;
         double dy = deltaTime * DirectionY * Speed;
+        /*
         System.Console.WriteLine("x = " + positionX);
         System.Console.WriteLine("y = " + positionY);
         System.Console.WriteLine("dx = " + dx);
         System.Console.WriteLine("dy = " + dy);
+        System.Console.WriteLine(
+            "= deltaTime " + deltaTime + " + ( DirectionX, DirectionY ) ( "  + DirectionY + ", " + DirectionX + " ) + Speed " + Speed);
+        */
         
         if (recursiveCount <= 0)
         {
@@ -102,15 +106,17 @@ public class Ball
         double collisionX = 0;
         double collisionY = 0;
         double collisionU = 999;
+        CollisionType currentCollision = CollisionType.None;
         Side side = Side.None;
         
         // Brick Collision
         for( int i = 0; i < brickWall.brickCount; i++ )
         {
             Brick brick = brickWall.getBrick(i);
-            if( CollisionChecker.circleRectCollision(PositionX, PositionY, Radius, dx, dy,
-                                               brick.x, brick.y, brick.w, brick.h,
-                                               ref collisionX, ref collisionY, ref collisionU, ref side))
+            if( !( previousCollision == CollisionType.Brick && Data.lastBrickCollisionIndex == i ) 
+                && CollisionChecker.circleRectCollision(PositionX, PositionY, Radius, dx, dy,
+                                                     brick.x, brick.y, brick.w, brick.h,
+                                                     ref collisionX, ref collisionY, ref collisionU, ref side) )
             {
                 brickCollisionIndex = i;
             }
@@ -121,27 +127,37 @@ public class Ball
             System.Console.WriteLine("Collision found with " + side + " part of brick n°" + brickCollisionIndex);
             HandleReflectiveCollision( collisionX, collisionY, side );
             brickWall.decreaseHealthBrick(brickCollisionIndex);
+            currentCollision = CollisionType.Brick;
+            Data.lastBrickCollisionIndex = brickCollisionIndex;
         }
         // Walls Collision
-        else if( CollisionChecker.circleWallsCollision( PositionX, PositionY, Radius, dx, dy,
-                                                      ref collisionX, ref collisionY, ref collisionU, ref side) )
+        else if( CollisionChecker.circleWallsCollision( PositionX, PositionY, Radius, dx, dy, previousCollision,
+                                                        ref collisionX, ref collisionY, ref collisionU, ref side) )
         {
             System.Console.WriteLine("Collision found with the " + side + " wall");
             HandleReflectiveCollision( collisionX, collisionY, side );
+            switch (side)
+            {
+                case Side.Left: currentCollision = CollisionType.LeftWall; break;
+                case Side.Right: currentCollision = CollisionType.RightWall; break;
+                case Side.Top: currentCollision = CollisionType.TopWall; break;
+            }
         }
         // Paddle Collision
-        else if (CollisionChecker.circleRectCollision(PositionX, PositionY, Radius, dx, dy,
-                paddle.x, paddle.y, paddle.w, paddle.h,
-                ref collisionX, ref collisionY, ref collisionU, ref side))
+        else if (previousCollision != CollisionType.Paddle 
+                 && CollisionChecker.circleRectCollision(PositionX, PositionY, Radius, dx, dy,
+                                                         paddle.x, paddle.y, paddle.w, paddle.h,
+                                                         ref collisionX, ref collisionY, ref collisionU, ref side))
         {
             System.Console.WriteLine("Collision found with the paddle on its " + side + " side");
             HandlePaddleCollision( collisionX, collisionY, side );
+            currentCollision = CollisionType.Paddle;
         }
 
         if (side != Side.None)
         {
-            double uDeltaTime = deltaTime * collisionU;
-            CheckCollissions( uDeltaTime, brickWall, paddle, recursiveCount-1 );
+            double uDeltaTime = deltaTime * ( 1 - collisionU );
+            CheckCollissions( uDeltaTime, brickWall, paddle, currentCollision, recursiveCount-1 );
         }
         else
         {

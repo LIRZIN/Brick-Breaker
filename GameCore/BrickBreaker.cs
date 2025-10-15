@@ -103,11 +103,13 @@ public class BrickBreaker
         double min = (W_pixels < H_pixels) ? W_pixels : H_pixels;
         Data.screenSizeWidth = (double)W_pixels / min; 
         Data.screenSizeHeight = (double)H_pixels / min; 
-        Data.screenSizeRatio = ( Data.screenSizeWidth > Data.screenSizeHeight) ? Data.screenSizeHeight / Data.screenSizeWidth : Data.screenSizeWidth / Data.screenSizeHeight;
-        brickWall.init(0);
+        
+        brickWall.init(1);
+        paddle.init();
+        ballManager.init( paddle );
+        
         IsGameWon = false;
         IsGameOver = false;
-        paddle.reset();
     }
 
     public int addLevel(string filePath)

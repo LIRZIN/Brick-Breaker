@@ -10,19 +10,14 @@ public class Paddle
     public double h { get; private set; }
     public double v { get; private set; }
     public Color color { get; private set; }
-
-    public Paddle()
-    {
-        reset();
-    }
-
-    public void reset()
+    
+    public void init()
     {
         w = Data.screenSizeWidth/5.0;
         h = Data.screenSizeHeight/20.0;
         x = (Data.screenSizeWidth - w) / 2.0;
         y = Data.screenSizeHeight - h;
-        v = 0.03;
+        v = 5;
         color = Color.Gray;
     }
 

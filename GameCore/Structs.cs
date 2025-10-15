@@ -58,3 +58,15 @@ public enum PaddleAttribute
     Speed,
     Color
 };
+
+public enum CollisionType
+{
+    Brick,
+    Paddle,
+    
+    LeftWall,
+    RightWall,
+    TopWall,
+    
+    None
+}

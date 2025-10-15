@@ -112,7 +112,7 @@ public static class CollisionChecker
         return collision;
     }
 
-    public static bool circleWallsCollision( double ballX, double ballY, double ballR, double dx, double dy,
+    public static bool circleWallsCollision( double ballX, double ballY, double ballR, double dx, double dy, CollisionType previousCollision,
                                            ref double collisionX, ref double collisionY, ref double collisionU, ref Side side )
     {
         bool collision = false;
@@ -125,9 +125,10 @@ public static class CollisionChecker
         double maxX = Data.screenSizeWidth - ballR;
         double maxY = Data.screenSizeHeight - ballR;
         
-        if( circleLineCollision( ballX, ballY, ballX+dx, ballY+dy, 
-                               maxX, maxY, maxX, minY,
-                               ref tmpCollisionX, ref tmpCollisionY, ref tmpCollisionU )
+        if( previousCollision != CollisionType.RightWall 
+            && circleLineCollision( ballX, ballY, ballX+dx, ballY+dy, 
+                                    maxX, maxY, maxX, minY,
+                                    ref tmpCollisionX, ref tmpCollisionY, ref tmpCollisionU )
             && tmpCollisionU < collisionU )
         {
             collision = true;
@@ -136,9 +137,10 @@ public static class CollisionChecker
             collisionU = tmpCollisionU;
             side = Side.Right;
         }
-        else if( circleLineCollision( ballX, ballY, ballX+dx, ballY+dy, 
-                                    minX, maxY, minX, minY,
-                                    ref tmpCollisionX, ref tmpCollisionY, ref tmpCollisionU )
+        else if( previousCollision != CollisionType.LeftWall 
+                 && circleLineCollision( ballX, ballY, ballX+dx, ballY+dy, 
+                                         minX, maxY, minX, minY,
+                                         ref tmpCollisionX, ref tmpCollisionY, ref tmpCollisionU )
                  && tmpCollisionU < collisionU )
         {
             collision = true;
@@ -147,9 +149,10 @@ public static class CollisionChecker
             collisionU = tmpCollisionU;
             side = Side.Left;
         }
-        else if( circleLineCollision( ballX, ballY, ballX+dx, ballY+dy, 
-                                    minX, minY, maxX, minY,
-                                    ref tmpCollisionX, ref tmpCollisionY, ref tmpCollisionU )
+        else if( previousCollision != CollisionType.TopWall 
+                 && circleLineCollision( ballX, ballY, ballX+dx, ballY+dy, 
+                                         minX, minY, maxX, minY,
+                                         ref tmpCollisionX, ref tmpCollisionY, ref tmpCollisionU )
                  && tmpCollisionU < collisionU )
         {
             collision = true;

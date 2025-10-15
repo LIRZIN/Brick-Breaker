@@ -30,11 +30,11 @@ public class ConsoleDisplay
         set => h_pixels = value;
     }
     
-    public void Init()
+    public void Init( int init_w_pixels, int init_h_pixels )
     {
         brickBreaker = new BrickBreaker();
-        W_pixels = 40; 
-        H_pixels = 10;
+        W_pixels = init_w_pixels; 
+        H_pixels = init_h_pixels;
         brickBreaker.init(W_pixels, H_pixels);
         displaytab = new char[H_pixels][];
         for (int i = 0; i < H_pixels; i++)
@@ -49,7 +49,7 @@ public class ConsoleDisplay
         deltaTime = 1;
     }
 
-    public void Update()
+    public void Update( double deltaTime )
     {
         //Update BrickBreaker et input
         PlayerMovement movement = PlayerMovement.Nothing;
@@ -61,9 +61,9 @@ public class ConsoleDisplay
         {
             movement = PlayerMovement.Right;
         }
-        BrickBreaker.update(0.1, movement);
-        System.Console.WriteLine(BrickBreaker.getBallAttribute(0, BallAttribute.PositionX));
-        System.Console.WriteLine(BrickBreaker.getBallAttribute(0, BallAttribute.PositionY));
+        BrickBreaker.update(deltaTime, movement);
+        //System.Console.WriteLine(BrickBreaker.getBallAttribute(0, BallAttribute.PositionX));
+        //System.Console.WriteLine(BrickBreaker.getBallAttribute(0, BallAttribute.PositionY));
         
         //Draw all pixels
         for (int i = 0; i < H_pixels; i++)
@@ -97,11 +97,11 @@ public class ConsoleDisplay
             int tempEndX =  (int)(((BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionX) + brickBreaker.getBrickAttribute(i, BrickAttribute.Width)) * (W_pixels-1)) / Data.screenSizeWidth);
             int tempEndY = (int)(((BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionY) + brickBreaker.getBrickAttribute(i, BrickAttribute.Height)) * (H_pixels-1)) / Data.screenSizeHeight);
             DrawBox(tempX, tempY, tempEndX, tempEndY);
-            System.Console.WriteLine("brique n°" + i + " :");
-            System.Console.WriteLine("x = " + BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionX) + " | " + tempX);
-            System.Console.WriteLine("y = " + BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionY)+ " | " + tempY);
-            System.Console.WriteLine("width = " + BrickBreaker.getBrickAttribute(i, BrickAttribute.Width)+ " | " + tempEndX);
-            System.Console.WriteLine("height = " + BrickBreaker.getBrickAttribute(i, BrickAttribute.Height)+ " | " + tempEndY);
+            //System.Console.WriteLine("brique n°" + i + " :");
+            //System.Console.WriteLine("x = " + BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionX) + " | " + tempX);
+            //System.Console.WriteLine("y = " + BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionY)+ " | " + tempY);
+            //System.Console.WriteLine("width = " + BrickBreaker.getBrickAttribute(i, BrickAttribute.Width)+ " | " + tempEndX);
+            //System.Console.WriteLine("height = " + BrickBreaker.getBrickAttribute(i, BrickAttribute.Height)+ " | " + tempEndY);
         }
     }
 

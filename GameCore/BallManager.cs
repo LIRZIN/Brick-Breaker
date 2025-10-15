@@ -19,20 +19,24 @@ public class BallManager
         return balls[index];
     }
 
-    public BallManager()
+    public void init( Paddle paddle )
     {
-        balls.Add(new Ball(0.5, 0.5, 0.2, 0.2, 0.1, 0.001, Color.Aqua));
+        double radius = 0.001;
+        double x = paddle.x + paddle.w / 2;
+        double y = paddle.y - radius - 0.0001;
+        balls.Add(new Ball(x, y, 0.2, 0.2, 3, radius, Color.Aqua));
     }
 
     public bool Update( double deltaTime, BrickWall brickWall, Paddle paddle )
     {
-        foreach (var ball in balls)
+        for( int i = 0; i < balls.Count; i++ )
         {
-            ball.CheckCollissions(deltaTime, brickWall, paddle, Data.MAX_RECURSIVE_COLLISION_CALL );
+            Ball ball = balls[i];
+            ball.CheckCollissions(deltaTime, brickWall, paddle, CollisionType.None, Data.MAX_RECURSIVE_COLLISION_CALL );
             
-            if (ball.PositionY < 0)
+            if (ball.PositionY >= Data.screenSizeHeight )
             {
-                balls.Remove(ball);
+                balls.RemoveAt(i);
             }
         }
         // retourne true si le jeu est terminé

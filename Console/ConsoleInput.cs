@@ -59,7 +59,7 @@ public class ConsoleInput : Form
 
         // Create a simple Windows message loop so the hook can receive events
         MSG msg;
-        while (GetMessage(out msg, IntPtr.Zero, 0, 0))
+        while (GetMessage(out msg, IntPtr.Zero, 0, 0) )
         {
             // Do nothing with the message; just pump it
         }
@@ -71,7 +71,7 @@ public class ConsoleInput : Form
     private static void StopListener()
     {
         _running = false;
-        _listenerThread?.Join();
+        _listenerThread?.Interrupt();
     }
 
     // --- Windows hook setup ---

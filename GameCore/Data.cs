@@ -6,12 +6,13 @@ static public class Data
 {
     public static double screenSizeWidth = 1.0; 
     public static double screenSizeHeight = 1.0;
-    public static double screenSizeRatio = 1.0;
     
     public const int MAX_VERTICAL_BRICKS = 10;
     public const int MAX_HORIZONTAL_BRICKS = 10;
 
-    public const int MAX_RECURSIVE_COLLISION_CALL = 3;
+    public const int MAX_RECURSIVE_COLLISION_CALL = 5;
+
+    public static int lastBrickCollisionIndex = 0;
     
     // Brick Wall n°0
     private static double bw0_x = 0.1;
@@ -33,10 +34,10 @@ static public class Data
     });
     
     // Brick Wall n°1
-    private static double bw1_x = 0;
-    private static double bw1_y = 0;
-    private static double bw1_w = 1;
-    private static double bw1_h = 1;
+    private static double bw1_x = 0.01;
+    private static double bw1_y = 0.01;
+    private static double bw1_w = 0.98;
+    private static double bw1_h = 0.4;
     private static int bw1_nbVerticalBricks = 4;
     private static int bw1_nbHorizontalBricks = 4;
     private static double bw1_spaceBetweenBricks = 0.04;

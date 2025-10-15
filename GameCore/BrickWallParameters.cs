@@ -10,7 +10,7 @@ public class BrickWallParameters
     public double x
     {
         get => _x;
-        private set => _x = (value<0 || value>Data.screenSizeWidth)
+        private set => _x = (value<0 || value>1)
                           ? throw new ArgumentOutOfRangeException(nameof(value), "The value given is invalid. ( is negative or is greater than screenSizeWidth)")
                           : value; 
     }
@@ -18,7 +18,7 @@ public class BrickWallParameters
     public double y
     {
         get => _y;
-        private set => _y = (value<0 || value>Data.screenSizeHeight)
+        private set => _y = (value<0 || value>1)
                           ? throw new ArgumentOutOfRangeException(nameof(value), "The value given is invalid. ( is negative or is greater than screenSizeHeight)")
                           : value; 
     }
@@ -26,7 +26,7 @@ public class BrickWallParameters
     public double w
     {
         get => _w;
-        private set => _w = (value<=0 || value>Data.screenSizeWidth-x)
+        private set => _w = (value<=0 || value>1-x)
                           ? throw new ArgumentOutOfRangeException(nameof(value), "The value given is invalid. ( is negative or doesn't fit on the screen)")
                           : value; 
     }
@@ -34,7 +34,7 @@ public class BrickWallParameters
     public double h
     {
         get => _h;
-        private set => _h = (value<=0 || value>Data.screenSizeHeight-y)
+        private set => _h = (value<=0 || value>1-y)
                           ? throw new ArgumentOutOfRangeException(nameof(value), "The value given is invalid. ( is negative or doesn't fit on the screen)")
                           : value; 
     }

@@ -21,7 +21,7 @@ public class main
             System.Console.Clear();
             display.Update( 1.0/(float)refreshRate );
             display.DrawGame();
-            System.Threading.Thread.Sleep(1000/refreshRate);
+            System.Threading.Thread.Sleep(10000/refreshRate);
         }
 
         if (display.BrickBreaker.IsGameWon)

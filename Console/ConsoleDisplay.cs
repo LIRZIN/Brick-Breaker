@@ -87,7 +87,8 @@ public class ConsoleDisplay
         DrawBox((int)((BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionX) * (W_pixels-1)) / Data.screenSizeWidth),
             (int)((BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionY) * (H_pixels-1)) / Data.screenSizeHeight),
             (int)(((BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionX) + brickBreaker.getPaddleAttribute(PaddleAttribute.Width)) * (W_pixels-1)) / Data.screenSizeWidth),
-            (int)(((BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionY) + brickBreaker.getPaddleAttribute(PaddleAttribute.Height)) * (H_pixels-1)) / Data.screenSizeHeight));
+            (int)(((BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionY) + brickBreaker.getPaddleAttribute(PaddleAttribute.Height)) * (H_pixels-1)) / Data.screenSizeHeight),
+            false);
         
         //draw brickWall
         for (int i = 0; i < brickBreaker.getBrickWallAttribute(BrickWallAttribute.BrickCount); i++)
@@ -96,7 +97,7 @@ public class ConsoleDisplay
             int tempY = (int)((BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionY) * (H_pixels-1)) / Data.screenSizeHeight);
             int tempEndX =  (int)(((BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionX) + brickBreaker.getBrickAttribute(i, BrickAttribute.Width)) * (W_pixels-1)) / Data.screenSizeWidth);
             int tempEndY = (int)(((BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionY) + brickBreaker.getBrickAttribute(i, BrickAttribute.Height)) * (H_pixels-1)) / Data.screenSizeHeight);
-            DrawBox(tempX, tempY, tempEndX, tempEndY);
+            DrawBox(tempX, tempY, tempEndX, tempEndY, true, (int)BrickBreaker.getBrickAttribute(i,BrickAttribute.Health));
             //System.Console.WriteLine("brique n°" + i + " :");
             //System.Console.WriteLine("x = " + BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionX) + " | " + tempX);
             //System.Console.WriteLine("y = " + BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionY)+ " | " + tempY);
@@ -129,31 +130,45 @@ public class ConsoleDisplay
     }
 
     //dessine une boite (barre ou brique)
-    private void DrawBox(int x, int y, int endX, int endY)
+    private void DrawBox(int x, int y, int endX, int endY, bool isBrick, int brickHealth = 0)
     {
         for (int i = y; i <= endY; i++)
         {
             for (int j = x; j <= endX; j++)
             {
-                //rempli l'intérieur de la boite
-                displaytab[i][j] = '#';
-                
-                //dessine les bords de la boite
-                if (i == y || i == endY)
+                if (isBrick)
                 {
-                    displaytab[i][j] = '-';
-                }
+                    //Desine une brique
+                    
+                    //rempli l'intérieur de la brique
+                    displaytab[i][j] = brickHealth.ToString()[0];
+                    //displaytab[i][j] = '#';
+                    
+                    //dessine les bords de la brique
+                    /*if (i == y || i == endY)
+                    {
+                        displaytab[i][j] = '-';
+                    }
 
-                if (j == x || j == endX)
+                    if (j == x || j == endX)
+                    {
+                        displaytab[i][j] = '|';
+                    }*/
+                }
+                else
                 {
-                    displaytab[i][j] = '|';
+                    displaytab[i][j] = '#';
                 }
             }
         }
-        //dessine les coins de la boite
-        displaytab[y][x] = '[';
-        displaytab[y][endX] = ']';
-        displaytab[endY][x] = '[';
-        displaytab[endY][endX] = ']';
+
+        if (isBrick)
+        {
+            //dessine les coins de la brique
+            displaytab[y][x] = '[';
+            displaytab[y][endX] = ']';
+            displaytab[endY][x] = '[';
+            displaytab[endY][endX] = ']';
+        }
     }
 }

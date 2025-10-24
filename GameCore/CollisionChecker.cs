@@ -1,5 +1,6 @@
 namespace Brick_Breaker;
 
+//https://jakesgordon.com/writing/collision-detection-in-breakout/
 public static class CollisionChecker
 {
     private static bool circleLineCollision(double ballX, double ballY, double nextBallX, double nextBallY, 
@@ -122,8 +123,8 @@ public static class CollisionChecker
 
         double minX = ballR;
         double minY = ballR;
-        double maxX = Data.screenSizeWidth - ballR;
-        double maxY = Data.screenSizeHeight - ballR;
+        double maxX = Utils.screenSizeWidth - ballR;
+        double maxY = Utils.screenSizeHeight - ballR;
         
         if( previousCollision != CollisionType.RightWall 
             && circleLineCollision( ballX, ballY, ballX+dx, ballY+dy, 

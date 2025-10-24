@@ -2,7 +2,82 @@ using System.Drawing;
 
 namespace Brick_Breaker;
 
-static public class Data
+
+// STRUCTS
+
+public enum PlayerMovement
+{
+    Left,
+    Right,
+    Nothing
+};
+
+public enum Side
+{
+    Top,
+    Bottom,
+    Left,
+    Right, 
+    None
+};
+
+public enum BallAttribute
+{
+    PositionX,
+    PositionY,
+    DirectionX, 
+    DirectionY,
+    Speed,
+    Radius,
+    Color
+};
+
+public enum BrickWallAttribute
+{
+    PositionX,
+    PositionY, 
+    Width, 
+    Height, 
+    SpaceBetweenBricks,
+    NbVerticalBricks,
+    NbHorizontalBricks, 
+    BrickCount
+};
+
+public enum BrickAttribute
+{
+    PositionX,
+    PositionY, 
+    Width, 
+    Height,
+    Health,
+    Color
+};
+
+public enum PaddleAttribute
+{
+    PositionX,
+    PositionY,
+    Width, 
+    Height,
+    Speed,
+    Color
+};
+
+public enum CollisionType
+{
+    Brick,
+    Paddle,
+    
+    LeftWall,
+    RightWall,
+    TopWall,
+    
+    None
+}
+
+// DATA
+static public class Utils
 {
     public static double screenSizeWidth = 1.0; 
     public static double screenSizeHeight = 1.0;
@@ -13,6 +88,8 @@ static public class Data
     public const int MAX_RECURSIVE_COLLISION_CALL = 5;
 
     public static int lastBrickCollisionIndex = 0;
+
+    public const double limit_angle_paddle_reflection = 0.01;
     
     // Brick Wall n°0
     private static double bw0_x = 0.1;
@@ -64,4 +141,9 @@ static public class Data
             default : return new BrickWallParameters(bw0_x, bw0_y, bw0_w, bw0_h, bw0_nbVerticalBricks, bw0_nbHorizontalBricks, bw0_spaceBetweenBricks, bw0_health, bw0_color);
         }
     }
+    
+    
+    // METHODS
+
+    
 }

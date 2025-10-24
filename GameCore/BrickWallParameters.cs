@@ -11,7 +11,7 @@ public class BrickWallParameters
     {
         get => _x;
         private set => _x = (value<0 || value>1)
-                          ? throw new ArgumentOutOfRangeException(nameof(value), "The value given is invalid. ( is negative or is greater than screenSizeWidth)")
+                          ? throw new ArgumentOutOfRangeException(nameof(value), "The value given is invalid. ( is negative or is greater than 1)")
                           : value; 
     }
 
@@ -19,7 +19,7 @@ public class BrickWallParameters
     {
         get => _y;
         private set => _y = (value<0 || value>1)
-                          ? throw new ArgumentOutOfRangeException(nameof(value), "The value given is invalid. ( is negative or is greater than screenSizeHeight)")
+                          ? throw new ArgumentOutOfRangeException(nameof(value), "The value given is invalid. ( is negative or is greater than 1)")
                           : value; 
     }
 
@@ -42,20 +42,22 @@ public class BrickWallParameters
     public double spaceBetweenBricks
     {
         get => _spaceBetweenBricks;
-        private set => _spaceBetweenBricks = value; // Check if negative or more than min( W/2, H/2 )
+        private set => _spaceBetweenBricks = (value<=0 || value>w || value>h)
+                                            ? throw new ArgumentOutOfRangeException(nameof(value), "The value given is invalid. ( is negative or exceeds the screen)")
+                                            : value; 
     }
 
     public int nbVerticalBricks
     {
         get => _nbVerticalBricks;
-        private set => _nbVerticalBricks = (value<=0 || value>Data.MAX_VERTICAL_BRICKS)
+        private set => _nbVerticalBricks = (value<=0 || value>Utils.MAX_VERTICAL_BRICKS)
                     ? throw new ArgumentOutOfRangeException(nameof(value), "The value given is invalid. ( is negative or is greater than MAX_VERTICAL_BRICKS)")
                     : value;
     }
     public int nbHorizontalBricks 
     {
         get => _nbHorizontalBricks;
-        private set => _nbHorizontalBricks = (value<=0 || value>Data.MAX_HORIZONTAL_BRICKS)
+        private set => _nbHorizontalBricks = (value<=0 || value>Utils.MAX_HORIZONTAL_BRICKS)
                     ? throw new ArgumentOutOfRangeException(nameof(value), "The value given is invalid. ( is negative or is greater than MAX_HORIZONTAL_BRICKS)")
                     : value;
     }

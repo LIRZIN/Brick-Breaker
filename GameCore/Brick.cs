@@ -16,10 +16,10 @@ public class Brick
 
     public Brick(double x, double y, double w, double h, Color color, int health)
     {
-        this.x = x * Data.screenSizeWidth;
-        this.y = y * Data.screenSizeHeight;
-        this.w = w * Data.screenSizeWidth;
-        this.h = h  * Data.screenSizeHeight;
+        this.x = x * Utils.screenSizeWidth;
+        this.y = y * Utils.screenSizeHeight;
+        this.w = w * Utils.screenSizeWidth;
+        this.h = h  * Utils.screenSizeHeight;
         this.color = color;
         this.health = health;
     }

@@ -13,7 +13,7 @@ public class main
         ConsoleInput.beginListening();
         
         ConsoleDisplay display = new ConsoleDisplay();
-        display.Init(120,20);
+        display.Init(180,30);
         int refreshRate = 60;
         
         while (!display.BrickBreaker.IsGameWon && !display.BrickBreaker.IsGameOver)

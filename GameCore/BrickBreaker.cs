@@ -83,8 +83,8 @@ public class BrickBreaker
         return 0;
     }
     
-    public double screenSizeWidth { get => Data.screenSizeWidth; }
-    public double screenSizeHeight { get => Data.screenSizeHeight; }
+    public double screenSizeWidth { get => Utils.screenSizeWidth; }
+    public double screenSizeHeight { get => Utils.screenSizeHeight; }
 
     public bool IsGameOver
     {
@@ -101,8 +101,8 @@ public class BrickBreaker
     public void init( int W_pixels, int H_pixels )
     {
         double min = (W_pixels < H_pixels) ? W_pixels : H_pixels;
-        Data.screenSizeWidth = (double)W_pixels / min; 
-        Data.screenSizeHeight = (double)H_pixels / min; 
+        Utils.screenSizeWidth = (double)W_pixels / min; 
+        Utils.screenSizeHeight = (double)H_pixels / min; 
         
         brickWall.init(1);
         paddle.init();

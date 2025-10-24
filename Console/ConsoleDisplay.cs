@@ -6,7 +6,7 @@ public class ConsoleDisplay
     private BrickBreaker brickBreaker;
     private double deltaTime;
     private int w_pixels, h_pixels;
-    private char[][] displaytab;
+    private char[] displaytab;
 
     public BrickBreaker BrickBreaker
     {
@@ -30,21 +30,34 @@ public class ConsoleDisplay
         set => h_pixels = value;
     }
     
+    private void setCharDisplay(int x, int y, char c)
+    {
+        if (x < 0 || x > w_pixels || y < 0 || y >= h_pixels)
+        {
+            return;
+        }
+        displaytab[(W_pixels+1)*y+x] = c;
+    }
+    private void initCharDisplay()
+    {
+        displaytab = new char[H_pixels*(W_pixels+1)];
+        for (int i = 0; i < H_pixels; i++)
+        {
+            for (int j = 0; j < W_pixels; j++)
+            {
+                setCharDisplay(j, i, '.');
+            }
+            
+            setCharDisplay(W_pixels, i, '\n');
+        }
+    }
+    
     public void Init( int init_w_pixels, int init_h_pixels )
     {
         brickBreaker = new BrickBreaker();
         W_pixels = init_w_pixels; 
         H_pixels = init_h_pixels;
         brickBreaker.init(W_pixels, H_pixels);
-        displaytab = new char[H_pixels][];
-        for (int i = 0; i < H_pixels; i++)
-        {
-            displaytab[i] = new char[W_pixels];
-            for (int j = 0; j < W_pixels; j++)
-            {
-                displaytab[i][j] = '.';
-            }
-        }
 
         deltaTime = 1;
     }
@@ -62,63 +75,37 @@ public class ConsoleDisplay
             movement = PlayerMovement.Right;
         }
         BrickBreaker.update(deltaTime, movement);
-        //System.Console.WriteLine(BrickBreaker.getBallAttribute(0, BallAttribute.PositionX));
-        //System.Console.WriteLine(BrickBreaker.getBallAttribute(0, BallAttribute.PositionY));
-        
-        //Draw all pixels
-        for (int i = 0; i < H_pixels; i++)
-        {
-            displaytab[i] = new char[W_pixels];
-            for (int j = 0; j < W_pixels; j++)
-            {
-                displaytab[i][j] = '.';
-            }
-        }
+
+        initCharDisplay();
         
         //Draw balls
         for (int i = 0; i < brickBreaker.nbBalls; i++)
         {
-            displaytab[(int)(BrickBreaker.getBallAttribute(i, BallAttribute.PositionY) * (H_pixels-1) / Data.screenSizeHeight)]
-                [(int)(BrickBreaker.getBallAttribute(i, BallAttribute.PositionX) * (W_pixels-1) / Data.screenSizeWidth)] = 'O';
-
+            setCharDisplay( (int)(BrickBreaker.getBallAttribute(i, BallAttribute.PositionX) * (W_pixels-1) / Utils.screenSizeWidth),
+                            (int)(BrickBreaker.getBallAttribute(i, BallAttribute.PositionY) * (H_pixels-1) / Utils.screenSizeHeight),'O');
         }
         
         //Draw paddle
-        DrawBox((int)((BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionX) * (W_pixels-1)) / Data.screenSizeWidth),
-            (int)((BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionY) * (H_pixels-1)) / Data.screenSizeHeight),
-            (int)(((BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionX) + brickBreaker.getPaddleAttribute(PaddleAttribute.Width)) * (W_pixels-1)) / Data.screenSizeWidth),
-            (int)(((BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionY) + brickBreaker.getPaddleAttribute(PaddleAttribute.Height)) * (H_pixels-1)) / Data.screenSizeHeight),
+        DrawBox((int)((BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionX) * (W_pixels-1)) / Utils.screenSizeWidth),
+            (int)((BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionY) * (H_pixels-1)) / Utils.screenSizeHeight),
+            (int)(((BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionX) + brickBreaker.getPaddleAttribute(PaddleAttribute.Width)) * (W_pixels-1)) / Utils.screenSizeWidth),
+            (int)(((BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionY) + brickBreaker.getPaddleAttribute(PaddleAttribute.Height)) * (H_pixels-1)) / Utils.screenSizeHeight),
             false);
         
         //draw brickWall
         for (int i = 0; i < brickBreaker.getBrickWallAttribute(BrickWallAttribute.BrickCount); i++)
         {
-            int tempX = (int)((BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionX) * (W_pixels-1)) / Data.screenSizeWidth);
-            int tempY = (int)((BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionY) * (H_pixels-1)) / Data.screenSizeHeight);
-            int tempEndX =  (int)(((BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionX) + brickBreaker.getBrickAttribute(i, BrickAttribute.Width)) * (W_pixels-1)) / Data.screenSizeWidth);
-            int tempEndY = (int)(((BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionY) + brickBreaker.getBrickAttribute(i, BrickAttribute.Height)) * (H_pixels-1)) / Data.screenSizeHeight);
+            int tempX = (int)((BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionX) * (W_pixels-1)) / Utils.screenSizeWidth);
+            int tempY = (int)((BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionY) * (H_pixels-1)) / Utils.screenSizeHeight);
+            int tempEndX =  (int)(((BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionX) + brickBreaker.getBrickAttribute(i, BrickAttribute.Width)) * (W_pixels-1)) / Utils.screenSizeWidth);
+            int tempEndY = (int)(((BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionY) + brickBreaker.getBrickAttribute(i, BrickAttribute.Height)) * (H_pixels-1)) / Utils.screenSizeHeight);
             DrawBox(tempX, tempY, tempEndX, tempEndY, true, (int)BrickBreaker.getBrickAttribute(i,BrickAttribute.Health));
-            //System.Console.WriteLine("brique n°" + i + " :");
-            //System.Console.WriteLine("x = " + BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionX) + " | " + tempX);
-            //System.Console.WriteLine("y = " + BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionY)+ " | " + tempY);
-            //System.Console.WriteLine("width = " + BrickBreaker.getBrickAttribute(i, BrickAttribute.Width)+ " | " + tempEndX);
-            //System.Console.WriteLine("height = " + BrickBreaker.getBrickAttribute(i, BrickAttribute.Height)+ " | " + tempEndY);
         }
     }
 
     public void DrawGame()
     {
-        string s = "";
-        //BrickBreaker.BrickWall
-        for (int i = 0; i < H_pixels; i++)
-        {
-            for (int j = 0; j < W_pixels; j++)
-            {
-                s += displaytab[i][j];
-            }
-            s += "\n";
-        }
-        System.Console.WriteLine(s);
+        System.Console.WriteLine(displaytab);
     }
     
     public void DrawWin()
@@ -143,23 +130,11 @@ public class ConsoleDisplay
                     //Desine une brique
                     
                     //rempli l'intérieur de la brique
-                    displaytab[i][j] = brickHealth.ToString()[0];
-                    //displaytab[i][j] = '#';
-                    
-                    //dessine les bords de la brique
-                    /*if (i == y || i == endY)
-                    {
-                        displaytab[i][j] = '-';
-                    }
-
-                    if (j == x || j == endX)
-                    {
-                        displaytab[i][j] = '|';
-                    }*/
+                    setCharDisplay(j, i, brickHealth.ToString()[0]);
                 }
                 else
                 {
-                    displaytab[i][j] = '#';
+                    setCharDisplay(j, i, '#');
                 }
             }
         }
@@ -167,10 +142,10 @@ public class ConsoleDisplay
         if (isBrick)
         {
             //dessine les coins de la brique
-            displaytab[y][x] = '[';
-            displaytab[y][endX] = ']';
-            displaytab[endY][x] = '[';
-            displaytab[endY][endX] = ']';
+            setCharDisplay(x, y, '[');
+            setCharDisplay(endX, y, ']');
+            setCharDisplay(x, endY, '[');
+            setCharDisplay(endX, endY, ']');
         }
     }
 }

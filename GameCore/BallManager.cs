@@ -24,7 +24,7 @@ public class BallManager
         double radius = 0.001;
         double x = paddle.x + paddle.w / 2;
         double y = paddle.y - radius - 0.0001;
-        balls.Add(new Ball(x, y, 0.2, 0.2, 3, radius, Color.Aqua));
+        balls.Add(new Ball(x, y, 0.2, -0.2, 3, radius, Color.Aqua));
     }
 
     public bool Update( double deltaTime, BrickWall brickWall, Paddle paddle )
@@ -32,8 +32,8 @@ public class BallManager
         for( int i = 0; i < balls.Count; i++ )
         {
             Ball ball = balls[i];
-            ball.CheckCollisions(deltaTime, brickWall, paddle, CollisionType.None, Data.MAX_RECURSIVE_COLLISION_CALL );
-            if (ball.PositionY >= Data.screenSizeHeight )
+            ball.CheckCollisions(deltaTime, brickWall, paddle, CollisionType.None, Utils.MAX_RECURSIVE_COLLISION_CALL );
+            if (ball.PositionY >= Utils.screenSizeHeight )
             {
                 balls.RemoveAt(i);
             }

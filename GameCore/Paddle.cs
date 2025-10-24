@@ -13,10 +13,10 @@ public class Paddle
     
     public void init()
     {
-        w = Data.screenSizeWidth/5.0;
-        h = Data.screenSizeHeight/20.0;
-        x = (Data.screenSizeWidth - w) / 2.0;
-        y = Data.screenSizeHeight - h;
+        w = Utils.screenSizeWidth/5.0;
+        h = Utils.screenSizeHeight/20.0;
+        x = (Utils.screenSizeWidth - w) / 2.0;
+        y = Utils.screenSizeHeight - h;
         v = 5;
         color = Color.Gray;
     }
@@ -37,9 +37,9 @@ public class Paddle
         {
             x = 0; 
         }
-        else if (x + w >= Data.screenSizeWidth)
+        else if (x + w >= Utils.screenSizeWidth)
         {
-            x = Data.screenSizeWidth - w;
+            x = Utils.screenSizeWidth - w;
         }
     }
 }

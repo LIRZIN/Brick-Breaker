@@ -41,7 +41,7 @@ public class BrickWall
 
     public void init(int index)
     {
-        buildParameters();
+        buildUtilsParameters();
         currentBrickWall = index;
     }
 
@@ -70,11 +70,11 @@ public class BrickWall
         return parameters.Count - 1;
     }
 
-    private void buildParameters()
+    private void buildUtilsParameters()
     {
         parameters.Clear();
-        parameters.Add( Data.getBrickWallParameters(0));
-        parameters.Add( Data.getBrickWallParameters(1));
+        parameters.Add( Utils.getBrickWallParameters(0));
+        parameters.Add( Utils.getBrickWallParameters(1));
     }
 
     private void buildWall()

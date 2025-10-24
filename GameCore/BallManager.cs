@@ -32,8 +32,7 @@ public class BallManager
         for( int i = 0; i < balls.Count; i++ )
         {
             Ball ball = balls[i];
-            ball.CheckCollissions(deltaTime, brickWall, paddle, CollisionType.None, Data.MAX_RECURSIVE_COLLISION_CALL );
-            
+            ball.CheckCollisions(deltaTime, brickWall, paddle, CollisionType.None, Data.MAX_RECURSIVE_COLLISION_CALL );
             if (ball.PositionY >= Data.screenSizeHeight )
             {
                 balls.RemoveAt(i);

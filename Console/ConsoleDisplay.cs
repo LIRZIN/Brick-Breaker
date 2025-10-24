@@ -108,15 +108,17 @@ public class ConsoleDisplay
 
     public void DrawGame()
     {
+        string s = "";
         //BrickBreaker.BrickWall
         for (int i = 0; i < H_pixels; i++)
         {
             for (int j = 0; j < W_pixels; j++)
             {
-                System.Console.Write(displaytab[i][j]);
+                s += displaytab[i][j];
             }
-            System.Console.Write("\n");
+            s += "\n";
         }
+        System.Console.WriteLine(s);
     }
     
     public void DrawWin()

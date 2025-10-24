@@ -67,7 +67,7 @@ public class Ball
         }
     }
 
-    private void HandlePaddleCollision(double CollisionX, double CollisionY, Side side)
+    private void HandlePaddleCollision(double CollisionX, double CollisionY, Side side, Paddle paddle)
     {
         if (side != Side.Top)
         {
@@ -75,14 +75,38 @@ public class Ball
         }
         else
         {
+            double collisionCos = ((CollisionX - paddle.x)/paddle.w - 0.5)*2;
+            //On obtient une valeur entre 0 et 1 à laquelle on soustrait 0.5 puis on multiplie le tout par 2 pour avoir le
+            //cosinus de l'angle à rajouter à celui de la balle
+            
+            double collAngle = GetAngle(collisionCos);
+            
+            /*Console.WriteLine("collision X : " + CollisionX + " paddleX : " + paddle.x + " paddlW : " + paddle.w);
+            Console.WriteLine("collision cosinus : " + collisionCos);
+            Console.WriteLine("angle col : " + RadToDeg(collAngle) + " angle ball : " + RadToDeg(GetAngle(DirectionX)));*/
+            
+            //on soustrait 90° à l'angle final, de cette façon plus le point d'impact se trouche proche du centre du paddle
+            //moins l'angle final est affecté, plus le point est gauche plus la direction de la balle ira vers la gauche et plus
+            //le point est à droite plus la direction de la balle ira vers la droite
+            double finalAngle = GetAngle(DirectionX) + collAngle - Math.PI/2;
+            if (finalAngle >= Math.PI)
+            {
+                finalAngle = Math.PI - 0.1;
+            }
+            else if (finalAngle <= 0)
+            {
+                finalAngle = 0.1;
+            }
             PositionX = CollisionX;
             PositionY = CollisionY;
-            HandleReflectiveCollision( CollisionX, CollisionY, side );
-            // Special Reflection
+            DirectionX = GetCosinus(finalAngle);
+            DirectionY = -1 * GetSinus(finalAngle);
+            //Console.WriteLine("x : " + positionX + " y : " + positionY + " angle : " + RadToDeg(finalAngle));
+            //Console.WriteLine("dx : " + directionX + " dy : " + DirectionY);
         }
     }
 
-    public void CheckCollissions(double deltaTime, BrickWall brickWall, Paddle paddle, CollisionType previousCollision, int recursiveCount )
+    public void CheckCollisions(double deltaTime, BrickWall brickWall, Paddle paddle, CollisionType previousCollision, int recursiveCount )
     {
         double dx = deltaTime * DirectionX * Speed;
         double dy = deltaTime * DirectionY * Speed;
@@ -150,14 +174,14 @@ public class Ball
                                                          ref collisionX, ref collisionY, ref collisionU, ref side))
         {
             System.Console.WriteLine("Collision found with the paddle on its " + side + " side");
-            HandlePaddleCollision( collisionX, collisionY, side );
+            HandlePaddleCollision( collisionX, collisionY, side, paddle );
             currentCollision = CollisionType.Paddle;
         }
 
         if (side != Side.None)
         {
             double uDeltaTime = deltaTime * ( 1 - collisionU );
-            CheckCollissions( uDeltaTime, brickWall, paddle, currentCollision, recursiveCount-1 );
+            CheckCollisions( uDeltaTime, brickWall, paddle, currentCollision, recursiveCount-1 );
         }
         else
         {
@@ -174,5 +198,30 @@ public class Ball
         Console.WriteLine("Rayon : " + Radius);
         Console.WriteLine("Couleur : " + Color);
         Console.WriteLine("\n");
+    }
+
+    //retourne l'angle en radian basé sur le cosinus
+    private double GetAngle(double cos)
+    {
+        // Calcule l'angle en radians
+        return Math.Acos(cos);
+    }
+
+    //retourne le cosinus de l'angle passé en radian
+    private double GetCosinus(double angle)
+    {
+        return Math.Cos(angle);
+    }
+    
+    //retourne le sinus de l'angle passé en radian
+    private double GetSinus(double angle)
+    {
+        return Math.Sin(angle);
+    }
+
+    //utilisé pour le debug
+    private double RadToDeg(double rad)
+    {
+        return rad * 180 / Math.PI;
     }
 }

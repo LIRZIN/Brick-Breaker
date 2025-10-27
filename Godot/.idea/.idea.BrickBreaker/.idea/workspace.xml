@@ -5,24 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="66326ca3-9b29-4ba1-927b-0c1ed4fe828e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../.vs/Brick Breaker/DesignTimeBuild/.dtbcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/../.vs/Brick Breaker/DesignTimeBuild/.dtbcache.v2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.vs/Brick Breaker/v17/.futdcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/../.vs/Brick Breaker/v17/.futdcache.v2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.vs/Brick Breaker/v17/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/../.vs/Brick Breaker/v17/.suo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.vs/ProjectEvaluation/brick breaker.metadata.v9.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../.vs/ProjectEvaluation/brick breaker.metadata.v9.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.vs/ProjectEvaluation/brick breaker.projects.v9.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../.vs/ProjectEvaluation/brick breaker.projects.v9.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.vs/ProjectEvaluation/brick breaker.strings.v9.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../.vs/ProjectEvaluation/brick breaker.strings.v9.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../GameCore/Ball.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../GameCore/Ball.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/BrickBreaker/DesignTimeBuild/.dtbcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/BrickBreaker/DesignTimeBuild/.dtbcache.v2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/BrickBreaker/FileContentIndex/ab4f3373-e0f3-431f-ae07-dcbeabe60ad7.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/BrickBreaker/FileContentIndex/cf2c450c-6d7d-4af7-a7a0-8c46661142e7.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/BrickBreaker/v17/.futdcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/BrickBreaker/v17/.futdcache.v2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/BrickBreaker/v17/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/BrickBreaker/v17/.suo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/BrickBreaker/v17/DocumentLayout.backup.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/BrickBreaker/v17/DocumentLayout.backup.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/BrickBreaker/v17/DocumentLayout.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/BrickBreaker/v17/DocumentLayout.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/brickbreaker.metadata.v9.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/brickbreaker.metadata.v9.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/brickbreaker.projects.v9.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/brickbreaker.projects.v9.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/brickbreaker.strings.v9.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/brickbreaker.strings.v9.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.BrickBreaker/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.BrickBreaker/.idea/indexLayout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.BrickBreaker/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Brick Breaker.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/../Brick Breaker.sln.DotSettings.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.BrickBreaker/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BrickBreaker/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BrickBreaker.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/BrickBreaker.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NewScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NewScript.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project.godot" beforeDir="false" afterPath="$PROJECT_DIR$/project.godot" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +63,7 @@
       <method v="2" />
     </configuration>
     <configuration name="Editor" type="RunExe" factoryName=".NET Executable">
-      <option name="EXE_PATH" value="$USER_HOME$/Downloads/ESGI/Godot_v4.5-stable_mono_win64/Godot_v4.5-stable_mono_win64/Godot_v4.5-stable_mono_win64.exe" />
+      <option name="EXE_PATH" value="$USER_HOME$/Downloads/Godot_v4.5.1-stable_mono_win64/Godot_v4.5.1-stable_mono_win64.exe" />
       <option name="PROGRAM_PARAMETERS" value="--path &quot;./&quot; --editor" />
       <option name="WORKING_DIRECTORY" value="C:\Users\EM341\Documents\GitHub\Brick-Breaker\Godot" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -91,7 +81,7 @@
       </method>
     </configuration>
     <configuration name="Player" type="RunExe" factoryName=".NET Executable">
-      <option name="EXE_PATH" value="$USER_HOME$/Downloads/ESGI/Godot_v4.5-stable_mono_win64/Godot_v4.5-stable_mono_win64/Godot_v4.5-stable_mono_win64.exe" />
+      <option name="EXE_PATH" value="$USER_HOME$/Downloads/Godot_v4.5.1-stable_mono_win64/Godot_v4.5.1-stable_mono_win64.exe" />
       <option name="PROGRAM_PARAMETERS" value="--path &quot;./&quot;" />
       <option name="WORKING_DIRECTORY" value="C:\Users\EM341\Documents\GitHub\Brick-Breaker\Godot" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -120,6 +110,7 @@
       <workItem from="1760371537911" duration="736000" />
       <workItem from="1760372384827" duration="830000" />
       <workItem from="1760375345809" duration="1179000" />
+      <workItem from="1761600230809" duration="3997000" />
     </task>
     <servers />
   </component>

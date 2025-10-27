@@ -133,12 +133,26 @@ static public class Utils
         Color.Red, Color.Blue, Color.Red, Color.Blue, 
     });
 
+    private static List<ColorEnum> bw2_color = new List<ColorEnum>(new ColorEnum[]
+    {
+        ColorEnum.Blue, ColorEnum.Red, ColorEnum.Blue, ColorEnum.Red,
+        ColorEnum.Red, ColorEnum.Blue, ColorEnum.Red, ColorEnum.Blue,
+        ColorEnum.Blue, ColorEnum.Red, ColorEnum.Blue, ColorEnum.Red,
+        ColorEnum.Red, ColorEnum.Blue, ColorEnum.Red, ColorEnum.Blue,
+    });
+
+    private static List<ColorEnum> bw3_color = new List<ColorEnum>(new ColorEnum[]
+{
+        ColorEnum.Blue, ColorEnum.Aqua,
+        ColorEnum.Chocolate, ColorEnum.DarkKhaki
+});
+
     public static BrickWallParameters getBrickWallParameters(int index)
     {
         switch( index )
         {
-            case 1 : return new BrickWallParameters(bw1_x, bw1_y, bw1_w, bw1_h, bw1_nbVerticalBricks, bw1_nbHorizontalBricks, bw1_spaceBetweenBricks, bw1_health, bw1_color);
-            default : return new BrickWallParameters(bw0_x, bw0_y, bw0_w, bw0_h, bw0_nbVerticalBricks, bw0_nbHorizontalBricks, bw0_spaceBetweenBricks, bw0_health, bw0_color);
+            case 1 : return new BrickWallParameters(bw1_x, bw1_y, bw1_w, bw1_h, bw1_nbVerticalBricks, bw1_nbHorizontalBricks, bw1_spaceBetweenBricks, bw1_health, bw3_color);
+            default : return new BrickWallParameters(bw0_x, bw0_y, bw0_w, bw0_h, bw0_nbVerticalBricks, bw0_nbHorizontalBricks, bw0_spaceBetweenBricks, bw0_health, bw2_color);
         }
     }
     

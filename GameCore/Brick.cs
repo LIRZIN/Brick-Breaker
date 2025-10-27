@@ -8,13 +8,13 @@ public class Brick
     public double y { get; }
     public double w { get; }
     public double h { get; }
-    public Color color { get; }
+    public ColorEnum color { get; }
     public int health { get; private set; }
     
     //private bool hasPowerUp;
     //private PowerUpType powerUpType;
 
-    public Brick(double x, double y, double w, double h, Color color, int health)
+    public Brick(double x, double y, double w, double h, ColorEnum color, int health)
     {
         this.x = x * Utils.screenSizeWidth;
         this.y = y * Utils.screenSizeHeight;

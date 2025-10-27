@@ -63,7 +63,8 @@ public class BrickBreaker
             case BrickAttribute.Width : return brick.w;
             case BrickAttribute.Height : return brick.h;
             case BrickAttribute.Health : return brick.health;
-            case BrickAttribute.Color : return brick.color.R | (brick.color.G<<8) | (brick.color.B<<16) |  (brick.color.A<<24);
+            case BrickAttribute.Color: return (int)brick.color;
+                //case BrickAttribute.Color : return brick.color.R | (brick.color.G<<8) | (brick.color.B<<16) |  (brick.color.A<<24);
         }
         return 0;
     }
@@ -144,6 +145,10 @@ public class BrickBreaker
         }
 
         List<int> healths = new List<int>();
+
+        //A CHANGER!
+        List<ColorEnum> color = new List<ColorEnum>();
+        
         List<Color> colors = new List<Color>();
         int i = 7;
         for (; i < 7 + nbVB * nbHB; i++)
@@ -163,7 +168,7 @@ public class BrickBreaker
 
         try
         {
-            newIndex = brickWall.addNewBrickWall(new BrickWallParameters(x, y, w, h, nbVB, nbHB, sBB, healths, colors));
+            newIndex = brickWall.addNewBrickWall(new BrickWallParameters(x, y, w, h, nbVB, nbHB, sBB, healths, color));
         }
         catch (Exception e)
         {

@@ -14,7 +14,7 @@ public partial class NewScript : Node
 		get => brickBreaker;
 	}
 
-	[Export] public int W_pixels
+	public int W_pixels
 	{
 		get => w_pixels;
 		set  => w_pixels = value;
@@ -30,16 +30,71 @@ public partial class NewScript : Node
 	{
 		base._Ready();
 		brickBreaker = new BrickBreaker();
-		double test = GetWindow().Size.X;
 		Window window = GetChild(0) as Window;
 		W_pixels = window.Size.X;
 		H_pixels = window.Size.Y;
 		brickBreaker.init(W_pixels, H_pixels);
+		
+		//Draw brickWall
+		for (int i = 0; i < brickBreaker.getBrickWallAttribute(BrickWallAttribute.BrickCount); i++)
+		{
+			int tempX = (int)((BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionX) * (W_pixels-1)) / Utils.screenSizeWidth);
+			int tempY = (int)((BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionY) * (H_pixels-1)) / Utils.screenSizeHeight);
+			int tempEndX =  (int)(((BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionX) + brickBreaker.getBrickAttribute(i, BrickAttribute.Width)) * (W_pixels-1)) / Utils.screenSizeWidth);
+			int tempEndY = (int)(((BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionY) + brickBreaker.getBrickAttribute(i, BrickAttribute.Height)) * (H_pixels-1)) / Utils.screenSizeHeight);
+			
+			ColorRect brickRect = new ColorRect(); 
+			brickRect.Size = new Vector2(tempEndX - tempX, tempEndY - tempY); 
+			
+			brickRect.Position = new Vector2(tempX, tempY);
+			
+			brickRect.Color = new Color(1, 0, 0);
+			
+			window.AddChild(brickRect);
+		}
+		
+		//Draw paddle
+		int posX = (int)((BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionX) * (W_pixels - 1)) /
+						 Utils.screenSizeWidth);
+		int posY = (int)((BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionY) * (H_pixels - 1)) /
+						 Utils.screenSizeHeight);
+		int endX = (int)(((BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionX) +
+						   brickBreaker.getPaddleAttribute(PaddleAttribute.Width)) * (W_pixels - 1)) /
+						 Utils.screenSizeWidth);
+		int endY = (int)(((BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionY) +
+						   brickBreaker.getPaddleAttribute(PaddleAttribute.Height)) * (H_pixels - 1)) /
+						 Utils.screenSizeHeight);
+		ColorRect rect = new ColorRect(); 
+		rect.Size = new Vector2(endX - posX, endY - posY); 
+			
+		rect.Position = new Vector2(posX, posY);
+			
+		rect.Color = new Color(0, 1, 0);
+			
+		window.AddChild(rect);
+		
+		//Draw balls
+		for (int i = 0; i < brickBreaker.nbBalls; i++)
+		{
+			Sprite2D sprite = new Sprite2D();
+
+			Texture2D texture = (Texture2D)GD.Load("res://icon.svg");
+			sprite.Texture = texture;
+
+			sprite.Position = new Vector2(
+				(int)(BrickBreaker.getBallAttribute(i, BallAttribute.PositionX) * (W_pixels - 1) /
+					  Utils.screenSizeWidth),
+				(int)(BrickBreaker.getBallAttribute(i, BallAttribute.PositionY) * (H_pixels - 1) /
+					  Utils.screenSizeHeight));
+
+			AddChild(sprite);
+		}
 	}
 
 	public override void _Process(double delta)
 	{
 		base._Process(delta);
+		
 		//Update BrickBreaker et input
 		/*PlayerMovement movement = PlayerMovement.Nothing;
 		if (ConsoleInput.pressingLeft)

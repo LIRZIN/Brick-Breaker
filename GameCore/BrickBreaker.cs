@@ -29,7 +29,7 @@ public class BrickBreaker
             case BallAttribute.DirectionY : return ball.DirectionY;
             case BallAttribute.Speed : return ball.Speed;
             case BallAttribute.Radius : return ball.Radius;
-            case BallAttribute.Color : return ball.Color.R | (ball.Color.G<<8) | (ball.Color.B<<16) |  (ball.Color.A<<24);
+            case BallAttribute.Color : return (int)ball.Color;
         }
 
         return 0;
@@ -78,7 +78,7 @@ public class BrickBreaker
             case PaddleAttribute.Width : return paddle.w;
             case PaddleAttribute.Height : return paddle.h;
             case PaddleAttribute.Speed : return paddle.v;
-            case PaddleAttribute.Color : return paddle.color.R | (paddle.color.G<<8) | (paddle.color.B<<16) |  (paddle.color.A<<24);
+            case PaddleAttribute.Color: return (int)paddle.color;
         }
 
         return 0;
@@ -148,7 +148,8 @@ public class BrickBreaker
 
         //A CHANGER!
         List<ColorEnum> color = new List<ColorEnum>();
-        
+        ColorEnum[] allColors = (ColorEnum[])Enum.GetValues(typeof(ColorEnum));
+
         List<Color> colors = new List<Color>();
         int i = 7;
         for (; i < 7 + nbVB * nbHB; i++)
@@ -164,11 +165,18 @@ public class BrickBreaker
             colors.Add(Color.FromArgb(R, G, B));
         }
 
+        for (int brickIndex = 0; brickIndex < nbVB * nbHB; brickIndex++)
+        {
+            int colorIndex = brickIndex % allColors.Length;
+            color.Add(allColors[colorIndex]);
+        }
+
+
         int newIndex = -1;
 
         try
         {
-            newIndex = brickWall.addNewBrickWall(new BrickWallParameters(x, y, w, h, nbVB, nbHB, sBB, healths, color));
+            //newIndex = brickWall.addNewBrickWall(new BrickWallParameters(x, y, w, h, nbVB, nbHB, sBB, healths, color));
         }
         catch (Exception e)
         {

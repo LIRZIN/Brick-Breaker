@@ -7,7 +7,7 @@ using System.Drawing;
 public class Ball
 {
     private double positionX, positionY, directionX, directionY, speed, radius;
-    private Color color;
+    private ColorEnum color;
 
     public double PositionX { get => positionX; set => positionX = value; }
     public double PositionY { get => positionY; set => positionY = value; }
@@ -33,9 +33,9 @@ public class Ball
 
     public double Speed { get => speed; set => speed = value; }
     public double Radius { get => radius; set => radius = value; }
-    public Color Color { get => color; set => color = value; }
+    public ColorEnum Color { get => color; set => color = value; }
 
-    public Ball(double positionX, double positionY, double directionX, double directionY, double speed, double radius, Color color)
+    public Ball(double positionX, double positionY, double directionX, double directionY, double speed, double radius, ColorEnum color)
     {
         this.positionX = positionX;
         this.positionY = positionY;

@@ -10,5 +10,6 @@ public enum ColorEnum
     Cyan,
     Chocolate,
     DarkKhaki,
-    Aqua
+    Aqua,
+    Gray
 }

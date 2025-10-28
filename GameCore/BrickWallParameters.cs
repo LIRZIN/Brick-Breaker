@@ -64,8 +64,6 @@ public class BrickWallParameters
 
     public List<int> brickHealth { get; }
     public List<ColorEnum> brickColor { get; }
-    //public List<Color> brickColor { get; }
-    //public BrickWallParameters(double x, double y, double w, double h, int nbVerticalBricks, int nbHorizontalBricks, double spaceBetweenBricks, List<int> brickHealth, List<Color> brickColor)
     public BrickWallParameters(double x, double y, double w, double h, int nbVerticalBricks, int nbHorizontalBricks, double spaceBetweenBricks, List<int> brickHealth, List<ColorEnum> brickColor)
     {
         this.x = x;

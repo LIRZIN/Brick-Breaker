@@ -9,7 +9,7 @@ public class Paddle
     public double w { get; private set; }
     public double h { get; private set; }
     public double v { get; private set; }
-    public Color color { get; private set; }
+    public ColorEnum color { get; private set; }
     
     public void init()
     {
@@ -18,7 +18,7 @@ public class Paddle
         x = (Utils.screenSizeWidth - w) / 2.0;
         y = Utils.screenSizeHeight - h;
         v = 5;
-        color = Color.Gray;
+        color = ColorEnum.Gray;
     }
 
     public void update(double deltaTime, PlayerMovement move)

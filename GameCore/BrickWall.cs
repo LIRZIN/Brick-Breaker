@@ -36,7 +36,7 @@ public class BrickWall
     public int nbVerticalBricks { get => parameters[currentBrickWall].nbVerticalBricks; }
     public int nbHorizontalBricks { get => parameters[currentBrickWall].nbHorizontalBricks; }
     public List<int> brickHealth { get => parameters[currentBrickWall].brickHealth; }
-    public List<Color> brickColor { get => parameters[currentBrickWall].brickColor; }
+    public List<ColorEnum> brickColor { get => parameters[currentBrickWall].brickColor; }
     public int brickCount { get => bricks.Count; }
 
     public void init(int index)

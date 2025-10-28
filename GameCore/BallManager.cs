@@ -24,7 +24,7 @@ public class BallManager
         double radius = 0.001;
         double x = paddle.x + paddle.w / 2;
         double y = paddle.y - radius - 0.0001;
-        balls.Add(new Ball(x, y, 0.2, -0.2, 3, radius, Color.Aqua));
+        balls.Add(new Ball(x, y, 0.2, -0.2, 3, radius, ColorEnum.Aqua));
     }
 
     public bool Update( double deltaTime, BrickWall brickWall, Paddle paddle )

@@ -249,7 +249,7 @@ public partial class NewScript : Node
 	private void CheckWinCondition()
 	{
 		GD.Print(brickBreaker.BrickWall.brickCount);
-		if (brickBreaker.BrickWall.brickCount < 1)
+		if (brickBreaker.BrickWall.brickCount <= 1)
 		{
 			brickBreaker.IsGameWon = true;
 		}

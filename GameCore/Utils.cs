@@ -4,6 +4,16 @@ namespace Brick_Breaker;
 
 
 // STRUCTS
+public enum EvenType
+{
+    GameOver,
+    GameWon,
+    BrickDie,
+    BallBounceOnPaddle,
+    BrickHealthDecreased,
+    BallBounceOnWall,
+    BallHitBrick
+}
 
 public enum PlayerMovement
 {

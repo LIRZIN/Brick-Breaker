@@ -89,7 +89,9 @@ public partial class NewScript : Node
 
 			AddChild(sprite);
 		}
-	}
+
+		SubscribeToEvents();
+    }
 
 	public override void _Process(double delta)
 	{
@@ -110,4 +112,57 @@ public partial class NewScript : Node
 		initCharDisplay();*/
 
 	}
+
+	private void SubscribeToEvents()
+	{
+		brickBreaker.BrickWall.Event += OnBrickWallLoosesHealthEvent;
+        brickBreaker.BallManager.getBall(0).Event += OnBallEvent;
+		brickBreaker.Event += OnMainGameEvent;
+    }
+
+	private void UnsibscribeToEvents()
+	{
+        brickBreaker.BrickWall.Event -= OnBrickWallLoosesHealthEvent;
+        brickBreaker.BallManager.getBall(0).Event -= OnBallEvent;
+        brickBreaker.Event -= OnMainGameEvent;
+    }
+
+    private void OnMainGameEvent(object sender, Brick_Breaker.EventArgs e)
+    {
+        if (e.eventType == EvenType.GameOver)
+		{
+			GD.Print("Game Over!");
+            //play sound game over
+        }
+        if ( e.eventType == EvenType.GameWon)
+		{
+			GD.Print("You Win!");
+            //play sound game won
+        }
+    }
+
+    private void OnBrickWallLoosesHealthEvent(object sender, Brick_Breaker.EventArgs e)
+    {
+		if (e.eventType != EvenType.BrickHealthDecreased) return;
+		var bw = (BrickWall)e.p[0];
+		GD.Print($"Brick has been hit! health remaining : {bw.h}");
+    }
+
+	private void OnBallEvent(object sender, Brick_Breaker.EventArgs e)
+	{
+		if (e.eventType == EvenType.BallBounceOnPaddle)
+		{
+            GD.Print("Ball hit paddle!");
+			//play sound ball hit paddle
+        }
+		if(e.eventType == EvenType.BallBounceOnWall)
+		{
+			GD.Print("Ball hit wall!");
+        }
+		if(e.eventType == EvenType.BallHitBrick)
+		{
+			GD.Print("Ball hit brick!");
+			//play sound ball hit brick
+        }
+    }
 }

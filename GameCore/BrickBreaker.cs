@@ -3,10 +3,6 @@ using System.IO;
 
 namespace Brick_Breaker;
 
-// Conditions victoire/défaite
-// faire le max de getters ici pour que l'état du jeu soit lisible 
-// Affichage terminal
-
 public class BrickBreaker
 {
     private BallManager ballManager = new BallManager();
@@ -16,6 +12,12 @@ public class BrickBreaker
     private bool isGameWon = false;
 
     public int nbBalls { get => ballManager.nbBalls; }
+
+    public BrickWall BrickWall { get => brickWall; }
+    public BallManager BallManager { get => ballManager; }
+
+    public event EventHandler Event;
+    public delegate void EventHandler(object sender, EventArgs e);
 
     public double getBallAttribute(int index, BallAttribute attribute)
     {
@@ -89,13 +91,23 @@ public class BrickBreaker
     public bool IsGameOver
     {
         get => isGameOver;
-        set => isGameOver = value;
+        set
+        {
+            isGameOver = value;
+            if(isGameOver)
+                Event?.Invoke(this, new EventArgs(EvenType.GameOver));
+        }
     }
 
     public bool IsGameWon
     {
         get => isGameWon;
-        set => isGameWon = value;
+        set
+        {
+            isGameWon = value;
+            if (isGameWon)
+                Event?.Invoke(this, new EventArgs(EvenType.GameWon));
+        }
     }
 
     public void init(int W_pixels, int H_pixels)

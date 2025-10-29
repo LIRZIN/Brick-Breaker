@@ -2,6 +2,8 @@ using System.Data;
 using System.Numerics;
 
 namespace Brick_Breaker;
+
+using System;
 using System.Drawing;
 
 public class Ball
@@ -11,6 +13,10 @@ public class Ball
 
     public double PositionX { get => positionX; set => positionX = value; }
     public double PositionY { get => positionY; set => positionY = value; }
+
+    public event EventHandler Event;
+    public delegate void EventHandler(object sender, EventArgs e);
+
     public double DirectionX
     {
         get => directionX;
@@ -127,6 +133,7 @@ public class Ball
                                                      ref collisionX, ref collisionY, ref collisionU, ref side) )
             {
                 brickCollisionIndex = i;
+                Event?.Invoke(this, new EventArgs(EvenType.BallHitBrick, collisionX, collisionY, side));
             }
         }
         
@@ -148,6 +155,8 @@ public class Ball
                 case Side.Right: currentCollision = CollisionType.RightWall; break;
                 case Side.Top: currentCollision = CollisionType.TopWall; break;
             }
+
+            Event?.Invoke(this, new EventArgs(EvenType.BrickHealthDecreased, collisionX, collisionY, side));
         }
         // Paddle Collision
         else if (previousCollision != CollisionType.Paddle 
@@ -157,6 +166,7 @@ public class Ball
         {
             HandlePaddleCollision( collisionX, collisionY, side, paddle );
             currentCollision = CollisionType.Paddle;
+            Event?.Invoke(this, new EventArgs(EvenType.BrickHealthDecreased, collisionX, collisionY, side, paddle));
         }
 
         if (side != Side.None)

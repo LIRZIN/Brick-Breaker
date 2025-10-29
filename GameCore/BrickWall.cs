@@ -39,6 +39,9 @@ public class BrickWall
     public List<ColorEnum> brickColor { get => parameters[currentBrickWall].brickColor; }
     public int brickCount { get => bricks.Count; }
 
+    public event EventHandler Event;
+    public delegate void EventHandler(object sender, EventArgs e);
+
     public void init(int index)
     {
         buildUtilsParameters();
@@ -58,7 +61,8 @@ public class BrickWall
     public void decreaseHealthBrick(int index)
     {
         bricks[index].decreaseHealthBrick();
-        if(bricks[index].health <= 0)
+        Event?.Invoke(this, new EventArgs(EvenType.BrickHealthDecreased, index));
+        if (bricks[index].health <= 0)
         {
             bricks.RemoveAt(index);
         }

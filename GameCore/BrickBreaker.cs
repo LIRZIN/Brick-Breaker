@@ -193,16 +193,21 @@ public class BrickBreaker
 
     public void update(double deltaTime, PlayerMovement move)
     {
-        IsGameOver = ballManager.Update(deltaTime, brickWall, paddle);
-        paddle.update(deltaTime, move);
-        IsGameWon = true;
-        foreach (var brickHealth in brickWall.brickHealth)
+        if(ballManager.Update(deltaTime, brickWall, paddle) && !IsGameOver)
         {
-            if (brickHealth >= 0)
-            {
-                IsGameWon = false;
-            }
+            IsGameOver = true;
         }
+        paddle.update(deltaTime, move);
+
+        //TODO: check if game is won based on number of bricks left. Set to Win = true only if false first. (faslse -> true only)
+        //IsGameWon = true;
+        //foreach (var brickHealth in brickWall.brickHealth)
+        //{
+        //    if (brickHealth >= 0)
+        //    {
+        //        IsGameWon = false;
+        //    }
+        //}
     }
 }
 

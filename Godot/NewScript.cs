@@ -88,6 +88,8 @@ public partial class NewScript : Node
 
         GD.Print(GetPositionX(BrickBreaker.getBallAttribute(0, BallAttribute.PositionX)));
         window.AddChild(ballSprite);
+
+        SubscribeToEvents();
     }
 
     public override void _Process(double delta)
@@ -133,9 +135,6 @@ public partial class NewScript : Node
         GetPositionX(BrickBreaker.getBallAttribute(0, BallAttribute.PositionX)),
         GetPositionY(BrickBreaker.getBallAttribute(0, BallAttribute.PositionY)));
         GD.Print(GetPositionX(BrickBreaker.getBallAttribute(0, BallAttribute.PositionX)));
-
-
-        SubscribeToEvents();
     }
 
     private void SubscribeToEvents()
@@ -169,8 +168,8 @@ public partial class NewScript : Node
     private void OnBrickWallLoosesHealthEvent(object sender, Brick_Breaker.EventArgs e)
     {
         if (e.eventType != EvenType.BrickHealthDecreased) return;
-        var bw = (BrickWall)e.p[0];
-        GD.Print($"Brick has been hit! health remaining : {bw.h}");
+        var hp = (int)e.p[0];
+        GD.Print($"Brick has been hit! health remaining : {hp}");
     }
 
     private void OnBallEvent(object sender, Brick_Breaker.EventArgs e)

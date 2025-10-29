@@ -5,4 +5,5 @@ riderModule.iml
 /_ReSharper.Caches/
 *.csproj.user
 .vs/
-Godot/.vs
+Godot/.vs/
+Godot/BrickBreaker.csproj.old*

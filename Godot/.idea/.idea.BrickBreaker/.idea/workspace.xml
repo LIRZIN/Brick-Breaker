@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="66326ca3-9b29-4ba1-927b-0c1ed4fe828e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.BrickBreaker/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.BrickBreaker/.idea/indexLayout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.BrickBreaker/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Brick Breaker.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/../Brick Breaker.sln.DotSettings.user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.BrickBreaker/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BrickBreaker/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BrickBreaker.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/BrickBreaker.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NewScript.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project.godot" beforeDir="false" afterPath="$PROJECT_DIR$/project.godot" afterDir="false" />
-    </list>
+    <list default="true" id="66326ca3-9b29-4ba1-927b-0c1ed4fe828e" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -63,7 +54,7 @@
       <method v="2" />
     </configuration>
     <configuration name="Editor" type="RunExe" factoryName=".NET Executable">
-      <option name="EXE_PATH" value="$USER_HOME$/Downloads/Godot_v4.5.1-stable_mono_win64/Godot_v4.5.1-stable_mono_win64.exe" />
+      <option name="EXE_PATH" value="D:/EM341/Téléchargements/ESGI/Godot_v4.5-stable_mono_win64/Godot_v4.5-stable_mono_win64.exe" />
       <option name="PROGRAM_PARAMETERS" value="--path &quot;./&quot; --editor" />
       <option name="WORKING_DIRECTORY" value="C:\Users\EM341\Documents\GitHub\Brick-Breaker\Godot" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -81,7 +72,7 @@
       </method>
     </configuration>
     <configuration name="Player" type="RunExe" factoryName=".NET Executable">
-      <option name="EXE_PATH" value="$USER_HOME$/Downloads/Godot_v4.5.1-stable_mono_win64/Godot_v4.5.1-stable_mono_win64.exe" />
+      <option name="EXE_PATH" value="D:/EM341/Téléchargements/ESGI/Godot_v4.5-stable_mono_win64/Godot_v4.5-stable_mono_win64.exe" />
       <option name="PROGRAM_PARAMETERS" value="--path &quot;./&quot;" />
       <option name="WORKING_DIRECTORY" value="C:\Users\EM341\Documents\GitHub\Brick-Breaker\Godot" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -111,6 +102,7 @@
       <workItem from="1760372384827" duration="830000" />
       <workItem from="1760375345809" duration="1179000" />
       <workItem from="1761600230809" duration="3997000" />
+      <workItem from="1761722270114" duration="1243000" />
     </task>
     <servers />
   </component>

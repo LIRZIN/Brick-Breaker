@@ -8,7 +8,9 @@ public class Paddle
     public double y { get; private set; }
     public double w { get; private set; }
     public double h { get; private set; }
-    public double v { get; private set; }
+    public double v { get; internal set; }
+
+    
     public ColorEnum color { get; private set; }
     
     public void init()

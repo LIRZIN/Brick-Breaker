@@ -17,6 +17,15 @@ public class BrickBreaker
 
     public int nbBalls { get => ballManager.nbBalls; }
 
+    public void SetBallSpeed(double speed)
+    {
+        ballManager.getBall(0).Speed = speed;
+    }
+    
+    public void SetPaddleSpeed(double speed)
+    {
+        paddle.v = speed;
+    }
     public double getBallAttribute(int index, BallAttribute attribute)
     {
         Ball ball = ballManager.getBall(index);

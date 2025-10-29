@@ -8,7 +8,7 @@ public class BrickWall
 {
     private List<BrickWallParameters> parameters = new List<BrickWallParameters>();                                                                     
     private List<Brick> bricks = new List<Brick>();
-    private int _currentBrickWall;   
+    private int _currentBrickWall;
 
     public int currentBrickWall
     {

@@ -19,6 +19,16 @@ public class BrickBreaker
     public event EventHandler Event;
     public delegate void EventHandler(object sender, EventArgs e);
 
+    public void SetBallSpeed(double speed)
+    {
+        ballManager.getBall(0).Speed = speed;
+    }
+    
+    public void SetPaddleSpeed(double speed)
+    {
+        paddle.v = speed;
+    }
+
     public double getBallAttribute(int index, BallAttribute attribute)
     {
         Ball ball = ballManager.getBall(index);

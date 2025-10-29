@@ -21,7 +21,7 @@ public class BallManager
 
     public void init( Paddle paddle )
     {
-        double radius = 0.001;
+        double radius = 0.05;
         double x = paddle.x + paddle.w / 2;
         double y = paddle.y - radius - 0.0001;
         balls.Add(new Ball(x, y, 0.2, -0.2, 3, radius, ColorEnum.Aqua));

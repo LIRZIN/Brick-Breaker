@@ -6,199 +6,252 @@ using Brick_Breaker;
 
 public partial class NewScript : Node
 {
-    private BrickBreaker brickBreaker;
-    private int w_pixels, h_pixels;
-    private Window window;
-    private ColorRect paddleRect;
-    private readonly Vector2 spriteSize = new Vector2(600, 600);
-    private Sprite2D ballSprite;
-    [Export] public double ballSpeed = 1;
-    [Export] public double PaddleSpeed = 1;
+	private BrickBreaker brickBreaker;
+	private int w_pixels, h_pixels;
+	private Window window;
+	private ColorRect paddleRect;
+	private readonly Vector2 spriteSize = new Vector2(600, 600);
+	private Sprite2D ballSprite;
+	[Export] public double ballSpeed = 1;
+	[Export] public double PaddleSpeed = 1;
+	[Export] public double ballRadius = 0.02;
+	private List<ColorRect> listBrickRect = new List<ColorRect>();
 
-    public BrickBreaker BrickBreaker
-    {
-        get => brickBreaker;
-    }
+	public BrickBreaker BrickBreaker
+	{
+		get => brickBreaker;
+	}
 
-    public int W_pixels
-    {
-        get => w_pixels;
-        set => w_pixels = value;
-    }
+	public int W_pixels
+	{
+		get => w_pixels;
+		set => w_pixels = value;
+	}
 
-    public int H_pixels
-    {
-        get => h_pixels;
-        set => h_pixels = value;
-    }
+	public int H_pixels
+	{
+		get => h_pixels;
+		set => h_pixels = value;
+	}
 
-    public float GetPositionX(double PositionX)
-    {
-        return (float)((PositionX * (W_pixels - 1)) / Utils.screenSizeWidth);
-    }
-    public float GetPositionY(double PositionY)
-    {
-        return (float)((PositionY * (H_pixels - 1)) / Utils.screenSizeHeight);
-    }
+	public float GetPositionX(double PositionX)
+	{
+		return (float)((PositionX * (W_pixels - 1)) / Utils.screenSizeWidth);
+	}
+	public float GetPositionY(double PositionY)
+	{
+		return (float)((PositionY * (H_pixels - 1)) / Utils.screenSizeHeight);
+	}
 
-    public override void _Ready()
-    {
-        base._Ready();
-        brickBreaker = new BrickBreaker();
-        window = GetChild(0) as Window;
-        W_pixels = window.Size.X;
-        H_pixels = window.Size.Y;
+	public override void _Ready()
+	{
+		base._Ready();
+		brickBreaker = new BrickBreaker();
+		window = GetChild(0) as Window;
+		W_pixels = window.Size.X;
+		H_pixels = window.Size.Y;
 
-        brickBreaker.init(W_pixels, H_pixels);
-        BrickBreaker.SetBallSpeed(ballSpeed);
-        BrickBreaker.SetPaddleSpeed(PaddleSpeed);
+		brickBreaker.init(W_pixels, H_pixels);
+		BrickBreaker.SetBallSpeed(ballSpeed);
+		BrickBreaker.SetPaddleSpeed(PaddleSpeed);
+		BrickBreaker.SetBallRadius(ballRadius);
+		GD.Print("test 1");
+		
+		//Draw brickWall
+		for (int i = 0; i < brickBreaker.getBrickWallAttribute(BrickWallAttribute.BrickCount); i++)
+		{
+			GD.Print("test 2");
+			float tempX = GetPositionX(BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionX));
+			float tempY = GetPositionY(BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionY));
+			float tempEndX = GetPositionX(BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionX) +
+										  brickBreaker.getBrickAttribute(i, BrickAttribute.Width));
+			float tempEndY = GetPositionY(BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionY) +
+										  brickBreaker.getBrickAttribute(i, BrickAttribute.Height));
+			listBrickRect.Add(new ColorRect());
+			listBrickRect[i].Size = new Vector2(tempEndX - tempX, tempEndY - tempY);
 
-        //Draw paddle
-        float posX = GetPositionX(BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionX));
-        float posY = GetPositionY(BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionY));
-        float endX = GetPositionX(BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionX) +
-                                  brickBreaker.getPaddleAttribute(PaddleAttribute.Width));
-        float endY = GetPositionY(BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionY) +
-                                  brickBreaker.getPaddleAttribute(PaddleAttribute.Height));
-        paddleRect = new ColorRect();
-        paddleRect.Size = new Vector2(endX - posX, endY - posY);
+			listBrickRect[i].Position = new Vector2(tempX, tempY);
+			
+			switch (BrickBreaker.getBrickAttribute(i, BrickAttribute.Health))
+			{
+				case 0:
+					GD.Print("la brique est dead");
+					break;
+				case 1:
+					listBrickRect[i].Color = new Color(0, 1, 0);
+					break;
+				case 2:
+					listBrickRect[i].Color = new Color(0, 0, 1);
+					break;
+				case 3:
+					listBrickRect[i].Color = new Color(1, 0, 0);
+					break;
+				default:
+					GD.Print("defaut case");
+					break;
+				
+			}
 
-        paddleRect.Position = new Vector2(posX, posY);
+			window.AddChild(listBrickRect[i]);
+		}
 
-        paddleRect.Color = new Color(0, 1, 0);
+		//Draw paddle
+		float posX = GetPositionX(BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionX));
+		float posY = GetPositionY(BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionY));
+		float endX = GetPositionX(BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionX) +
+								  brickBreaker.getPaddleAttribute(PaddleAttribute.Width));
+		float endY = GetPositionY(BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionY) +
+								  brickBreaker.getPaddleAttribute(PaddleAttribute.Height));
+		paddleRect = new ColorRect();
+		paddleRect.Size = new Vector2(endX - posX, endY - posY);
 
-        window.AddChild(paddleRect);
+		paddleRect.Position = new Vector2(posX, posY);
 
-        //Draw balls
-        //GD.Print(0);
-        ballSprite = new Sprite2D();
+		paddleRect.Color = new Color(0, 1, 0);
 
-        Texture2D texture = (Texture2D)GD.Load("res://ball.png");
-        ballSprite.Texture = texture;
+		window.AddChild(paddleRect);
 
-        //GD.Print(1);
-        ballSprite.Position = new Vector2(
-            GetPositionX(BrickBreaker.getBallAttribute(0, BallAttribute.PositionX)),
-            GetPositionY(BrickBreaker.getBallAttribute(0, BallAttribute.PositionY)));
+		//Draw balls
+		ballSprite = new Sprite2D();
 
-        Vector2 scale = new Vector2();
-        scale.X = (float)(BrickBreaker.getBallAttribute(0, BallAttribute.Radius) * h_pixels) / spriteSize.X;
-        scale.Y = scale.X;
-        ballSprite.SetScale(scale);
+		Texture2D texture = (Texture2D)GD.Load("res://ball.png");
+		ballSprite.Texture = texture;
 
-        //GD.Print(GetPositionX(BrickBreaker.getBallAttribute(0, BallAttribute.PositionX)));
-        window.AddChild(ballSprite);
+		ballSprite.Position = new Vector2(
+			GetPositionX(BrickBreaker.getBallAttribute(0, BallAttribute.PositionX)),
+			GetPositionY(BrickBreaker.getBallAttribute(0, BallAttribute.PositionY)));
 
-        SubscribeToEvents();
-        //GetNode<SoundManager>("AudioStreamPlayer").PlaySound("game-over");
-    }
+		Vector2 scale = new Vector2();
+		scale.X = (float)(BrickBreaker.getBallAttribute(0, BallAttribute.Radius) * h_pixels) / spriteSize.X;
+		scale.Y = scale.X;
+		ballSprite.SetScale(scale);
 
-    public override void _Process(double delta)
-    {
-        base._Process(delta);
+		window.AddChild(ballSprite);
 
-        //Update BrickBreaker et input
-        PlayerMovement movement = PlayerMovement.Nothing;
-        if (Input.IsActionPressed("MoveLeft"))
-        {
-            movement = PlayerMovement.Left;
-        }
-        else if (Input.IsActionPressed("MoveRight"))
-        {
-            movement = PlayerMovement.Right;
-        }
-        BrickBreaker.update(delta, movement);
+		SubscribeToEvents();
+		//GetNode<SoundManager>("AudioStreamPlayer").PlaySound("game-over");
+	}
 
-        //Draw brickWall
-        for (int i = 0; i < brickBreaker.getBrickWallAttribute(BrickWallAttribute.BrickCount); i++)
-        {
-            int tempX = (int)((BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionX) * (W_pixels - 1)) / Utils.screenSizeWidth);
-            int tempY = (int)((BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionY) * (H_pixels - 1)) / Utils.screenSizeHeight);
-            int tempEndX = (int)(((BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionX) + brickBreaker.getBrickAttribute(i, BrickAttribute.Width)) * (W_pixels - 1)) / Utils.screenSizeWidth);
-            int tempEndY = (int)(((BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionY) + brickBreaker.getBrickAttribute(i, BrickAttribute.Height)) * (H_pixels - 1)) / Utils.screenSizeHeight);
+	public override void _Process(double delta)
+	{
+		base._Process(delta);
+		
+		//input pour quitter le jeu
+		if (Input.IsActionPressed("QuitGame"))
+		{
+			GetTree().Quit();
+		}
 
-            ColorRect brickRect = new ColorRect();
-            brickRect.Size = new Vector2(tempEndX - tempX, tempEndY - tempY);
+		//Update BrickBreaker et input
+		PlayerMovement movement = PlayerMovement.Nothing;
+		if (Input.IsActionPressed("MoveLeft"))
+		{
+			movement = PlayerMovement.Left;
+		}
+		else if (Input.IsActionPressed("MoveRight"))
+		{
+			movement = PlayerMovement.Right;
+		}
+		BrickBreaker.update(delta, movement);
 
-            brickRect.Position = new Vector2(tempX, tempY);
+		//Update Paddle
+		paddleRect.Position = new Vector2(
+			GetPositionX(BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionX)),
+				GetPositionY(BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionY)));
 
-            brickRect.Color = new Color(1, 0, 0);
+		//Update Ball
+		ballSprite.Position = new Vector2(
+		GetPositionX(BrickBreaker.getBallAttribute(0, BallAttribute.PositionX)),
+		GetPositionY(BrickBreaker.getBallAttribute(0, BallAttribute.PositionY)));
+	}
 
-            window.AddChild(brickRect);
-        }
+	private void SubscribeToEvents()
+	{
+		brickBreaker.BrickWall.Event += OnBrickWallLoosesHealthEvent;
+		brickBreaker.BallManager.getBall(0).Event += OnBallEvent;
+		brickBreaker.Event += OnMainGameEvent;
+	}
 
-        //Update Paddle
-        paddleRect.Position = new Vector2(
-            GetPositionX(BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionX)),
-                GetPositionY(BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionY)));
+	private void UnsibscribeToEvents()
+	{
+		brickBreaker.BrickWall.Event -= OnBrickWallLoosesHealthEvent;
+		brickBreaker.BallManager.getBall(0).Event -= OnBallEvent;
+		brickBreaker.Event -= OnMainGameEvent;
+	}
 
-        ballSprite.Position = new Vector2(
-        GetPositionX(BrickBreaker.getBallAttribute(0, BallAttribute.PositionX)),
-        GetPositionY(BrickBreaker.getBallAttribute(0, BallAttribute.PositionY)));
-        //GD.Print(GetPositionX(BrickBreaker.getBallAttribute(0, BallAttribute.PositionX)));
-    }
+	private void OnMainGameEvent(object sender, Brick_Breaker.EventArgs e)
+	{
+		if (e.eventType == EvenType.GameOver)
+		{
+			GD.Print("Game Over!");
+			GetNode<SoundManager>("AudioStreamPlayer").PlaySound("game-over");
+		}
+		if (e.eventType == EvenType.GameWon)
+		{
+			GD.Print("You Win!");
+			GetNode<SoundManager>("AudioStreamPlayer").PlaySound("game-won");
+		}
+	}
 
-    private void SubscribeToEvents()
-    {
-        brickBreaker.BrickWall.Event += OnBrickWallLoosesHealthEvent;
-        brickBreaker.BallManager.getBall(0).Event += OnBallEvent;
-        brickBreaker.Event += OnMainGameEvent;
-    }
+	private void OnBrickWallLoosesHealthEvent(object sender, Brick_Breaker.EventArgs e)
+	{
+		if (e.eventType != EvenType.BrickHealthDecreased) return;
+		var index = (int)e.p[0];
+		if (BrickBreaker.getBrickAttribute(index, BrickAttribute.Health) <= 0)
+		{
+			listBrickRect[index].QueueFree();
+		}
 
-    private void UnsibscribeToEvents()
-    {
-        brickBreaker.BrickWall.Event -= OnBrickWallLoosesHealthEvent;
-        brickBreaker.BallManager.getBall(0).Event -= OnBallEvent;
-        brickBreaker.Event -= OnMainGameEvent;
-    }
+		switch (BrickBreaker.getBrickAttribute(index, BrickAttribute.Health))
+		{
+			case 0:
+				listBrickRect[index].QueueFree();
+				listBrickRect.RemoveAt(index);
+				break;
+			case 1:
+				listBrickRect[index].Color = new Color(0, 1, 0);
+				break;
+			case 2:
+				listBrickRect[index].Color = new Color(0, 0, 1);
+				break;
+			case 3:
+				listBrickRect[index].Color = new Color(1, 0, 0);
+				break;
+			default:
+				GD.Print("defaut case");
+				break;
+				
+		}
+		//GD.Print($"Brick has been hit! health remaining : {hp}");
+	}
 
-    private void OnMainGameEvent(object sender, Brick_Breaker.EventArgs e)
-    {
-        if (e.eventType == EvenType.GameOver)
-        {
-            GD.Print("Game Over!");
-            GetNode<SoundManager>("AudioStreamPlayer").PlaySound("game-over");
-        }
-        if (e.eventType == EvenType.GameWon)
-        {
-            GD.Print("You Win!");
-            GetNode<SoundManager>("AudioStreamPlayer").PlaySound("game-won");
-        }
-    }
+	private void OnBallEvent(object sender, Brick_Breaker.EventArgs e)
+	{
+		if (e.eventType == EvenType.BallBounceOnPaddle)
+		{
+			GD.Print("Ball hit paddle!");
+			GetNode<SoundManager>("AudioStreamPlayer").PlaySound("hit-paddle");
+		}
+		if (e.eventType == EvenType.BallBounceOnWall)
+		{
+			GD.Print("Ball hit wall!");
+			GetNode<SoundManager>("AudioStreamPlayer").PlaySound("brick-die");
 
-    private void OnBrickWallLoosesHealthEvent(object sender, Brick_Breaker.EventArgs e)
-    {
-        if (e.eventType != EvenType.BrickHealthDecreased) return;
-        var hp = (int)e.p[0];
-        //GD.Print($"Brick has been hit! health remaining : {hp}");
-    }
+		}
+		if (e.eventType == EvenType.BallHitBrick)
+		{
+			GD.Print("Ball hit brick!");
+			GetNode<SoundManager>("AudioStreamPlayer").PlaySound("brick-die");
+			CheckWinCondition();
+		}
+	}
 
-    private void OnBallEvent(object sender, Brick_Breaker.EventArgs e)
-    {
-        if (e.eventType == EvenType.BallBounceOnPaddle)
-        {
-            GD.Print("Ball hit paddle!");
-            GetNode<SoundManager>("AudioStreamPlayer").PlaySound("hit-paddle");
-        }
-        if (e.eventType == EvenType.BallBounceOnWall)
-        {
-            GD.Print("Ball hit wall!");
-            GetNode<SoundManager>("AudioStreamPlayer").PlaySound("brick-die");
-        }
-        if (e.eventType == EvenType.BallHitBrick)
-        {
-            GD.Print("Ball hit brick!");
-            GetNode<SoundManager>("AudioStreamPlayer").PlaySound("brick-die");
-            CheckWinCondition();
-        }
-    }
-
-    private void CheckWinCondition()
-    {
-        GD.Print(brickBreaker.BrickWall.brickCount);
-        if (brickBreaker.BrickWall.brickCount <= 1)
-        {
-            brickBreaker.IsGameWon = true;
-        }
-    }
+	private void CheckWinCondition()
+	{
+		GD.Print(brickBreaker.BrickWall.brickCount);
+		if (brickBreaker.BrickWall.brickCount <= 1)
+		{
+			brickBreaker.IsGameWon = true;
+		}
+	}
 }

@@ -29,6 +29,12 @@ public class BrickBreaker
         paddle.v = speed;
     }
 
+    public void SetBallRadius(double radius)
+    {
+        
+        ballManager.getBall(0).Radius = radius;
+    }
+
     public double getBallAttribute(int index, BallAttribute attribute)
     {
         Ball ball = ballManager.getBall(index);

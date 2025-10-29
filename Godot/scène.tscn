@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bxbbu65u58yl6"]
+[gd_scene load_steps=3 format=3 uid="uid://bxbbu65u58yl6"]
 
 [ext_resource type="Script" uid="uid://bjoxo7vltwkav" path="res://NewScript.cs" id="1_0pnx4"]
+[ext_resource type="Script" uid="uid://bdosshimx0vd3" path="res://SoundManager.cs" id="2_vs4pp"]
 
 [node name="Scène" type="Node2D"]
 script = ExtResource("1_0pnx4")
@@ -8,3 +9,6 @@ script = ExtResource("1_0pnx4")
 [node name="Window" type="Window" parent="."]
 oversampling_override = 1.0
 size = Vector2i(1920, 1080)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+script = ExtResource("2_vs4pp")

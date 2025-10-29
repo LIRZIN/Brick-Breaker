@@ -129,7 +129,7 @@ public partial class NewScript : Node
 		window.AddChild(ballSprite);
 
 		SubscribeToEvents();
-		GetNode<SoundManager>("AudioStreamPlayer").PlaySound("game-over");
+		//GetNode<SoundManager>("AudioStreamPlayer").PlaySound("game-over");
 	}
 
 	public override void _Process(double delta)
@@ -184,12 +184,12 @@ public partial class NewScript : Node
 		if (e.eventType == EvenType.GameOver)
 		{
 			GD.Print("Game Over!");
-			//GetNode<SoundManager>("AudioStreamPlayer").PlaySound("game-over");
+			GetNode<SoundManager>("AudioStreamPlayer").PlaySound("game-over");
 		}
 		if (e.eventType == EvenType.GameWon)
 		{
 			GD.Print("You Win!");
-			//GetNode<SoundManager>("AudioStreamPlayer").PlaySound("game-won");
+			GetNode<SoundManager>("AudioStreamPlayer").PlaySound("game-won");
 		}
 	}
 
@@ -230,18 +230,18 @@ public partial class NewScript : Node
 		if (e.eventType == EvenType.BallBounceOnPaddle)
 		{
 			GD.Print("Ball hit paddle!");
-			//GetNode<SoundManager>("AudioStreamPlayer").PlaySound("hit-paddle");
+			GetNode<SoundManager>("AudioStreamPlayer").PlaySound("hit-paddle");
 		}
 		if (e.eventType == EvenType.BallBounceOnWall)
 		{
 			GD.Print("Ball hit wall!");
-			//GetNode<SoundManager>("AudioStreamPlayer").PlaySound("brick-die");
+			GetNode<SoundManager>("AudioStreamPlayer").PlaySound("brick-die");
 
 		}
 		if (e.eventType == EvenType.BallHitBrick)
 		{
 			GD.Print("Ball hit brick!");
-			//GetNode<SoundManager>("AudioStreamPlayer").PlaySound("brick-die");
+			GetNode<SoundManager>("AudioStreamPlayer").PlaySound("brick-die");
 			CheckWinCondition();
 		}
 	}

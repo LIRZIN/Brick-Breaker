@@ -156,7 +156,7 @@ public class Ball
                 case Side.Top: currentCollision = CollisionType.TopWall; break;
             }
 
-            Event?.Invoke(this, new EventArgs(EvenType.BrickHealthDecreased, collisionX, collisionY, side));
+            Event?.Invoke(this, new EventArgs(EvenType.BallBounceOnWall, collisionX, collisionY, side));
         }
         // Paddle Collision
         else if (previousCollision != CollisionType.Paddle 
@@ -166,7 +166,7 @@ public class Ball
         {
             HandlePaddleCollision( collisionX, collisionY, side, paddle );
             currentCollision = CollisionType.Paddle;
-            Event?.Invoke(this, new EventArgs(EvenType.BrickHealthDecreased, collisionX, collisionY, side, paddle));
+            Event?.Invoke(this, new EventArgs(EvenType.BallBounceOnPaddle, collisionX, collisionY, side, paddle));
         }
 
         if (side != Side.None)

@@ -32,6 +32,10 @@ public class BrickBreaker
     public double getBallAttribute(int index, BallAttribute attribute)
     {
         Ball ball = ballManager.getBall(index);
+        if(ball == null)
+        {
+            return 0;
+        }
 
         switch (attribute)
         {
@@ -193,6 +197,7 @@ public class BrickBreaker
 
     public void update(double deltaTime, PlayerMovement move)
     {
+        if (IsGameOver || isGameWon) return;
         if(ballManager.Update(deltaTime, brickWall, paddle) && !IsGameOver)
         {
             IsGameOver = true;

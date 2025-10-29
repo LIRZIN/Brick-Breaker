@@ -222,7 +222,6 @@ public partial class NewScript : Node
 				break;
 				
 		}
-		//GD.Print($"Brick has been hit! health remaining : {hp}");
 	}
 
 	private void OnBallEvent(object sender, Brick_Breaker.EventArgs e)
@@ -246,12 +245,5 @@ public partial class NewScript : Node
 		}
 	}
 
-	private void CheckWinCondition()
-	{
-		GD.Print(brickBreaker.BrickWall.brickCount);
-		if (brickBreaker.BrickWall.brickCount <= 1)
-		{
-			brickBreaker.IsGameWon = true;
-		}
-	}
+	private void CheckWinCondition() => brickBreaker.IsGameWon = brickBreaker.BrickWall.brickCount <= 1;
 }

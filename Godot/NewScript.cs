@@ -163,9 +163,12 @@ public partial class NewScript : Node
 		ballSprite.Position = new Vector2(
 		GetPositionX(BrickBreaker.getBallAttribute(0, BallAttribute.PositionX)),
 		GetPositionY(BrickBreaker.getBallAttribute(0, BallAttribute.PositionY)));
-	}
 
-	private void SubscribeToEvents()
+		//Check Win Condition
+		CheckWinCondition();
+    }
+
+    private void SubscribeToEvents()
 	{
 		brickBreaker.BrickWall.Event += OnBrickWallLoosesHealthEvent;
 		brickBreaker.BallManager.getBall(0).Event += OnBallEvent;
@@ -241,9 +244,12 @@ public partial class NewScript : Node
 		{
 			GD.Print("Ball hit brick!");
 			GetNode<SoundManager>("AudioStreamPlayer").PlaySound("brick-die");
-			CheckWinCondition();
+			//CheckWinCondition();
 		}
 	}
 
-	private void CheckWinCondition() => brickBreaker.IsGameWon = brickBreaker.BrickWall.brickCount <= 1;
+	private void CheckWinCondition()
+	{
+        brickBreaker.IsGameWon = brickBreaker.BrickWall.brickCount <= 0;
+    }
 }

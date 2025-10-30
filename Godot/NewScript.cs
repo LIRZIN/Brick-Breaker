@@ -49,7 +49,7 @@ public partial class NewScript : Node
 		brickBreaker = new BrickBreaker();
 		window = GetChild(0) as Window;
 		W_pixels = window.Size.X;
-		H_pixels = window.Size.Y;
+		H_pixels = window.Size.Y;	
 
 		brickBreaker.init(W_pixels, H_pixels);
 		BrickBreaker.SetBallSpeed(ballSpeed);
@@ -185,11 +185,17 @@ public partial class NewScript : Node
 		{
 			GD.Print("Game Over!");
 			GetNode<SoundManager>("AudioStreamPlayer").PlaySound("game-over");
-		}
+            var label = GetChild(2) as Label;
+            window.Visible = false;
+            label.Visible = true;
+        }
 		if (e.eventType == EvenType.GameWon)
 		{
 			GD.Print("You Win!");
-			GetNode<SoundManager>("AudioStreamPlayer").PlaySound("game-won");
+            GetNode<SoundManager>("AudioStreamPlayer").PlaySound("game-won");
+			var label = GetChild(1) as Label;
+			window.Visible = false;
+            label.Visible = true;
 		}
 	}
 

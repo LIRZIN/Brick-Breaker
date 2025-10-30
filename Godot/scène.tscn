@@ -12,5 +12,27 @@ oversampling_override = 1.0
 position = Vector2i(0, 36)
 size = Vector2i(1920, 1080)
 
+[node name="WinLabel" type="Label" parent="."]
+visible = false
+offset_top = 448.0
+offset_right = 1924.0
+offset_bottom = 695.0
+theme_override_font_sizes/font_size = 126
+text = "YOU WON!"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Loose Label" type="Label" parent="."]
+visible = false
+offset_top = 448.0
+offset_right = 1924.0
+offset_bottom = 695.0
+theme_override_font_sizes/font_size = 126
+text = "YOU LOST! :("
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 script = ExtResource("2_vs4pp")

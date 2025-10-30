@@ -219,6 +219,7 @@ public class BrickBreaker
         //        IsGameWon = false;
         //    }
         //}
+        IsGameWon = BrickWall.brickCount <= 0;
     }
 }
 

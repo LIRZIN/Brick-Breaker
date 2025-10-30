@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Brick_Breaker;
 
-public partial class NewScript : Node
+public partial class GodotDisplay : Node
 {
 	private BrickBreaker brickBreaker;
 	private int w_pixels, h_pixels;
@@ -12,7 +12,7 @@ public partial class NewScript : Node
 	private ColorRect paddleRect;
 	private readonly Vector2 spriteSize = new Vector2(600, 600);
 	private Sprite2D ballSprite;
-	[Export] public double ballSpeed = 1;
+	[Export] public double ballSpeed = 0.5;
 	[Export] public double PaddleSpeed = 1;
 	[Export] public double ballRadius = 0.02;
 	private List<ColorRect> listBrickRect = new List<ColorRect>();
@@ -48,6 +48,7 @@ public partial class NewScript : Node
 		base._Ready();
 		brickBreaker = new BrickBreaker();
 		window = GetChild(0) as Window;
+		window.Position = new Vector2I(0, 0);
 		W_pixels = window.Size.X;
 		H_pixels = window.Size.Y;	
 
@@ -55,12 +56,10 @@ public partial class NewScript : Node
 		BrickBreaker.SetBallSpeed(ballSpeed);
 		BrickBreaker.SetPaddleSpeed(PaddleSpeed);
 		BrickBreaker.SetBallRadius(ballRadius);
-		GD.Print("test 1");
 		
 		//Draw brickWall
 		for (int i = 0; i < brickBreaker.getBrickWallAttribute(BrickWallAttribute.BrickCount); i++)
 		{
-			GD.Print("test 2");
 			float tempX = GetPositionX(BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionX));
 			float tempY = GetPositionY(BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionY));
 			float tempEndX = GetPositionX(BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionX) +

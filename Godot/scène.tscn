@@ -1,15 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://bxbbu65u58yl6"]
 
-[ext_resource type="Script" uid="uid://bjoxo7vltwkav" path="res://NewScript.cs" id="1_0pnx4"]
+[ext_resource type="Script" uid="uid://bjoxo7vltwkav" path="res://GodotDisplay.cs" id="1_0pnx4"]
 [ext_resource type="Script" uid="uid://bdosshimx0vd3" path="res://SoundManager.cs" id="2_vs4pp"]
 
 [node name="Scène" type="Node2D"]
 script = ExtResource("1_0pnx4")
-ballSpeed = 0.5
 
 [node name="Window" type="Window" parent="."]
 oversampling_override = 1.0
-position = Vector2i(0, 36)
 size = Vector2i(1920, 1080)
 
 [node name="WinLabel" type="Label" parent="."]

@@ -151,7 +151,7 @@ public partial class GodotDisplay : Node
 		{
 			movement = PlayerMovement.Right;
 		}
-		BrickBreaker.update(delta, movement);
+		BrickBreaker.update(delta, movement, record: false);
 
 		//Update Paddle
 		paddleRect.Position = new Vector2(

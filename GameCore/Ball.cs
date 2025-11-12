@@ -133,6 +133,7 @@ public class Ball
                                                      ref collisionX, ref collisionY, ref collisionU, ref side) )
             {
                 brickCollisionIndex = i;
+
                 Event?.Invoke(this, new EventArgs(EvenType.BallHitBrick, collisionX, collisionY, side));
             }
         }

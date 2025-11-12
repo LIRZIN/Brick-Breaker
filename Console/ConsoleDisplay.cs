@@ -74,7 +74,7 @@ public class ConsoleDisplay
         {
             movement = PlayerMovement.Right;
         }
-        BrickBreaker.update(deltaTime, movement);
+        BrickBreaker.update(deltaTime, movement, record: true);
 
         initCharDisplay();
         

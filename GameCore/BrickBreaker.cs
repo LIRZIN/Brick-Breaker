@@ -11,6 +11,8 @@ public class BrickBreaker
     private bool isGameOver = false;
     private bool isGameWon = false;
 
+    private DataRecorder dataRecorder;
+
     public int nbBalls { get => ballManager.nbBalls; }
 
     public BrickWall BrickWall { get => brickWall; }
@@ -130,7 +132,7 @@ public class BrickBreaker
         }
     }
 
-    public void init(int W_pixels, int H_pixels)
+    public void init(int W_pixels, int H_pixels, bool record = false)
     {
         double min = (W_pixels < H_pixels) ? W_pixels : H_pixels;
         Utils.screenSizeWidth = (double)W_pixels / min;
@@ -142,6 +144,10 @@ public class BrickBreaker
 
         IsGameWon = false;
         IsGameOver = false;
+
+        if (!record) return;
+        dataRecorder = new DataRecorder(brickWall.brickCount);
+        Console.WriteLine("Warning: initializing Data Recorder. This may slow down the game.Verify that the parameter passed is the max amount of brick possible");
     }
 
     public int addLevel(string filePath)
@@ -201,7 +207,7 @@ public class BrickBreaker
         return newIndex;
     }
 
-    public void update(double deltaTime, PlayerMovement move)
+    public void update(double deltaTime, PlayerMovement move, bool record)
     {
         if (IsGameOver || isGameWon) return;
         if(ballManager.Update(deltaTime, brickWall, paddle) && !IsGameOver)
@@ -209,6 +215,11 @@ public class BrickBreaker
             IsGameOver = true;
         }
         paddle.update(deltaTime, move);
+        if(record && dataRecorder != null)
+        {
+            var ball = ballManager.getBall(0);
+            dataRecorder.RecordData(ball.PositionX, ball.PositionY, ball.DirectionX, ball.DirectionY, paddle.x, paddle.y,[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,]);
+        }
 
         //TODO: check if game is won based on number of bricks left. Set to Win = true only if false first. (faslse -> true only)
         //IsGameWon = true;

@@ -14,17 +14,20 @@ namespace Brick_Breaker
 
         public DataRecorder(int maxNbBricks)
         {
-            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"game_data{DateTime.Now:'dd'-'MM'-'yy'T'HH':'mm'}.csv");
+            string fileName = $"game_data_{DateTime.Now.ToString("hh-mm")}.csv";
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
             _stream = new FileStream(path, FileMode.Create, FileAccess.Write);
             _writer = new StreamWriter(_stream);
 
             var bricksHeader = "";
             for (int i = 0; i < maxNbBricks; i++)
             {
-                bricksHeader += $",Brick{i}";
+                bricksHeader += $";Brick{i}";
             }
 
-            _writer.WriteLine($"BallPosX,BallPosY,BallVelX,BallVelY,PaddlePosX,PaddlePosY{bricksHeader}");
+            //First line
+            _writer.WriteLine($"BallPosX;BallPosY;BallVelX;BallVelY;PaddlePosX;PaddlePosY{bricksHeader}");
+            _writer.Flush();
         }
 
         /// <summary>
@@ -45,10 +48,10 @@ namespace Brick_Breaker
         {
             var sb = new StringBuilder();
 
-            sb.Append($"{ballPosX},{ballPosY},{ballVelX},{ballVelY},{paddlePosX},{paddlePosY}");
+            sb.Append($"{ballPosX};{ballPosY};{ballVelX};{ballVelY};{paddlePosX};{paddlePosY}");
             for (int i = 0; i < bricks.Length; i++)
             {
-                sb.Append(',');
+                sb.Append(';');
                 sb.Append(bricks[i]);
             }
 

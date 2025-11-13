@@ -57,7 +57,7 @@ public class ConsoleDisplay
         brickBreaker = new BrickBreaker();
         W_pixels = init_w_pixels; 
         H_pixels = init_h_pixels;
-        brickBreaker.init(W_pixels, H_pixels);
+        brickBreaker.init(W_pixels, H_pixels, true);
 
         deltaTime = 1;
     }

@@ -9,13 +9,21 @@ namespace Brick_Breaker
 {
     internal class DataRecorder : IDisposable
     {
-        private FileStream _stream;
-        private StreamWriter _writer;
+        private readonly FileStream _stream;
+        private readonly StreamWriter _writer;
 
         public DataRecorder(int maxNbBricks)
         {
-            string fileName = $"game_data_{DateTime.Now.ToString("hh-mm")}.csv";
+            string fileName = $"game_data_{DateTime.Now:hh-mm-ss}.csv";
+
+            //for console : Brick-Breaker\Console\bin\Debug\net9.0-windows\
+            //for godot   : Brick-Breaker\Godot\.godot\mono\temp\bin\Debug\
             string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
+
+            //uncomment the line down below to set the path in a better directory. WARNING: works for console, not for godot
+            //path should look like this : Brick-Breaker\Dataset\[FileName].csv
+            //path = Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName+ "\\Dataset", fileName);
+
             _stream = new FileStream(path, FileMode.Create, FileAccess.Write);
             _writer = new StreamWriter(_stream);
 
@@ -26,7 +34,7 @@ namespace Brick_Breaker
             }
 
             //First line
-            _writer.WriteLine($"BallPosX;BallPosY;BallVelX;BallVelY;PaddlePosX;PaddlePosY{bricksHeader}");
+            _writer.WriteLine($"BallPosX;BallPosY;BallVelX;BallVelY;PaddlePosX{bricksHeader}");
             _writer.Flush();
         }
 
@@ -43,12 +51,12 @@ namespace Brick_Breaker
         public void RecordData(
             double ballPosX, double ballPosY,
             double ballVelX, double ballVelY,
-            double paddlePosX, double paddlePosY,
+            double paddlePosX,
             int[] bricks)
         {
             var sb = new StringBuilder();
 
-            sb.Append($"{ballPosX};{ballPosY};{ballVelX};{ballVelY};{paddlePosX};{paddlePosY}");
+            sb.Append($"{ballPosX};{ballPosY};{ballVelX};{ballVelY};{paddlePosX}");
             for (int i = 0; i < bricks.Length; i++)
             {
                 sb.Append(';');

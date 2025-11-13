@@ -218,18 +218,9 @@ public class BrickBreaker
         if(record && dataRecorder != null)
         {
             var ball = ballManager.getBall(0);
-            dataRecorder.RecordData(ball.PositionX, ball.PositionY, ball.DirectionX, ball.DirectionY, paddle.x, paddle.y,[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,]);
+            dataRecorder.RecordData(ball.PositionX, ball.PositionY, ball.DirectionX, ball.DirectionY, paddle.x,[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,]);
         }
 
-        //TODO: check if game is won based on number of bricks left. Set to Win = true only if false first. (faslse -> true only)
-        //IsGameWon = true;
-        //foreach (var brickHealth in brickWall.brickHealth)
-        //{
-        //    if (brickHealth >= 0)
-        //    {
-        //        IsGameWon = false;
-        //    }
-        //}
         IsGameWon = BrickWall.brickCount <= 0;
     }
 }

@@ -52,7 +52,7 @@ public partial class GodotDisplay : Node
 		W_pixels = window.Size.X;
 		H_pixels = window.Size.Y;	
 
-		brickBreaker.init(W_pixels, H_pixels);
+		brickBreaker.init(W_pixels, H_pixels, true);
 		BrickBreaker.SetBallSpeed(ballSpeed);
 		BrickBreaker.SetPaddleSpeed(PaddleSpeed);
 		BrickBreaker.SetBallRadius(ballRadius);
@@ -151,7 +151,7 @@ public partial class GodotDisplay : Node
 		{
 			movement = PlayerMovement.Right;
 		}
-		BrickBreaker.update(delta, movement, record: false);
+		BrickBreaker.update(delta, movement, true);
 
 		//Update Paddle
 		paddleRect.Position = new Vector2(

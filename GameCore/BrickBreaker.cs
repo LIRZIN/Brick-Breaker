@@ -146,7 +146,7 @@ public class BrickBreaker
         IsGameOver = false;
 
         if (!record) return;
-        dataRecorder = new DataRecorder(brickWall.brickCount);
+        dataRecorder = new DataRecorder();
         Console.WriteLine("Warning: initializing Data Recorder. This may slow down the game.Verify that the parameter passed is the max amount of brick possible");
     }
 
@@ -217,8 +217,10 @@ public class BrickBreaker
         paddle.update(deltaTime, move);
         if(record && dataRecorder != null)
         {
+            var inputL = move == PlayerMovement.Left ? 1 : 0;
+            var inputR = move == PlayerMovement.Right ? 1 : 0;
             var ball = ballManager.getBall(0);
-            dataRecorder.RecordData(ball.PositionX, ball.PositionY, ball.DirectionX, ball.DirectionY, paddle.x,[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,]);
+            dataRecorder.RecordData(inputL, inputR, ball.PositionX, ball.PositionY, ball.DirectionX, ball.DirectionY, ball.Speed, ball.Radius, paddle.x, paddle.y, paddle.w, paddle.h, paddle.v, BrickWall.GetCurrentBricksHealth());
         }
 
         IsGameWon = BrickWall.brickCount <= 0;

@@ -121,4 +121,14 @@ public class BrickWall
             System.Console.WriteLine("(x, y, next_x, next_y, color, health ):" + bricks[i].x + ", " + bricks[i].y + ", " + ( bricks[i].x + bricks[i].w ) + ", " + ( bricks[i].y +bricks[i].h ) + ", " + bricks[i].color + ", " + bricks[i].health + "\n");
         }
     }
+
+    public int[] GetCurrentBricksHealth()
+    {
+        var r = new int[brickCount];
+        for (int i = 0; i < brickCount; i++)
+        {
+            r[i] = getBrick(i).health;
+        }
+        return r;
+    }
 }

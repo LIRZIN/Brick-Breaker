@@ -128,7 +128,6 @@ public partial class GodotDisplay : Node
 		window.AddChild(ballSprite);
 
 		SubscribeToEvents();
-		//GetNode<SoundManager>("AudioStreamPlayer").PlaySound("game-over");
 	}
 
 	public override void _Process(double delta)

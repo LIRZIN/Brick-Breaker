@@ -215,7 +215,7 @@ public class BrickBreaker
             IsGameOver = true;
         }
         paddle.update(deltaTime, move);
-        if(record && dataRecorder != null)
+        if(record && dataRecorder != null && !isGameOver && !isGameWon)
         {
             var inputL = move == PlayerMovement.Left ? 1 : 0;
             var inputR = move == PlayerMovement.Right ? 1 : 0;

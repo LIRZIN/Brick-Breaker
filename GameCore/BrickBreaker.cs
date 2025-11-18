@@ -1,5 +1,6 @@
 using System.Drawing;
 using System.IO;
+using System.Security.Cryptography;
 
 namespace Brick_Breaker;
 
@@ -138,7 +139,8 @@ public class BrickBreaker
         Utils.screenSizeWidth = (double)W_pixels / min;
         Utils.screenSizeHeight = (double)H_pixels / min;
 
-        brickWall.init(1);
+        Random rnd = new Random();
+        brickWall.init(rnd.Next(2));
         paddle.init();
         ballManager.init(paddle);
 

@@ -133,7 +133,7 @@ public class BrickBreaker
         }
     }
 
-    public void init(int W_pixels, int H_pixels, bool record)
+    public void init(int W_pixels, int H_pixels, bool record, string platformName = "unknown")
     {
         double min = (W_pixels < H_pixels) ? W_pixels : H_pixels;
         Utils.screenSizeWidth = (double)W_pixels / min;
@@ -149,7 +149,7 @@ public class BrickBreaker
         IsGameOver = false;
 
         if (!record) return;
-        dataRecorder = new DataRecorder();
+        dataRecorder = new DataRecorder(platformName);
         Console.WriteLine("Warning: initializing Data Recorder. This may slow down the game.Verify that the parameter passed is the max amount of brick possible");
     }
 

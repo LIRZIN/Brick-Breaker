@@ -15,7 +15,7 @@ public partial class GodotDisplay : Node
 	[Export] public double ballSpeed = 0.5;
 	[Export] public double PaddleSpeed = 1;
 	[Export] public double ballRadius = 0.02;
-	[Export] public bool racordData = false;
+	[Export] public bool recordData = false;
     private List<ColorRect> listBrickRect = new List<ColorRect>();
 
 	public BrickBreaker BrickBreaker
@@ -53,7 +53,7 @@ public partial class GodotDisplay : Node
 		W_pixels = window.Size.X;
 		H_pixels = window.Size.Y;	
 
-		brickBreaker.init(W_pixels, H_pixels, racordData);
+		brickBreaker.init(W_pixels, H_pixels, recordData, "godot");
 		BrickBreaker.SetBallSpeed(ballSpeed);
 		BrickBreaker.SetPaddleSpeed(PaddleSpeed);
 		BrickBreaker.SetBallRadius(ballRadius);

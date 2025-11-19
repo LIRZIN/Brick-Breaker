@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.IO;
+using System.Text;
 
 namespace Brick_Breaker
 {
@@ -16,17 +17,24 @@ namespace Brick_Breaker
 
         public bool IsRecording { get; internal set; }
 
-        public DataRecorder()
+        public DataRecorder(string platform)
         {
-            string fileName = $"game_data_{DateTime.Now:dd-MM-hh-mm-ss}.csv";
+            string fileName = $"game_data_{platform}_{DateTime.Now:dd-MM-hh-mm-ss}.csv";
 
-            //Path console version  : Brick-Breaker\Console\bin\Debug\net9.0-windows\
-            //Path godot version    : Brick-Breaker\Godot\.godot\mono\temp\bin\Debug\
-            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
+            var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+
+            if (!Directory.Exists(baseDir + "\\Dataset"))
+            {
+                Directory.CreateDirectory(baseDir + "\\Dataset");
+            }
+
+            //Path console version  : Brick-Breaker\Console\bin\Debug\net9.0-windows\Dataset
+            //Path godot version    : Brick-Breaker\Godot\.godot\mono\temp\bin\Debug\Dataset
+            string path = Path.Combine(baseDir + "\\Dataset", fileName);
 
             //uncomment the line down below to set the path in a better directory. WARNING: works for console, not for godot
             //path should look like this : Brick-Breaker\Dataset\[FileName].csv
-            //path = Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName+ "\\Dataset", fileName);
+            //string path = Path.Combine(Directory.GetParent(Environment.CurrentDirectory)?.Parent?.Parent.FullName+ "\\Dataset", fileName);
 
             _stream = new FileStream(path, FileMode.Create, FileAccess.Write);
             _writer = new StreamWriter(_stream);

@@ -26,6 +26,7 @@ public class ConsoleInput : Form
 
     public static bool pressingLeft{ get => isLeftPressed && !isRightPressed; }
     public static bool pressingRight{ get => !isLeftPressed && isRightPressed; }
+    public static bool isQuit = false;
     
     private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
     private static LowLevelKeyboardProc _proc = new LowLevelKeyboardProc(HookCallback);
@@ -102,6 +103,7 @@ public class ConsoleInput : Form
                         case 0x26: OnArrowPressed("Up"); break;
                         case 0x27: OnArrowPressed("Right"); break;
                         case 0x28: OnArrowPressed("Down"); break;
+                        case 0x1b: isQuit = true; break;
                     }
                 }
             }

@@ -133,14 +133,15 @@ public class BrickBreaker
         }
     }
 
-    public void init(int W_pixels, int H_pixels, bool record = false)
+    public void init(int W_pixels, int H_pixels, bool record)
     {
         double min = (W_pixels < H_pixels) ? W_pixels : H_pixels;
         Utils.screenSizeWidth = (double)W_pixels / min;
         Utils.screenSizeHeight = (double)H_pixels / min;
 
         Random rnd = new Random();
-        brickWall.init(rnd.Next(2));
+        //brickWall.init(rnd.Next(2));
+        brickWall.init(1);
         paddle.init();
         ballManager.init(paddle);
 
@@ -209,7 +210,7 @@ public class BrickBreaker
         return newIndex;
     }
 
-    public void update(double deltaTime, PlayerMovement move, bool record)
+    public void update(double deltaTime, PlayerMovement move)
     {
         if (IsGameOver || isGameWon) return;
         if(ballManager.Update(deltaTime, brickWall, paddle) && !IsGameOver)
@@ -217,8 +218,9 @@ public class BrickBreaker
             IsGameOver = true;
         }
         paddle.update(deltaTime, move);
-        if(record && dataRecorder != null && !isGameOver && !isGameWon)
+        if(dataRecorder != null && !isGameOver && !isGameWon)
         {
+            if (!dataRecorder.IsRecording) return;
             var inputL = move == PlayerMovement.Left ? 1 : 0;
             var inputR = move == PlayerMovement.Right ? 1 : 0;
             var ball = ballManager.getBall(0);

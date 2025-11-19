@@ -14,6 +14,8 @@ namespace Brick_Breaker
         private readonly StreamWriter _writer;
         private const int THEORICAL_MAX_NB_BRICKS = 100;
 
+        public bool IsRecording { get; internal set; }
+
         public DataRecorder()
         {
             string fileName = $"game_data_{DateTime.Now:dd-MM-hh-mm-ss}.csv";
@@ -38,6 +40,7 @@ namespace Brick_Breaker
             //First line
             _writer.WriteLine($"InputL;InputR;BallPosX;BallPosY;BallVelX;BallVelY;ballSpeed;ballRadius;PaddlePosX;PaddlePosY;PaddleW;PaddleH;PaddleV{bricksHeader}");
             _writer.Flush();
+            IsRecording = true;
         }
 
         /// <summary>
@@ -67,10 +70,8 @@ namespace Brick_Breaker
             int[] bricks)
         {
             var sb = new StringBuilder();
-
             sb.Append($"{inputL};{inputR};{ballPosX};{ballPosY};{ballVelX};{ballVelY};{ballSpeed};{ballRadius};{paddlePosX};{paddlePosY};{paddleW};{paddleH};{paddleV}");
 
-            //set brick healths (0 = dead brick)
             var maxBrickList = new int[THEORICAL_MAX_NB_BRICKS];
 
             for (int i = 0; i < maxBrickList.Length; i++)
@@ -88,6 +89,7 @@ namespace Brick_Breaker
 
         public void Dispose()
         {
+            IsRecording = false;
             _writer?.Dispose();
         }
     }

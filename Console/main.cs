@@ -13,21 +13,20 @@ public class main
         ConsoleInput.beginListening();
         
         ConsoleDisplay display = new ConsoleDisplay();
-        display.Init(150,25);
         int refreshRate = 60;
-        bool isQuit = false;
-        
-        System.Console.WriteLine("If you want to train press t, if you want to play press any other letter");
+
+        System.Console.WriteLine("If you want to train press 'r', if you want to play press any other letter");
         char temp = new char();
         temp = System.Console.ReadKey().KeyChar;
 
-        if (temp == 't')
+        if (temp == 'r')
         {
+            display.Init(150, 25, true);
             while (!ConsoleInput.isQuit)
             {
                 if (display.BrickBreaker.IsGameWon || display.BrickBreaker.IsGameOver)
                 {
-                    display.Init(150,25);
+                    display.Init(150,25, true);
                 }
                 System.Console.Clear();
                 display.Update( 1.0/(float)refreshRate );
@@ -37,6 +36,7 @@ public class main
         }
         else
         {
+            display.Init(150, 25, false);
             while (!display.BrickBreaker.IsGameWon && !display.BrickBreaker.IsGameOver)
             {
                 System.Console.Clear();

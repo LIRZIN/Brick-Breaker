@@ -52,12 +52,12 @@ public class ConsoleDisplay
         }
     }
     
-    public void Init( int init_w_pixels, int init_h_pixels )
+    public void Init( int init_w_pixels, int init_h_pixels, bool record)
     {
         brickBreaker = new BrickBreaker();
         W_pixels = init_w_pixels; 
         H_pixels = init_h_pixels;
-        brickBreaker.init(W_pixels, H_pixels, true);
+        brickBreaker.init(W_pixels, H_pixels, record);
 
         deltaTime = 1;
     }
@@ -74,7 +74,7 @@ public class ConsoleDisplay
         {
             movement = PlayerMovement.Right;
         }
-        BrickBreaker.update(deltaTime, movement, record: true);
+        BrickBreaker.update(deltaTime, movement);
 
         initCharDisplay();
         

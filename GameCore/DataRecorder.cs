@@ -13,7 +13,7 @@ namespace Brick_Breaker
     {
         private readonly FileStream _stream;
         private readonly StreamWriter _writer;
-        private const int THEORICAL_MAX_NB_BRICKS = 100;
+        private const int THEORICAL_MAX_NB_BRICKS = 49;
 
         public bool IsRecording { get; internal set; }
 

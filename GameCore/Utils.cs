@@ -1,4 +1,5 @@
 using System.Drawing;
+using System.Runtime.Intrinsics.Arm;
 
 namespace Brick_Breaker;
 
@@ -114,12 +115,13 @@ static public class Utils
         1, 2,
         3, 4
     });
-    private static List<ColorEnum> bw3_color = new List<ColorEnum>(new ColorEnum[]
+    private static List<ColorEnum> bw0_color = new List<ColorEnum>(new ColorEnum[]
     {
         ColorEnum.Blue, ColorEnum.Aqua,
         ColorEnum.Chocolate, ColorEnum.DarkKhaki
     });
 
+    
     // Brick Wall n°1
     private static double bw1_x = 0.01;
     private static double bw1_y = 0.01;
@@ -135,21 +137,62 @@ static public class Utils
         1, 1, 1, 1,
         0, 1, 1, 0,
     });
-
-    private static List<ColorEnum> bw2_color = new List<ColorEnum>(new ColorEnum[]
+    private static List<ColorEnum> bw1_color = new List<ColorEnum>(new ColorEnum[]
     {
         ColorEnum.Blue, ColorEnum.Red, ColorEnum.Blue, ColorEnum.Red,
         ColorEnum.Red, ColorEnum.Blue, ColorEnum.Red, ColorEnum.Blue,
         ColorEnum.Blue, ColorEnum.Red, ColorEnum.Blue, ColorEnum.Red,
         ColorEnum.Red, ColorEnum.Blue, ColorEnum.Red, ColorEnum.Blue,
     });
+    
+    
+    // Brick Wall n°2
+    private static double bw2_x = 0.01;
+    private static double bw2_y = 0.01;
+    private static double bw2_w = 0.98;
+    private static double bw2_h = 0.6;
+    private static int bw2_nbVerticalBricks = 7;
+    private static int bw2_nbHorizontalBricks = 7;
+    private static double bw2_spaceBetweenBricks = 0.03;
+    private static List<int> bw2_health = new List<int>(new int[]
+    {
+        0, 2, 3, 0, 3, 2, 0,
+        0, 2, 3, 0, 3, 2, 0,
+        1, 1, 0, 0, 0, 1, 1,
+        1, 1, 1, 0, 1, 1, 1,
+        1, 1, 0, 0, 0, 1, 1,
+        0, 0, 1, 0, 1, 0, 0,
+        0, 0, 1, 0, 1, 0, 0,
+    });
+    
+    private static List<ColorEnum> bw2_color = new List<ColorEnum>(new ColorEnum[]
+    {
+        ColorEnum.Blue, ColorEnum.Red, ColorEnum.Blue, ColorEnum.Red, ColorEnum.Red, ColorEnum.Red, ColorEnum.Red,
+        ColorEnum.Red, ColorEnum.Blue, ColorEnum.Red, ColorEnum.Blue, ColorEnum.Red, ColorEnum.Red, ColorEnum.Red,
+        ColorEnum.Blue, ColorEnum.Red, ColorEnum.Blue, ColorEnum.Red, ColorEnum.Red, ColorEnum.Red, ColorEnum.Red,
+        ColorEnum.Red, ColorEnum.Blue, ColorEnum.Red, ColorEnum.Blue, ColorEnum.Red, ColorEnum.Red, ColorEnum.Red,
+        ColorEnum.Red, ColorEnum.Blue, ColorEnum.Red, ColorEnum.Blue, ColorEnum.Red, ColorEnum.Red, ColorEnum.Red,
+        ColorEnum.Blue, ColorEnum.Red, ColorEnum.Blue, ColorEnum.Red, ColorEnum.Red, ColorEnum.Red, ColorEnum.Red,
+        ColorEnum.Red, ColorEnum.Blue, ColorEnum.Red, ColorEnum.Blue, ColorEnum.Red, ColorEnum.Red, ColorEnum.Red,
+    });
 
     public static BrickWallParameters getBrickWallParameters(int index)
     {
         switch (index)
         {
-            case 1: return new BrickWallParameters(bw1_x, bw1_y, bw1_w, bw1_h, bw1_nbVerticalBricks, bw1_nbHorizontalBricks, bw1_spaceBetweenBricks, bw1_health, bw2_color);
-            default: return new BrickWallParameters(bw0_x, bw0_y, bw0_w, bw0_h, bw0_nbVerticalBricks, bw0_nbHorizontalBricks, bw0_spaceBetweenBricks, bw0_health, bw3_color);
+            case 0: return new BrickWallParameters(bw0_x, bw0_y, bw0_w, bw0_h, bw0_nbVerticalBricks, bw0_nbHorizontalBricks, bw0_spaceBetweenBricks, bw0_health, bw0_color);
+            case 1: return new BrickWallParameters(bw1_x, bw1_y, bw1_w, bw1_h, bw1_nbVerticalBricks, bw1_nbHorizontalBricks, bw1_spaceBetweenBricks, bw1_health, bw1_color);
+            case 2:
+            {
+                bw2_health.Clear();
+                Random rnd = new Random();
+                for (int i = 0; i < bw2_nbHorizontalBricks * bw2_nbVerticalBricks; i++)
+                {
+                    bw2_health.Add(rnd.Next(0, 4));
+                }
+                return new BrickWallParameters(bw2_x, bw2_y, bw2_w, bw2_h, bw2_nbVerticalBricks, bw2_nbHorizontalBricks, bw2_spaceBetweenBricks, bw2_health, bw2_color);
+            }
+            default: return new BrickWallParameters(bw1_x, bw1_y, bw1_w, bw1_h, bw1_nbVerticalBricks, bw1_nbHorizontalBricks, bw1_spaceBetweenBricks, bw1_health, bw1_color);
         }
     }
     // METHODS

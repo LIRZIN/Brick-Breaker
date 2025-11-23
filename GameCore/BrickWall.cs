@@ -79,6 +79,7 @@ public class BrickWall
         parameters.Clear();
         parameters.Add( Utils.getBrickWallParameters(0));
         parameters.Add( Utils.getBrickWallParameters(1));
+        parameters.Add( Utils.getBrickWallParameters(2));
     }
 
     private void buildWall()

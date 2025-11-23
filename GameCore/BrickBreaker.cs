@@ -140,7 +140,7 @@ public class BrickBreaker
 
         Random rnd = new Random();
         //brickWall.init(rnd.Next(2));
-        brickWall.init(1);
+        brickWall.init(2);
         paddle.init();
         ballManager.init(paddle);
 

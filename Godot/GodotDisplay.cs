@@ -17,6 +17,7 @@ public partial class GodotDisplay : Node
 	public double ballRadius = 0.02;
 	[Export] public bool recordData = false;
     private List<ColorRect> listBrickRect = new List<ColorRect>();
+    [Export] public Color PaddleColor = new Color(0.247f, 0.133f, 0.016f);
 
 	public BrickBreaker BrickBreaker
 	{
@@ -101,7 +102,7 @@ public partial class GodotDisplay : Node
 
 		paddleRect.Position = new Vector2(posX, posY);
 
-		paddleRect.Color = new Color(0, 1, 0);
+		paddleRect.Color = PaddleColor;
 
 		window.AddChild(paddleRect);
 

@@ -12,9 +12,9 @@ public partial class GodotDisplay : Node
 	private ColorRect paddleRect;
 	private readonly Vector2 spriteSize = new Vector2(600, 600);
 	private Sprite2D ballSprite;
-	[Export] public double ballSpeed = 0.5;
-	[Export] public double PaddleSpeed = 1;
-	[Export] public double ballRadius = 0.02;
+	public double ballSpeed = 0.5;
+	public double PaddleSpeed = 1;
+	public double ballRadius = 0.02;
 	[Export] public bool recordData = false;
     private List<ColorRect> listBrickRect = new List<ColorRect>();
 
@@ -44,21 +44,15 @@ public partial class GodotDisplay : Node
 		return (float)((PositionY * (H_pixels - 1)) / Utils.screenSizeHeight);
 	}
 
-	public override void _Ready()
+	public void GodotInit()
 	{
-		base._Ready();
-		brickBreaker = new BrickBreaker();
-		window = GetChild(0) as Window;
-		window.Position = new Vector2I(0, 0);
-		W_pixels = window.Size.X;
-		H_pixels = window.Size.Y;	
-
 		brickBreaker.init(W_pixels, H_pixels, recordData, "godot");
 		BrickBreaker.SetBallSpeed(ballSpeed);
 		BrickBreaker.SetPaddleSpeed(PaddleSpeed);
 		BrickBreaker.SetBallRadius(ballRadius);
 		
 		//Draw brickWall
+		listBrickRect = new List<ColorRect>();
 		for (int i = 0; i < brickBreaker.getBrickWallAttribute(BrickWallAttribute.BrickCount); i++)
 		{
 			float tempX = GetPositionX(BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionX));
@@ -131,10 +125,41 @@ public partial class GodotDisplay : Node
 		SubscribeToEvents();
 	}
 
+	public void ClearGame()
+	{
+		brickBreaker.BrickWall.Event -= OnBrickWallLoosesHealthEvent;
+		foreach (var VARIABLE in listBrickRect)
+		{
+			VARIABLE.QueueFree();
+		}
+		brickBreaker.BallManager.ClearBalls();
+		listBrickRect.Clear();
+		ballSprite.QueueFree();
+		paddleRect.QueueFree();
+	}
+
+	public override void _Ready()
+	{
+		base._Ready();
+		brickBreaker = new BrickBreaker();
+		window = GetChild(0) as Window;
+		window.Position = new Vector2I(0, 0);
+		W_pixels = window.Size.X;
+		H_pixels = window.Size.Y;	
+
+		GodotInit();
+	}
+
 	public override void _Process(double delta)
 	{
 		base._Process(delta);
-		
+
+		if ((brickBreaker.IsGameOver || brickBreaker.IsGameWon) && recordData)
+		{
+			ClearGame();
+			GodotInit();
+		}
+			
 		//input pour quitter le jeu
 		if (Input.IsActionPressed("QuitGame"))
 		{
@@ -180,21 +205,24 @@ public partial class GodotDisplay : Node
 
 	private void OnMainGameEvent(object sender, Brick_Breaker.EventArgs e)
 	{
-		if (e.eventType == EvenType.GameOver)
+		if (!recordData)
 		{
-			GD.Print("Game Over!");
-			GetNode<SoundManager>("AudioStreamPlayer").PlaySound("game-over");
-            var label = GetChild(2) as Label;
-            window.Visible = false;
-            label.Visible = true;
-        }
-		if (e.eventType == EvenType.GameWon)
-		{
-			GD.Print("You Win!");
-            GetNode<SoundManager>("AudioStreamPlayer").PlaySound("game-won");
-			var label = GetChild(1) as Label;
-			window.Visible = false;
-            label.Visible = true;
+			if (e.eventType == EvenType.GameOver)
+			{
+				GD.Print("Game Over!");
+				GetNode<SoundManager>("AudioStreamPlayer").PlaySound("game-over");
+		        var label = GetChild(2) as Label;
+		        window.Visible = false;
+		        label.Visible = true;
+		    }
+			if (e.eventType == EvenType.GameWon)
+			{
+				GD.Print("You Win!");
+		        GetNode<SoundManager>("AudioStreamPlayer").PlaySound("game-won");
+				var label = GetChild(1) as Label;
+				window.Visible = false;
+		        label.Visible = true;
+			}
 		}
 	}
 

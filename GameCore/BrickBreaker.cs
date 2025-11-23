@@ -34,7 +34,6 @@ public class BrickBreaker
 
     public void SetBallRadius(double radius)
     {
-        
         ballManager.getBall(0).Radius = radius;
     }
 

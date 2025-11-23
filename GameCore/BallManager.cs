@@ -19,6 +19,11 @@ public class BallManager
         return balls[index];
     }
 
+    public void ClearBalls()
+    {
+        balls.Clear();
+    }
+
     public void init( Paddle paddle )
     {
         double radius = 0.02;

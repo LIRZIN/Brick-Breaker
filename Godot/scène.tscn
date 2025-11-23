@@ -5,7 +5,6 @@
 
 [node name="Scène" type="Node2D"]
 script = ExtResource("1_0pnx4")
-recordData = true
 
 [node name="Window" type="Window" parent="."]
 oversampling_override = 1.0

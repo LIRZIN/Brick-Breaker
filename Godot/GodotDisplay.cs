@@ -16,10 +16,14 @@ public partial class GodotDisplay : Node
 	public double PaddleSpeed = 1;
 	public double ballRadius = 0.02;
 	[Export] public bool recordData = false;
+	[Export] public bool aiPlaying = false;
     private List<ColorRect> listBrickRect = new List<ColorRect>();
     [Export] public Color PaddleColor = new Color(0.247f, 0.133f, 0.016f);
+	[Export] public AIBehavior aiBehavior = AIBehavior.None;
 
-	public BrickBreaker BrickBreaker
+	private AiAgent aiAgent;
+
+    public BrickBreaker BrickBreaker
 	{
 		get => brickBreaker;
 	}
@@ -51,9 +55,12 @@ public partial class GodotDisplay : Node
 		BrickBreaker.SetBallSpeed(ballSpeed);
 		BrickBreaker.SetPaddleSpeed(PaddleSpeed);
 		BrickBreaker.SetBallRadius(ballRadius);
-		
-		//Draw brickWall
-		listBrickRect = new List<ColorRect>();
+
+		if(aiPlaying)
+            aiAgent = new AiAgent(aiBehavior);
+
+        //Draw brickWall
+        listBrickRect = new List<ColorRect>();
 		for (int i = 0; i < brickBreaker.getBrickWallAttribute(BrickWallAttribute.BrickCount); i++)
 		{
 			float tempX = GetPositionX(BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionX));
@@ -167,16 +174,29 @@ public partial class GodotDisplay : Node
 			GetTree().Quit();
 		}
 
-		//Update BrickBreaker et input
-		PlayerMovement movement = PlayerMovement.Nothing;
-		if (Input.IsActionPressed("MoveLeft"))
+        //Update BrickBreaker et input
+        PlayerMovement movement = PlayerMovement.Nothing;
+        if (aiPlaying)
 		{
-			movement = PlayerMovement.Left;
-		}
-		else if (Input.IsActionPressed("MoveRight"))
+			movement = aiAgent.Predict(ballVelX: BrickBreaker.getBallAttribute(0, BallAttribute.DirectionX),
+							ballVelY: BrickBreaker.getBallAttribute(0, BallAttribute.DirectionY),
+							ballPosX: BrickBreaker.getBallAttribute(0, BallAttribute.PositionX),
+							ballPosY: BrickBreaker.getBallAttribute(0, BallAttribute.PositionY),
+							paddlePosX: BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionX),
+							bricks: new int[] { 0, 0 });
+        }
+        else
 		{
-			movement = PlayerMovement.Right;
-		}
+            if (Input.IsActionPressed("MoveLeft"))
+            {
+                movement = PlayerMovement.Left;
+            }
+            else if (Input.IsActionPressed("MoveRight"))
+            {
+                movement = PlayerMovement.Right;
+            }
+        }
+		
 		BrickBreaker.update(delta, movement);
 
 		//Update Paddle

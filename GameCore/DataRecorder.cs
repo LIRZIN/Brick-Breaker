@@ -46,7 +46,7 @@ namespace Brick_Breaker
             }
 
             //First line
-            _writer.WriteLine($"InputL;InputR;BallPosX;BallPosY;BallVelX;BallVelY;ballSpeed;ballRadius;PaddlePosX;PaddlePosY;PaddleW;PaddleH;PaddleV{bricksHeader}");
+            _writer.WriteLine($"InputL;InputR;BallPosX;BallPosY;BallVelX;BallVelY;PaddlePosX;{bricksHeader}");
             _writer.Flush();
             IsRecording = true;
         }
@@ -78,7 +78,7 @@ namespace Brick_Breaker
             int[] bricks)
         {
             var sb = new StringBuilder();
-            sb.Append($"{inputL};{inputR};{ballPosX};{ballPosY};{ballVelX};{ballVelY};{ballSpeed};{ballRadius};{paddlePosX};{paddlePosY};{paddleW};{paddleH};{paddleV}");
+            sb.Append($"{inputL};{inputR};{ballPosX};{ballPosY};{ballVelX};{ballVelY};{paddlePosX}");
 
             var maxBrickList = new int[THEORICAL_MAX_NB_BRICKS];
 

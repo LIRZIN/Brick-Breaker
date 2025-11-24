@@ -49,6 +49,5 @@ internal class AiAgent
         {
             return PlayerMovement.Nothing;
         }
-        return PlayerMovement.Nothing;
     }
 }

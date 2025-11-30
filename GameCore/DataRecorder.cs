@@ -46,7 +46,7 @@ namespace Brick_Breaker
             }
 
             //First line
-            _writer.WriteLine($"InputL;InputR;BallPosX;BallPosY;BallVelX;BallVelY;PaddlePosX;{bricksHeader}");
+            _writer.WriteLine($"InputL;InputR;BallPosX;BallPosY;BallVelX;BallVelY;PaddlePosX{bricksHeader}");
             _writer.Flush();
             IsRecording = true;
         }

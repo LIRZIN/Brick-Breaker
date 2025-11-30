@@ -6,7 +6,7 @@ namespace Brick_Breaker;
 
 public class BrickWall
 {
-    private List<BrickWallParameters> parameters = new List<BrickWallParameters>();                                                                     
+    private List<BrickWallParameters> parameters = new List<BrickWallParameters>();
     private List<Brick> bricks = new List<Brick>();
     private int _currentBrickWall;
 
@@ -15,22 +15,22 @@ public class BrickWall
         get => _currentBrickWall;
         set
         {
-            if(value < 0 || value >= parameters.Count )
+            if (value < 0 || value >= parameters.Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(value),
                     "The value given is invalid. ( is negative or is greater than the number of brick wall parameter sets)");
             }
-            
+
             _currentBrickWall = value;
             buildWall();
         }
     }
-    
+
     public double x { get => parameters[currentBrickWall].x; }
     public double y { get => parameters[currentBrickWall].y; }
     public double w { get => parameters[currentBrickWall].w; }
     public double h { get => parameters[currentBrickWall].h; }
-    
+
     public double spaceBetweenBricks { get => parameters[currentBrickWall].spaceBetweenBricks; }
 
     public int nbVerticalBricks { get => parameters[currentBrickWall].nbVerticalBricks; }
@@ -50,11 +50,11 @@ public class BrickWall
 
     public Brick getBrick(int index)
     {
-        if (index < 0 || index >= brickCount )
+        if (index < 0 || index >= brickCount)
         {
             throw new ArgumentOutOfRangeException(nameof(index), "The value given is out of range");
         }
-        
+
         return bricks[index];
     }
 
@@ -62,10 +62,6 @@ public class BrickWall
     {
         bricks[index].decreaseHealthBrick();
         Event?.Invoke(this, new EventArgs(EvenType.BrickHealthDecreased, index));
-        if (bricks[index].health <= 0)
-        {
-            bricks.RemoveAt(index);
-        }
     }
 
     public int addNewBrickWall(BrickWallParameters newParameters)
@@ -77,9 +73,9 @@ public class BrickWall
     private void buildUtilsParameters()
     {
         parameters.Clear();
-        parameters.Add( Utils.getBrickWallParameters(0));
-        parameters.Add( Utils.getBrickWallParameters(1));
-        parameters.Add( Utils.getBrickWallParameters(2));
+        parameters.Add(Utils.getBrickWallParameters(0));
+        parameters.Add(Utils.getBrickWallParameters(1));
+        parameters.Add(Utils.getBrickWallParameters(2));
     }
 
     private void buildWall()
@@ -93,17 +89,12 @@ public class BrickWall
         {
             for (int j = 0; j < nbHorizontalBricks; j++, index++)
             {
-                if (brickHealth[index] <= 0)
-                {
-                    continue;
-                }
-                
-                double position_x = ((double)j / (double)(nbHorizontalBricks)) * building_width + spaceBetweenBricks/2.0;
-                double position_y = ((double)i / (double)(nbVerticalBricks)) * building_height + spaceBetweenBricks/2.0;
-                double next_position_x = ((double)(j+1) / (double)(nbHorizontalBricks)) * building_width - spaceBetweenBricks/2.0;
-                double next_position_y = ((double)(i+1) / (double)(nbVerticalBricks)) * building_height - spaceBetweenBricks/2.0;
-                
-                bricks.Add( new Brick(x + position_x - spaceBetweenBricks/2.0, y + position_y - spaceBetweenBricks/2.0, next_position_x - position_x, next_position_y - position_y, brickColor[index], brickHealth[index] ) );
+                double position_x = ((double)j / (double)(nbHorizontalBricks)) * building_width + spaceBetweenBricks / 2.0;
+                double position_y = ((double)i / (double)(nbVerticalBricks)) * building_height + spaceBetweenBricks / 2.0;
+                double next_position_x = ((double)(j + 1) / (double)(nbHorizontalBricks)) * building_width - spaceBetweenBricks / 2.0;
+                double next_position_y = ((double)(i + 1) / (double)(nbVerticalBricks)) * building_height - spaceBetweenBricks / 2.0;
+
+                bricks.Add(new Brick(x + position_x - spaceBetweenBricks / 2.0, y + position_y - spaceBetweenBricks / 2.0, next_position_x - position_x, next_position_y - position_y, brickColor[index], brickHealth[index]));
             }
         }
     }
@@ -115,11 +106,11 @@ public class BrickWall
         System.Console.WriteLine("( nbVertical, nbHorizontal ) : " + nbVerticalBricks + ", " + nbHorizontalBricks);
         System.Console.WriteLine("Space Between Bricks: " + spaceBetweenBricks + "\n\n");
 
-        for( int i = 0; i < bricks.Count; i++ )
+        for (int i = 0; i < bricks.Count; i++)
         {
             System.Console.WriteLine("Brick n°" + i);
             System.Console.WriteLine("(w, h) : " + bricks[i].w + ", " + bricks[i].h);
-            System.Console.WriteLine("(x, y, next_x, next_y, color, health ):" + bricks[i].x + ", " + bricks[i].y + ", " + ( bricks[i].x + bricks[i].w ) + ", " + ( bricks[i].y +bricks[i].h ) + ", " + bricks[i].color + ", " + bricks[i].health + "\n");
+            System.Console.WriteLine("(x, y, next_x, next_y, color, health ):" + bricks[i].x + ", " + bricks[i].y + ", " + (bricks[i].x + bricks[i].w) + ", " + (bricks[i].y + bricks[i].h) + ", " + bricks[i].color + ", " + bricks[i].health + "\n");
         }
     }
 
@@ -128,7 +119,7 @@ public class BrickWall
         var r = new int[brickCount];
         for (int i = 0; i < brickCount; i++)
         {
-            r[i] = getBrick(i).health;
+            r[i] = bricks[i].health;
         }
         return r;
     }

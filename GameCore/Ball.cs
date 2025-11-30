@@ -52,10 +52,10 @@ public class Ball
         this.color = color;
         normalizeDirection();
     }
-    
+
     private void normalizeDirection()
     {
-        double norm = double.Sqrt( directionX * directionX + directionY * directionY );
+        double norm = double.Sqrt(directionX * directionX + directionY * directionY);
         directionX /= norm;
         directionY /= norm;
     }
@@ -64,7 +64,7 @@ public class Ball
     {
         PositionX = collisionX;
         PositionY = collisionY;
-        
+
         switch (side)
         {
             case Side.Left:
@@ -78,21 +78,21 @@ public class Ball
     {
         if (side != Side.Top)
         {
-            HandleReflectiveCollision( collisionX, collisionY, side );
+            HandleReflectiveCollision(collisionX, collisionY, side);
         }
         else
         {
             PositionX = collisionX;
             PositionY = collisionY;
-            
-            double u = ((collisionX - paddle.x)/paddle.w - 0.5)*Math.PI;
+
+            double u = ((collisionX - paddle.x) / paddle.w - 0.5) * Math.PI;
             DirectionX += double.Sin(u);
             DirectionY += double.Cos(u);
             DirectionY *= -1;
 
             double right_angle = Math.Acos(directionX); // = acos( ( directionX, directionY ) . ( 1, 0 ) )
 
-            if (right_angle >= Math.PI-Utils.limit_angle_paddle_reflection)
+            if (right_angle >= Math.PI - Utils.limit_angle_paddle_reflection)
             {
                 DirectionX = -double.Sin(Utils.limit_angle_paddle_reflection);
                 DirectionY = double.Cos(Utils.limit_angle_paddle_reflection);
@@ -105,11 +105,11 @@ public class Ball
         }
     }
 
-    public void CheckCollisions(double deltaTime, BrickWall brickWall, Paddle paddle, CollisionType previousCollision, int recursiveCount )
+    public void CheckCollisions(double deltaTime, BrickWall brickWall, Paddle paddle, CollisionType previousCollision, int recursiveCount)
     {
         double dx = deltaTime * DirectionX * Speed;
         double dy = deltaTime * DirectionY * Speed;
-        
+
         if (recursiveCount <= 0)
         {
             PositionX += dx;
@@ -122,34 +122,40 @@ public class Ball
         double collisionU = 999;
         CollisionType currentCollision = CollisionType.None;
         Side side = Side.None;
-        
+
         // Brick Collision
-        for( int i = 0; i < brickWall.brickCount; i++ )
+        for (int i = 0; i < brickWall.brickCount; i++)
         {
             Brick brick = brickWall.getBrick(i);
-            if( !( previousCollision == CollisionType.Brick && Utils.lastBrickCollisionIndex == i ) 
+
+            //don't check collision with destroyed bricks
+            if (brick.health <= 0)
+                continue;
+
+            if (!(previousCollision == CollisionType.Brick && Utils.lastBrickCollisionIndex == i)
                 && CollisionChecker.circleRectCollision(PositionX, PositionY, Radius, dx, dy,
-                                                     brick.x, brick.y, brick.w, brick.h,
-                                                     ref collisionX, ref collisionY, ref collisionU, ref side) )
+                                                        brick.x, brick.y, brick.w, brick.h,
+                                                        ref collisionX, ref collisionY, ref collisionU, ref side))
             {
                 brickCollisionIndex = i;
-
                 Event?.Invoke(this, new EventArgs(EvenType.BallHitBrick, collisionX, collisionY, side));
             }
         }
-        
+
         if (brickCollisionIndex >= 0)
         {
-            HandleReflectiveCollision( collisionX, collisionY, side );
+            HandleReflectiveCollision(collisionX, collisionY, side);
             brickWall.decreaseHealthBrick(brickCollisionIndex);
             currentCollision = CollisionType.Brick;
             Utils.lastBrickCollisionIndex = brickCollisionIndex;
+
+            //update brick health list
         }
         // Walls Collision
-        else if( CollisionChecker.circleWallsCollision( PositionX, PositionY, Radius, dx, dy, previousCollision,
-                                                        ref collisionX, ref collisionY, ref collisionU, ref side) )
+        else if (CollisionChecker.circleWallsCollision(PositionX, PositionY, Radius, dx, dy, previousCollision,
+                                                        ref collisionX, ref collisionY, ref collisionU, ref side))
         {
-            HandleReflectiveCollision( collisionX, collisionY, side );
+            HandleReflectiveCollision(collisionX, collisionY, side);
             switch (side)
             {
                 case Side.Left: currentCollision = CollisionType.LeftWall; break;
@@ -160,20 +166,20 @@ public class Ball
             Event?.Invoke(this, new EventArgs(EvenType.BallBounceOnWall, collisionX, collisionY, side));
         }
         // Paddle Collision
-        else if (previousCollision != CollisionType.Paddle 
+        else if (previousCollision != CollisionType.Paddle
                  && CollisionChecker.circleRectCollision(PositionX, PositionY, Radius, dx, dy,
                                                          paddle.x, paddle.y, paddle.w, paddle.h,
                                                          ref collisionX, ref collisionY, ref collisionU, ref side))
         {
-            HandlePaddleCollision( collisionX, collisionY, side, paddle );
+            HandlePaddleCollision(collisionX, collisionY, side, paddle);
             currentCollision = CollisionType.Paddle;
             Event?.Invoke(this, new EventArgs(EvenType.BallBounceOnPaddle, collisionX, collisionY, side, paddle));
         }
 
         if (side != Side.None)
         {
-            double uDeltaTime = deltaTime * ( 1 - collisionU );
-            CheckCollisions( uDeltaTime, brickWall, paddle, currentCollision, recursiveCount-1 );
+            double uDeltaTime = deltaTime * (1 - collisionU);
+            CheckCollisions(uDeltaTime, brickWall, paddle, currentCollision, recursiveCount - 1);
         }
         else
         {

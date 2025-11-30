@@ -77,8 +77,8 @@ public partial class GodotDisplay : Node
 			switch (BrickBreaker.getBrickAttribute(i, BrickAttribute.Health))
 			{
 				case 0:
-					GD.Print("la brique est dead");
-					break;
+                    listBrickRect[i].Color = new Color(0, 0, 0, 0);
+                    break;
 				case 1:
 					listBrickRect[i].Color = new Color(0, 1, 0);
 					break;
@@ -138,8 +138,15 @@ public partial class GodotDisplay : Node
 		brickBreaker.BrickWall.Event -= OnBrickWallLoosesHealthEvent;
 		foreach (var VARIABLE in listBrickRect)
 		{
-			VARIABLE.QueueFree();
-		}
+			try
+			{
+                VARIABLE.QueueFree();
+            }
+			catch (Exception e)
+			{
+				//ignore
+			}
+        }
 		brickBreaker.BallManager.ClearBalls();
 		listBrickRect.Clear();
 		ballSprite.QueueFree();
@@ -259,9 +266,10 @@ public partial class GodotDisplay : Node
 		switch (BrickBreaker.getBrickAttribute(index, BrickAttribute.Health))
 		{
 			case 0:
-				listBrickRect[index].QueueFree();
-				listBrickRect.RemoveAt(index);
-				break;
+                listBrickRect[index].QueueFree();
+                //listBrickRect.RemoveAt(index);
+                listBrickRect[index].Color = new Color(0, 0, 0, 0);
+                break;
 			case 1:
 				listBrickRect[index].Color = new Color(0, 1, 0);
 				break;

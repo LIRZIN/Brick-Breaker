@@ -121,6 +121,7 @@ public class ConsoleDisplay
     //dessine une boite (barre ou brique)
     private void DrawBox(int x, int y, int endX, int endY, bool isBrick, int brickHealth = 0)
     {
+        bool doDraw = brickHealth > 0;
         for (int i = y; i <= endY; i++)
         {
             for (int j = x; j <= endX; j++)
@@ -130,7 +131,8 @@ public class ConsoleDisplay
                     //Desine une brique
                     
                     //rempli l'intérieur de la brique
-                    setCharDisplay(j, i, brickHealth.ToString()[0]);
+                    if(doDraw)
+                        setCharDisplay(j, i, brickHealth.ToString()[0]);
                 }
                 else
                 {
@@ -139,7 +141,7 @@ public class ConsoleDisplay
             }
         }
 
-        if (isBrick)
+        if (isBrick && doDraw)
         {
             //dessine les coins de la brique
             setCharDisplay(x, y, '[');

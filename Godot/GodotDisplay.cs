@@ -17,13 +17,13 @@ public partial class GodotDisplay : Node
 	public double ballRadius = 0.02;
 	[Export] public bool recordData = false;
 	[Export] public bool aiPlaying = false;
-    private List<ColorRect> listBrickRect = new List<ColorRect>();
-    [Export] public Color PaddleColor = new Color(0.247f, 0.133f, 0.016f);
+	private List<ColorRect> listBrickRect = new List<ColorRect>();
+	[Export] public Color PaddleColor = new Color(0.247f, 0.133f, 0.016f);
 	[Export] public AIBehavior aiBehavior = AIBehavior.None;
 
 	private AiAgent aiAgent;
 
-    public BrickBreaker BrickBreaker
+	public BrickBreaker BrickBreaker
 	{
 		get => brickBreaker;
 	}
@@ -57,10 +57,10 @@ public partial class GodotDisplay : Node
 		BrickBreaker.SetBallRadius(ballRadius);
 
 		if(aiPlaying)
-            aiAgent = new AiAgent(aiBehavior);
+			aiAgent = new AiAgent(aiBehavior);
 
-        //Draw brickWall
-        listBrickRect = new List<ColorRect>();
+		//Draw brickWall
+		listBrickRect = new List<ColorRect>();
 		for (int i = 0; i < brickBreaker.getBrickWallAttribute(BrickWallAttribute.BrickCount); i++)
 		{
 			float tempX = GetPositionX(BrickBreaker.getBrickAttribute(i, BrickAttribute.PositionX));
@@ -77,8 +77,8 @@ public partial class GodotDisplay : Node
 			switch (BrickBreaker.getBrickAttribute(i, BrickAttribute.Health))
 			{
 				case 0:
-                    listBrickRect[i].Color = new Color(0, 0, 0, 0);
-                    break;
+					listBrickRect[i].Color = new Color(0, 0, 0, 0);
+					break;
 				case 1:
 					listBrickRect[i].Color = new Color(0, 1, 0);
 					break;
@@ -140,13 +140,13 @@ public partial class GodotDisplay : Node
 		{
 			try
 			{
-                VARIABLE.QueueFree();
-            }
+				VARIABLE.QueueFree();
+			}
 			catch (Exception e)
 			{
 				//ignore
 			}
-        }
+		}
 		brickBreaker.BallManager.ClearBalls();
 		listBrickRect.Clear();
 		ballSprite.QueueFree();
@@ -181,9 +181,9 @@ public partial class GodotDisplay : Node
 			GetTree().Quit();
 		}
 
-        //Update BrickBreaker et input
-        PlayerMovement movement = PlayerMovement.Nothing;
-        if (aiPlaying)
+		//Update BrickBreaker et input
+		PlayerMovement movement = PlayerMovement.Nothing;
+		if (aiPlaying)
 		{
 			movement = aiAgent.Predict(ballVelX: BrickBreaker.getBallAttribute(0, BallAttribute.DirectionX),
 							ballVelY: BrickBreaker.getBallAttribute(0, BallAttribute.DirectionY),
@@ -191,18 +191,18 @@ public partial class GodotDisplay : Node
 							ballPosY: BrickBreaker.getBallAttribute(0, BallAttribute.PositionY),
 							paddlePosX: BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionX),
 							bricks: new int[] { 0, 0 });
-        }
-        else
+		}
+		else
 		{
-            if (Input.IsActionPressed("MoveLeft"))
-            {
-                movement = PlayerMovement.Left;
-            }
-            else if (Input.IsActionPressed("MoveRight"))
-            {
-                movement = PlayerMovement.Right;
-            }
-        }
+			if (Input.IsActionPressed("MoveLeft"))
+			{
+				movement = PlayerMovement.Left;
+			}
+			else if (Input.IsActionPressed("MoveRight"))
+			{
+				movement = PlayerMovement.Right;
+			}
+		}
 		
 		BrickBreaker.update(delta, movement);
 
@@ -215,9 +215,9 @@ public partial class GodotDisplay : Node
 		ballSprite.Position = new Vector2(
 		GetPositionX(BrickBreaker.getBallAttribute(0, BallAttribute.PositionX)),
 		GetPositionY(BrickBreaker.getBallAttribute(0, BallAttribute.PositionY)));
-    }
+	}
 
-    private void SubscribeToEvents()
+	private void SubscribeToEvents()
 	{
 		brickBreaker.BrickWall.Event += OnBrickWallLoosesHealthEvent;
 		brickBreaker.BallManager.getBall(0).Event += OnBallEvent;
@@ -239,17 +239,17 @@ public partial class GodotDisplay : Node
 			{
 				GD.Print("Game Over!");
 				GetNode<SoundManager>("AudioStreamPlayer").PlaySound("game-over");
-		        var label = GetChild(2) as Label;
-		        window.Visible = false;
-		        label.Visible = true;
-		    }
+				var label = GetChild(2) as Label;
+				window.Visible = false;
+				label.Visible = true;
+			}
 			if (e.eventType == EvenType.GameWon)
 			{
 				GD.Print("You Win!");
-		        GetNode<SoundManager>("AudioStreamPlayer").PlaySound("game-won");
+				GetNode<SoundManager>("AudioStreamPlayer").PlaySound("game-won");
 				var label = GetChild(1) as Label;
 				window.Visible = false;
-		        label.Visible = true;
+				label.Visible = true;
 			}
 		}
 	}
@@ -266,10 +266,10 @@ public partial class GodotDisplay : Node
 		switch (BrickBreaker.getBrickAttribute(index, BrickAttribute.Health))
 		{
 			case 0:
-                listBrickRect[index].QueueFree();
-                //listBrickRect.RemoveAt(index);
-                listBrickRect[index].Color = new Color(0, 0, 0, 0);
-                break;
+				listBrickRect[index].QueueFree();
+				//listBrickRect.RemoveAt(index);
+				listBrickRect[index].Color = new Color(0, 0, 0, 0);
+				break;
 			case 1:
 				listBrickRect[index].Color = new Color(0, 1, 0);
 				break;

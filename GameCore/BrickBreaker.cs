@@ -226,7 +226,16 @@ public class BrickBreaker
             dataRecorder.RecordData(inputL, inputR, ball.PositionX, ball.PositionY, ball.DirectionX, ball.DirectionY, ball.Speed, ball.Radius, paddle.x, paddle.y, paddle.w, paddle.h, paddle.v, BrickWall.GetCurrentBricksHealth());
         }
 
-        IsGameWon = BrickWall.brickCount <= 0;
+        //IsGameWon = BrickWall.brickCount <= 0;
+        bool isWon = true;
+        foreach (var brick in brickWall.getBricks())
+        {
+            if (brick.health > 0)
+            {
+                isWon = false;
+            }
+        }
+        isGameWon = isWon;
     }
 }
 

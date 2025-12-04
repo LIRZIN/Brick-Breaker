@@ -58,6 +58,11 @@ public class BrickWall
         return bricks[index];
     }
 
+    public List<Brick> getBricks()
+    {
+        return bricks;
+    }
+
     public void decreaseHealthBrick(int index)
     {
         bricks[index].decreaseHealthBrick();

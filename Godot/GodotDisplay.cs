@@ -16,12 +16,9 @@ public partial class GodotDisplay : Node
 	public double PaddleSpeed = 1;
 	public double ballRadius = 0.02;
 	[Export] public bool recordData = false;
-	[Export] public bool aiPlaying = false;
 	private List<ColorRect> listBrickRect = new List<ColorRect>();
 	[Export] public Color PaddleColor = new Color(0.247f, 0.133f, 0.016f);
-	[Export] public AIBehavior aiBehavior = AIBehavior.None;
-
-	private AiAgent aiAgent;
+	[Export] private AIBehavior aiBehavior = AIBehavior.None;
 
 	public BrickBreaker BrickBreaker
 	{
@@ -51,13 +48,10 @@ public partial class GodotDisplay : Node
 
 	public void GodotInit()
 	{
-		brickBreaker.init(W_pixels, H_pixels, recordData, "godot");
+		brickBreaker.init(W_pixels, H_pixels, recordData, aiBehavior, "godot");
 		BrickBreaker.SetBallSpeed(ballSpeed);
 		BrickBreaker.SetPaddleSpeed(PaddleSpeed);
 		BrickBreaker.SetBallRadius(ballRadius);
-
-		if(aiPlaying)
-			aiAgent = new AiAgent(aiBehavior);
 
 		//Draw brickWall
 		listBrickRect = new List<ColorRect>();
@@ -183,28 +177,23 @@ public partial class GodotDisplay : Node
 
 		//Update BrickBreaker et input
 		PlayerMovement movement = PlayerMovement.Nothing;
-		if (aiPlaying)
+		if (aiBehavior == AIBehavior.None)
 		{
-			movement = aiAgent.Predict(ballVelX: BrickBreaker.getBallAttribute(0, BallAttribute.DirectionX),
-							ballVelY: BrickBreaker.getBallAttribute(0, BallAttribute.DirectionY),
-							ballPosX: BrickBreaker.getBallAttribute(0, BallAttribute.PositionX),
-							ballPosY: BrickBreaker.getBallAttribute(0, BallAttribute.PositionY),
-							paddlePosX: BrickBreaker.getPaddleAttribute(PaddleAttribute.PositionX),
-							bricks: new int[] { 0, 0 });
-		}
-		else
+            if (Input.IsActionPressed("MoveLeft"))
+            {
+                movement = PlayerMovement.Left;
+            }
+            else if (Input.IsActionPressed("MoveRight"))
+            {
+                movement = PlayerMovement.Right;
+            }
+        }
+		else 
 		{
-			if (Input.IsActionPressed("MoveLeft"))
-			{
-				movement = PlayerMovement.Left;
-			}
-			else if (Input.IsActionPressed("MoveRight"))
-			{
-				movement = PlayerMovement.Right;
-			}
-		}
-		
-		BrickBreaker.update(delta, movement);
+			movement = brickBreaker.GetAIMovement();
+        }
+
+			BrickBreaker.update(delta, movement);
 
 		//Update Paddle
 		paddleRect.Position = new Vector2(

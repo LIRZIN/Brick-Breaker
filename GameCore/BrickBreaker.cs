@@ -22,6 +22,8 @@ public class BrickBreaker
     public event EventHandler Event;
     public delegate void EventHandler(object sender, EventArgs e);
 
+    private AiAgent aiAgent;
+
     public void SetBallSpeed(double speed)
     {
         ballManager.getBall(0).Speed = speed;
@@ -132,14 +134,12 @@ public class BrickBreaker
         }
     }
 
-    public void init(int W_pixels, int H_pixels, bool record, string platformName = "unknown")
+    public void init(int W_pixels, int H_pixels, bool record, AIBehavior aiBehaviour = AIBehavior.None, string platformName = "unknown")
     {
         double min = (W_pixels < H_pixels) ? W_pixels : H_pixels;
         Utils.screenSizeWidth = (double)W_pixels / min;
         Utils.screenSizeHeight = (double)H_pixels / min;
 
-        Random rnd = new Random();
-        //brickWall.init(rnd.Next(2));
         brickWall.init(2);
         paddle.init();
         ballManager.init(paddle);
@@ -150,6 +150,8 @@ public class BrickBreaker
         if (!record) return;
         dataRecorder = new DataRecorder(platformName);
         Console.WriteLine("Warning: initializing Data Recorder. This may slow down the game.Verify that the parameter passed is the max amount of brick possible");
+
+        aiAgent = new AiAgent(aiBehaviour);
     }
 
     public int addLevel(string filePath)
@@ -236,6 +238,14 @@ public class BrickBreaker
             }
         }
         isGameWon = isWon;
+    }
+
+    public PlayerMovement GetAIMovement()
+    {
+        if (aiAgent == null)
+            return PlayerMovement.Nothing;
+        var ball = ballManager.getBall(0);
+        return aiAgent.Predict(ball.PositionX, ball.PositionY, ball.DirectionX, ball.DirectionY, paddle.x, BrickWall.GetCurrentBricksHealth());      
     }
 }
 

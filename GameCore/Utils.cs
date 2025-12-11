@@ -16,6 +16,15 @@ public enum EvenType
     BallHitBrick
 }
 
+public enum AIBehavior
+{
+    Random,
+    FollowBall,
+    LM,
+    MLP,
+    None,
+}
+
 public enum PlayerMovement
 {
     Left,

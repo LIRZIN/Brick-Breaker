@@ -60,10 +60,13 @@ public class main
 
     private static void GenerateWeightsStuff()
     {
-        bool isMLP = false;
+        bool isMLP = true;
         bool isTesting = true;
         bool isTraining = false;
         Files files = new();
+
+        if(isTraining)
+            files.csvData = files.ReadCsvFile(files.datasetPath); // Call the method to read and process the CSV data
         #region LM & MLP stuff
         #region Train LM
         if (isTraining && !isMLP) 
@@ -72,10 +75,6 @@ public class main
             LM lmRight = new LM(54);
             lmLeft.SetUsedForClassification(true);
             lmRight.SetUsedForClassification(true);
-
-            
-            // Call the method to read and process the CSV data
-            files.csvData = files.ReadCsvFile(files.datasetPath);
 
             files.AddDatasetToLm(lmLeft, true);
             //lmLeft.Print(false, true, true, false);
@@ -109,7 +108,6 @@ public class main
         #region Train MLP
         if (isTraining && isMLP)
         {
-            files.csvData = files.ReadCsvFile(files.datasetPath);
             MLP mlp = new([54, 108, 54, 27, 2]);
             mlp.SetUsedForClassification(true);
             files.AddDatasetToMlp(mlp);

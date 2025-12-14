@@ -6,6 +6,7 @@
 
 [node name="Scène" type="Node2D"]
 script = ExtResource("1_0pnx4")
+recordData = true
 randomLevelLoopMode = true
 PaddleColor = Color(0.38493606, 0.028984837, 0.07180501, 1)
 aiBehavior = 3

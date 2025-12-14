@@ -8,10 +8,10 @@ namespace Brick_Breaker;
 
 public class Files
 {
-    public string datasetPath = "/dataset_33_games_randomized.csv";
+    public string datasetPath = "./Dataset/dataset_33_games_1_out_of_5_randomized.csv";
     public string weightPathL = "./Data/weight_data_LM_True_13-12-03-48-31.csv"; //à changer
     public string weightPathR = "./Data/weight_data_LM_False_13-12-03-48-31.csv"; //à changer
-    public string mlpWeightsPaths = "./Data/weight_data_MLP_13-12-04-22-03.csv";
+    public string mlpWeightsPaths = "./Data/weight_data_MLP_1-5_14-12-08-40-23.csv";
     public List<float[]> csvData = [];
     public List<float[]> csvWeight = [];
     private FileStream _stream;
@@ -22,7 +22,9 @@ public class Files
     public List<float[]> ReadCsvFile(string csvPath)
     {
         List<float[]> rows = new List<float[]>();
-
+        var fp = Path.GetFullPath($"{datasetPath}");
+        Logger.Write(fp);
+        Console.WriteLine(Path.GetFullPath($"{datasetPath}"));
         try
         {
             // Read all lines from the CSV file

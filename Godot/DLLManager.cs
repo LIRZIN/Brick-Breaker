@@ -29,5 +29,11 @@ public partial class DLLManager : Node
         {
             GD.Print("Native DLL loaded OK");
         }
+
+        AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+        {
+            GD.PushError(e.ExceptionObject.ToString());
+        };
     }
+
 }

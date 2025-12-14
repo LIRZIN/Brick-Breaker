@@ -224,7 +224,7 @@ public partial class GodotDisplay : Node
 
 	private void OnMainGameEvent(object sender, Brick_Breaker.EventArgs e)
 	{
-		if (!recordData)
+		if (!randomLevelLoopMode)
 		{
 			if (e.eventType == EvenType.GameOver)
 			{
@@ -273,7 +273,6 @@ public partial class GodotDisplay : Node
 			default:
 				GD.Print("defaut case");
 				break;
-				
 		}
 	}
 

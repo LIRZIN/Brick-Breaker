@@ -1,13 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://bxbbu65u58yl6"]
+[gd_scene load_steps=4 format=3 uid="uid://bxbbu65u58yl6"]
 
 [ext_resource type="Script" uid="uid://bjoxo7vltwkav" path="res://GodotDisplay.cs" id="1_0pnx4"]
 [ext_resource type="Script" uid="uid://bdosshimx0vd3" path="res://SoundManager.cs" id="2_vs4pp"]
+[ext_resource type="Script" uid="uid://bmxefrr7hjfrj" path="res://DLLManager.cs" id="3_lejh4"]
 
 [node name="Scène" type="Node2D"]
 script = ExtResource("1_0pnx4")
-recordData = true
+randomLevelLoopMode = true
 PaddleColor = Color(0.38493606, 0.028984837, 0.07180501, 1)
-aiBehavior = 1
+aiBehavior = 3
 
 [node name="Window" type="Window" parent="."]
 oversampling_override = 1.0
@@ -38,3 +39,6 @@ uppercase = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 script = ExtResource("2_vs4pp")
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("3_lejh4")

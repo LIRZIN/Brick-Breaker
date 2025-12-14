@@ -5,7 +5,6 @@ using System;
 public class MLP : IDisposable
 {
     private IntPtr _ptr;
-
     
     public MLP(params int[] layers)
     {
@@ -18,7 +17,6 @@ public class MLP : IDisposable
             throw new Exception("Erreur : MLP_new_array a échoué.");
     }
 
-    
     public void Dispose()
     {
         if (_ptr != IntPtr.Zero)
@@ -33,7 +31,6 @@ public class MLP : IDisposable
     {
         Dispose();
     }
-
     
     public void SetUsedForClassification(bool value)
     {
@@ -45,7 +42,6 @@ public class MLP : IDisposable
         NativeMLP.MLP_initElements(_ptr, count);
     }
 
-    
     public void AddElement(float[] values)
     {
         NativeMLP.MLP_addElementArray(_ptr, values);
@@ -62,7 +58,6 @@ public class MLP : IDisposable
         NativeMLP.MLP_quickTrain(_ptr);
     }
 
-    
     public float[] Predict(float[] inputs)
     {
         NativeMLP.MLP_generatePredictionArray(_ptr, inputs);
@@ -75,14 +70,11 @@ public class MLP : IDisposable
         return result;
     }
 
-    
-    
     public float Test()
     {
         return NativeMLP.MLP_test(_ptr);
     }
 
-    
     public int MSESize()
     {
         return NativeMLP.MLP_getMSESize(_ptr);

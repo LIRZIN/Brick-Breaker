@@ -7,7 +7,7 @@ public class ConsoleDisplay
     private double deltaTime;
     private int w_pixels, h_pixels;
     private char[] displaytab;
-
+    private AIBehavior aIBehavior;
     public BrickBreaker BrickBreaker
     {
         get => brickBreaker;
@@ -52,13 +52,14 @@ public class ConsoleDisplay
         }
     }
     
-    public void Init( int init_w_pixels, int init_h_pixels, bool record)
+    public void Init( int init_w_pixels, int init_h_pixels, AIBehavior aIBehaviour, bool record)
     {
         brickBreaker = new BrickBreaker();
         W_pixels = init_w_pixels; 
         H_pixels = init_h_pixels;
-        brickBreaker.init(W_pixels, H_pixels, record, AIBehavior.None, "console");
-
+        aIBehavior = aIBehaviour;
+        brickBreaker.init(W_pixels, H_pixels, record, aIBehavior, true, "console");
+        
         deltaTime = 1;
     }
 

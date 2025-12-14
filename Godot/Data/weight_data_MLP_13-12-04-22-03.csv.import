@@ -1,0 +1,15 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://d271dsnvbxfv"
+valid=false
+
+[deps]
+
+source_file="res://Data/weight_data_MLP_13-12-04-22-03.csv"
+
+[params]
+
+compress=true
+delimiter=0

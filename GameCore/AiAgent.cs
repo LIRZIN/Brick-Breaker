@@ -2,9 +2,15 @@ namespace Brick_Breaker;
 using System.Linq;
 internal class AiAgent
 {
+    public bool IsReady { get; private set; }
+
     private Random rand;
+    private MLP mlp;
+    private LM lmL, lmR;
+    private Files f;
+
     public AIBehavior Behaviour { get; }
-    public bool IsReady = false;
+
 
     public AiAgent(AIBehavior behaviour)
     {
@@ -13,20 +19,29 @@ internal class AiAgent
         Setup();
     }
 
-    MLP mlp;
-    LM lm;
-
     public void Setup()
     {
+        Logger.Write($"Setting up AI Agent with behaviour: {Behaviour}");
+        f = new Files();
         switch (Behaviour)
         {
             case AIBehavior.LM:
-                lm ??= new LM(54);
-                lm.Train(10000, 0.01f);
+                lmL = new(54);
+                lmR = new(54);
+                f.csvWeight = f.ReadCsvFile(f.weightPathL);
+                //Logger.Write($"Weights read from {f.weightPathL}, count: {f.csvWeight.Count}");
+                f.SetWeightForLm(lmL);
+                f.csvWeight = f.ReadCsvFile(f.weightPathR);
+                f.SetWeightForLm(lmR);
+                //float[] input = { 0, 0, 1.7163222666290556f, 1.2451554414004138f, 0.5324266333873037f, -0.846476154454372f, 1.3388922222222217f, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                //var l = lmL.Predict(input);
+                //var r = lmR.Predict(input);
+                //Logger.Write($"Test LM : l = {l}, r = {r}");
                 break;
             case AIBehavior.MLP:
-                mlp ??= new MLP([54, 27, 2]);
-                mlp.Train(10000, 0.01f);
+                f.csvWeight = f.ReadCsvFile(f.mlpWeightsPaths);
+                mlp ??= f.CreateMlpFromCsv();
+                f.SetWeightForMlp(mlp);
                 break;
         }
     }
@@ -46,9 +61,15 @@ internal class AiAgent
                 return FollowBall(paddlePosX, ballPosX);
 
             case AIBehavior.LM:
-                if (lm == null)
+                if(lmL == null || lmR == null)
+                {
+                    Logger.WriteError("LM models are not initialized.");
                     break;
-                return GetMovementFromOutputs(lm.Predict(inputs));
+                }
+                    
+                var l = lmL.Predict(inputs);
+                var r = lmR.Predict(inputs);
+                return GetMovementFromOutputs([l, r]);
 
             case AIBehavior.MLP:
                 if (mlp == null)
@@ -76,18 +97,32 @@ internal class AiAgent
 
     private static PlayerMovement GetMovementFromOutputs(float[] outputs)
     {
-        if (outputs.Length != 2)
-            return PlayerMovement.Nothing;
+        //if (outputs.Length != 2)
+        //    return PlayerMovement.Nothing;
 
-        //case [-1,-1] || [1,1]
+        //Logger.Write("--------------------------------------------------");
+        //Logger.Write("Evaluating outputs for movement prediction...");
+        //Logger.Write("Outputs: " + string.Join(", ", outputs));
         if (outputs[0] == outputs[1])
+        {
+            //Logger.Write("Predicted Move: Nothing");
             return PlayerMovement.Nothing;
+        }
+            
 
         if (outputs[0] == 1)
+        {
+            //Logger.Write("Predicted Move: Left");
             return PlayerMovement.Left;
-        if(outputs[1] == 1)
-            return PlayerMovement.Right;
+        }
 
+        else if (outputs[1] == 1)
+        {
+            //Logger.Write("Predicted Move: Right");
+            return PlayerMovement.Right;
+        }
+
+        //Logger.Write("Predicted Move: Nothing! No cases were handled");
         return PlayerMovement.Nothing;
     }
 }

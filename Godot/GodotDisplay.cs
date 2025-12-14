@@ -16,6 +16,7 @@ public partial class GodotDisplay : Node
 	public double PaddleSpeed = 1;
 	public double ballRadius = 0.02;
 	[Export] public bool recordData = false;
+	[Export] public bool randomLevelLoopMode = false;
 	private List<ColorRect> listBrickRect = new List<ColorRect>();
 	[Export] public Color PaddleColor = new Color(0.247f, 0.133f, 0.016f);
 	[Export] private AIBehavior aiBehavior = AIBehavior.None;
@@ -48,7 +49,7 @@ public partial class GodotDisplay : Node
 
 	public void GodotInit()
 	{
-		brickBreaker.init(W_pixels, H_pixels, recordData, aiBehavior, "godot");
+		brickBreaker.init(W_pixels, H_pixels, recordData, aiBehavior, randomLevelLoopMode, "godot");
 		BrickBreaker.SetBallSpeed(ballSpeed);
 		BrickBreaker.SetPaddleSpeed(PaddleSpeed);
 		BrickBreaker.SetBallRadius(ballRadius);
@@ -85,7 +86,6 @@ public partial class GodotDisplay : Node
 				default:
 					GD.Print("defaut case");
 					break;
-				
 			}
 
 			window.AddChild(listBrickRect[i]);
@@ -150,7 +150,9 @@ public partial class GodotDisplay : Node
 	public override void _Ready()
 	{
 		base._Ready();
-		brickBreaker = new BrickBreaker();
+        GD.Print(System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture);
+        Brick_Breaker.Logger.Info = msg => GD.Print($"[GameCore] {msg}");
+        brickBreaker = new BrickBreaker();
 		window = GetChild(0) as Window;
 		window.Position = new Vector2I(0, 0);
 		W_pixels = window.Size.X;

@@ -71,9 +71,9 @@ public class LM : IDisposable
         NativeLM.LM_print(_ptr, printX, printY, printW, printMSE);
     }
 
-    public float[] Predict(float[] inputs)
+    public float Predict(float[] inputs)
     {
-        return [NativeLM.LM_predictArray(_ptr, inputs)];
+        return NativeLM.LM_predictArray(_ptr, inputs);
     }
 
     public float Test()

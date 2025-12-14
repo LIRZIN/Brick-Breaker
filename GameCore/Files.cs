@@ -8,14 +8,18 @@ namespace Brick_Breaker;
 
 public class Files
 {
-    public string datasetPath = "Data/dataset_33_games_randomized.csv";
-    public string weightPath = "Data/weight_data_MLP_10-12-01-38-21.csv";
-    public List<float[]> csvData;
-    public List<float[]> csvWeight;
+    public string datasetPath = "/dataset_33_games_randomized.csv";
+    public string weightPathL = "./Data/weight_data_LM_True_13-12-03-48-31.csv"; //à changer
+    public string weightPathR = "./Data/weight_data_LM_False_13-12-03-48-31.csv"; //à changer
+    public string mlpWeightsPaths = "./Data/weight_data_MLP_13-12-04-22-03.csv";
+    public List<float[]> csvData = [];
+    public List<float[]> csvWeight = [];
     private FileStream _stream;
     private StreamWriter _writer;
     
-    public static List<float[]> ReadCsvFile(string csvPath)
+
+    //mettre le résultat de cette fonction dans csvData ou csvWeight
+    public List<float[]> ReadCsvFile(string csvPath)
     {
         List<float[]> rows = new List<float[]>();
 
@@ -34,17 +38,20 @@ public class Files
             }
 
             Console.WriteLine("CSV file read successfully!");
+            Logger.Write("CSV file read successfully!");
         }
         catch (Exception ex)
         {
             Console.WriteLine($"An error occurred: {ex.Message}");
+            Logger.WriteError($"An error occurred: {ex.Message}");
         }
 
         return rows;
     }
 
     //LM Functions
-    
+    //mettre le dataset dans un model linéaire (faut en faire 2 (instances), un pour la sortie gauche, 1 pour la sortie droite)
+    //faut read le csv file avant (au dessus)
     public void AddDatasetToLm(LM lm, bool isLeftInput)
     {
         lm.InitElements(csvData.Count);
@@ -56,9 +63,11 @@ public class Files
         }
     }
     
-    public void WriteWeightFromLmToCSV(LM lm)
+    //génère un csv de poid par rapport au LM
+    //à appeller après avoir train le LM
+    public void WriteWeightFromLmToCSV(LM lm, bool isLeftInput)
     {
-        string fileName = $"weight_data_LM_{DateTime.Now:dd-MM-hh-mm-ss}.csv";
+        string fileName = $"weight_data_LM_{isLeftInput}_{DateTime.Now:dd-MM-hh-mm-ss}.csv";
         var baseDir = AppDomain.CurrentDomain.BaseDirectory;
 
         if (!Directory.Exists(baseDir + "\\Data"))
@@ -92,14 +101,15 @@ public class Files
     }
     
     public void SetWeightForLm(LM lm)
-    {
+    {        
         float[] line = csvWeight[0];
-        lm.SetWeights(line);
+        lm.SetWeights(line);        
     }
-    
-    
+
+    #region MLP
+
     //MLP Functions
-    
+
     public void AddDatasetToMlp(MLP mlp)
     {
         mlp.InitElements(csvData.Count);
@@ -113,6 +123,7 @@ public class Files
         }
     }
 
+    //une fois que j'ai train
     public void WriteWeightFromMlpToCSV(MLP mlp)
     {
         string fileName = $"weight_data_MLP_{DateTime.Now:dd-MM-hh-mm-ss}.csv";
@@ -196,3 +207,5 @@ public class Files
         }
     }
 }
+
+#endregion

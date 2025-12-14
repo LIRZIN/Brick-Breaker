@@ -1,0 +1,15 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://b18ldhaoyptsw"
+valid=false
+
+[deps]
+
+source_file="res://Data/weight_data_LM_False_13-12-03-48-31.csv"
+
+[params]
+
+compress=true
+delimiter=0

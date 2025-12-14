@@ -11,5 +11,10 @@
     <ItemGroup>
       <ProjectReference Include="..\GameCore\GameCore.csproj" />
     </ItemGroup>
+	<ItemGroup>
+		<None Include="..\Lib\ML_Lib.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
 
 </Project>

@@ -134,24 +134,26 @@ public class BrickBreaker
         }
     }
 
-    public void init(int W_pixels, int H_pixels, bool record, AIBehavior aiBehaviour = AIBehavior.None, string platformName = "unknown")
+    public void init(int W_pixels, int H_pixels, bool record, AIBehavior aiBehaviour = AIBehavior.None, bool randomLoopGame = false, string platformName = "unknown")
     {
+        Logger.Write("Test");
         double min = (W_pixels < H_pixels) ? W_pixels : H_pixels;
         Utils.screenSizeWidth = (double)W_pixels / min;
         Utils.screenSizeHeight = (double)H_pixels / min;
 
-        brickWall.init(2);
+        var bwIndex = randomLoopGame ? 2 : 1;
+        brickWall.init(bwIndex);
         paddle.init();
         ballManager.init(paddle);
 
         IsGameWon = false;
         IsGameOver = false;
 
+        aiAgent = new AiAgent(aiBehaviour);
+
         if (!record) return;
         dataRecorder = new DataRecorder(platformName);
         Console.WriteLine("Warning: initializing Data Recorder. This may slow down the game.Verify that the parameter passed is the max amount of brick possible");
-
-        aiAgent = new AiAgent(aiBehaviour);
     }
 
     public int addLevel(string filePath)
